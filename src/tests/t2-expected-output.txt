@@ -1,0 +1,7 @@
+In MyClass2:
+	# of attributes: 2
+	# of operations: 1
+
+List of attributes changed by operation `fun`:
+	a1: final value is 184 
+	a2: final value is 46

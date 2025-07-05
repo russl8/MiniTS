@@ -1,0 +1,36 @@
+=====
+- Input is a test file specifying a single class (with a name):
+	+ Content of the class is enclosed with a pair of curly brackets ({...}).
+	+ There is an "attributes" section, where each attribute has: 
+		* a name 
+		* a type (INT only)
+		* The name and type are separated by a colon (:).
+	+ There is an "operations" section, where each operation has:
+		* a name (e.g., fun1, fun2)
+		* no parameters
+		* a series of variable assignments (wrapped within a do ... end block).
+		* The left-hand side (LHS) of each variable assignment is a single variable reference.
+		* The right-hand side (RHS) of each variable assignment may be:
+			- an integer literal (e.g., 23)
+			- the reference of a variable (e.g., a1)
+			- a compound expression (e.g., a1 * 2)
+			  (Assume that only addition and multiplication are possible in the input.)
+=====
+- Output:
+	+ Report an error if the LHS or RHS of a variable assignment references an undeclared attribute.
+	  (You need not worry other kinds of semantic error such as duplicated operation names.)
+	+ When multiple errors are present, report them all.
+	+ If no errors are found:
+		* Summarize the numbers of declared attributes and functions in the class.
+		* For each operation:
+			- Identify variables that are modified (ones appearing on the LHS).
+			- Report the LAST value of each modified variable.
+=====
+- Develop Your Solution
+	+ (Re-Generate) skeleton code via the ANTLR4 tool into the `antlr` package. 
+	+ All Java classes you develop should go to the `model` package.
+=====
+- Example Tests:
+	+ See t1 to t4 in the `tests` folder.
+	+ Test your project via the command line (by exporting the project as a Runnable JAR file).
+	+ Create additional test files that can be derived from the above input-output specification.

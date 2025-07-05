@@ -1,0 +1,2 @@
+Error: In `fun2`, `a3` on the LHS is undeclared.
+Error: In `fun3`, `a3` on the RHS is undeclared.

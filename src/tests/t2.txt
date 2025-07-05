@@ -1,0 +1,12 @@
+class MyClass2 {
+	attributes
+		a1: INT
+		a2: INT
+	operations
+		fun
+			do
+				a1 = 23
+				a2 = a1 * 2
+				a1 = a2 * 4
+			end
+}
