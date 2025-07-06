@@ -1,10 +1,13 @@
 package model;
 
 import antlr.ExprBaseVisitor;
-import antlr.ExprParser;
-
+import antlr.ExprParser.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.antlr.v4.runtime.Token;
 
 public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 
@@ -17,7 +20,8 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
     private List<String> semanticErrors; // 1. duplicate declaration 2. reference to undeclared variable
     // Note that semantic errors are different from syntax errors.
     private String currentOperation; // track current operation being processed
-
+    Map<String, Variable> variables = new HashMap<>();
+    
     public AntlrToExpression(List<String> semanticErrors) {
         this.vars = new ArrayList<>();
         this.semanticErrors = semanticErrors;
@@ -25,127 +29,122 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
     }
 
     @Override
-    public Expression visitClassDeclaration(ExprParser.ClassDeclarationContext ctx) {
-        ClassDeclaration classDecl = new ClassDeclaration();
-        classDecl.className = ctx.ID().getText();
-
-        // Visit attributes section to collect attributes
-        if (ctx.attributes_section() != null) {
-            ExprParser.AttributesSectionContext attrsSection = (ExprParser.AttributesSectionContext) ctx.attributes_section();
-            for (ExprParser.AttributeContext attrCtx : attrsSection.attribute()) {
-                AttributeDeclaration attr = (AttributeDeclaration) visit(attrCtx);
-                if (attr != null) {
-                    classDecl.addAttribute(attr);
-                }
-            }
+    public Expression visitClassDeclaration(ClassDeclarationContext ctx) {
+        String className = ctx.ID(0).getText();
+        System.out.println("Visiting class: " + className);
+        
+        if (ctx.ID().size() > 1) {
+            String parentClass = ctx.ID(1).getText();
+            System.out.println("Extends: " + parentClass);
         }
-
-        // Visit operations section to collect operations
-        if (ctx.operations_section() != null) {
-            ExprParser.OperationsSectionContext opsSection = (ExprParser.OperationsSectionContext) ctx.operations_section();
-            for (ExprParser.OperationContext opCtx : opsSection.operation()) {
-                OperationDeclaration op = (OperationDeclaration) visit(opCtx);
-                if (op != null) {
-                    classDecl.addOperation(op);
-                }
-            }
-        }
-
-        return classDecl;
+        
+        return visitChildren(ctx);
     }
 
     @Override
-    public Expression visitAttributesSection(ExprParser.AttributesSectionContext ctx) {
-        // This method is called for structure but doesn't return a meaningful Expression
+    public Expression visitDeclarationWithOptionalAssignment(DeclarationWithOptionalAssignmentContext ctx) {
+        String name = ctx.ID().getText();
+        String type = ctx.type().getText();  // "INT" or "BOOL"
+
+        if (variables.containsKey(name)) {
+            throw new RuntimeException("Variable '" + name + "' already declared.");
+        }
+
+        Variable var;
+        if (ctx.expr() != null) {
+            Object value = visit(ctx.expr());
+            var = new Variable(name, type, value);
+        } else {
+            var = new Variable(type);
+        }
+
+        variables.put(name, var);
+        System.out.println("Declared " + name + ": " + var);
+        return var;
+    }
+
+    @Override
+    public Expression visitVariableAssignment(VariableAssignmentContext ctx) {
+    	String name = ctx.ID().getText();
+
+        if (!variables.containsKey(name)) {
+            throw new RuntimeException("Variable '" + name + "' not declared.");
+        }
+
+        Variable var = variables.get(name);
+
+        if (ctx.expr() == null) {
+            throw new RuntimeException("No value provided for variable assignment.");
+        }
+
+        Object value = visit(ctx.expr());
+
+        // Update variable value with type checking inside Variable.setValue
+        var.setValue(value);
+
+        System.out.println("Assigned " + name + " = " + value);
+
+        return var; // or return value if you want
+    }
+
+    @Override
+    public Expression visitIfStatement(IfStatementContext ctx) {
+        System.out.println("Evaluating IF condition:");
+        Expression val = visit(ctx.expr());
+        if (val instanceof BooleanVal) {
+        	if (((BooleanVal)val).value) {
+        		System.out.println("Entering IF block:");
+        		for (StatementContext stmt : ctx.statement()) {
+        			visit(stmt);
+        		}
+        	}
+        }
         return null;
     }
-
+    
     @Override
-    public Expression visitAttributeDeclaration(ExprParser.AttributeDeclarationContext ctx) {
-        String attrName = ctx.ID().getText();
-        String attrType = ctx.INT_TYPE().getText();
-
-        // Add to declared variables
-        vars.add(attrName);
-
-        return new AttributeDeclaration(attrName, attrType);
-    }
-
-    @Override
-    public Expression visitOperationsSection(ExprParser.OperationsSectionContext ctx) {
-        // This method is called for structure but doesn't return a meaningful Expression
-        return null;
-    }
-
-    @Override
-    public Expression visitOperationDeclaration(ExprParser.OperationDeclarationContext ctx) {
-        String opName = ctx.ID().getText();
-        currentOperation = opName; // Set current operation context
-        OperationDeclaration op = new OperationDeclaration(opName);
-
-        // Visit do block to collect assignments
-        if (ctx.do_block() != null) {
-            ExprParser.DoBlockContext doBlock = (ExprParser.DoBlockContext) ctx.do_block();
-            for (ExprParser.AssignmentContext assignCtx : doBlock.assignment()) {
-                Assignment assign = (Assignment) visit(assignCtx);
-                if (assign != null) {
-                    op.addAssignment(assign);
-                }
-            }
-        }
-
-        currentOperation = null; // Clear operation context
-        return op;
-    }
-
-    @Override
-    public Expression visitDoBlock(ExprParser.DoBlockContext ctx) {
-        // This method is called for structure but doesn't return a meaningful Expression
-        return null;
-    }
-
-    @Override
-    public Expression visitAttributeAssignment(ExprParser.AttributeAssignmentContext ctx) {
-        String varName = ctx.ID().getText();
-
-        // Check if LHS variable is declared
-        if (!vars.contains(varName)) {
-            semanticErrors.add("Error: In `" + currentOperation + "`, `" + varName + "` on the LHS is undeclared.");
-        }
-
-        Expression value = visit(ctx.expr());
-        return new Assignment(varName, value);
-    }
-
-    @Override
-    public Expression visitMultiplication(ExprParser.MultiplicationContext ctx) {
+    public Expression visitBinaryExpr(BinaryExprContext ctx) {
         Expression left = visit(ctx.expr(0));
         Expression right = visit(ctx.expr(1));
-        return new BinaryOperation(left, "*", right);
+        String op = ctx.op.getText();
+
+        if (left instanceof Number && right instanceof Number) {
+            return new BinaryOperation((Number) left, op, (Number) right).evaluate();
+        } else if (left instanceof BooleanVal && right instanceof BooleanVal) {
+            return new BinaryOperation((BooleanVal) left, op, (BooleanVal) right).evaluate();
+        } else {
+            throw new RuntimeException("Invalid operand types for operator '" + op + "'");
+        }
     }
-
+	
     @Override
-    public Expression visitAddition(ExprParser.AdditionContext ctx) {
-        Expression left = visit(ctx.expr(0));
-        Expression right = visit(ctx.expr(1));
-        return new BinaryOperation(left, "+", right);
-    }
+    public Expression visitVariable(VariableContext ctx) {
+        String name = ctx.ID().getText();
 
-    @Override
-    public Expression visitVariable(ExprParser.VariableContext ctx) {
-        String varName = ctx.ID().getText();
-
-        // Check if RHS variable is declared
-        if (!vars.contains(varName)) {
-            semanticErrors.add("Error: In `" + currentOperation + "`, `" + varName + "` on the RHS is undeclared.");
+        if (!variables.containsKey(name)) {
+            throw new RuntimeException("Variable '" + name + "' not declared.");
         }
 
-        return new Variable(varName);
+        Variable var = variables.get(name);
+        Expression value = var.value;
+
+        if (value == null) {
+            throw new RuntimeException("Variable '" + name + "' has not been assigned a value.");
+        }
+
+        System.out.println("Variable lookup: " + name + " = " + value);
+        return value;
     }
 
     @Override
-    public Expression visitNumber(ExprParser.NumberContext ctx) {
+    public Expression visitBooleanLiteral(BooleanLiteralContext ctx) {
+        boolean value = Boolean.parseBoolean(ctx.BOOL().getText());
+        return new BooleanVal(value); // fully-qualified if name clash with java.lang.Boolean
+    }
+
+    @Override
+    public Expression visitNumberLiteral(NumberLiteralContext ctx) {
         int value = Integer.parseInt(ctx.NUM().getText());
-        return new Number(value);
+        return new Number(value); // your model.Number
     }
 }

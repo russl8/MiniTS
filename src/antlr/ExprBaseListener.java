@@ -1,6 +1,6 @@
 // Generated from Expr.g4 by ANTLR 4.13.2
 
-	package antlr;
+    package antlr;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -43,97 +43,61 @@ public class ExprBaseListener implements ExprListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAttributesSection(ExprParser.AttributesSectionContext ctx) { }
+	@Override public void enterClassBody(ExprParser.ClassBodyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAttributesSection(ExprParser.AttributesSectionContext ctx) { }
+	@Override public void exitClassBody(ExprParser.ClassBodyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAttributeDeclaration(ExprParser.AttributeDeclarationContext ctx) { }
+	@Override public void enterStatement(ExprParser.StatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAttributeDeclaration(ExprParser.AttributeDeclarationContext ctx) { }
+	@Override public void exitStatement(ExprParser.StatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOperationsSection(ExprParser.OperationsSectionContext ctx) { }
+	@Override public void enterDeclarationWithOptionalAssignment(ExprParser.DeclarationWithOptionalAssignmentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOperationsSection(ExprParser.OperationsSectionContext ctx) { }
+	@Override public void exitDeclarationWithOptionalAssignment(ExprParser.DeclarationWithOptionalAssignmentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOperationDeclaration(ExprParser.OperationDeclarationContext ctx) { }
+	@Override public void enterVariableAssignment(ExprParser.VariableAssignmentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOperationDeclaration(ExprParser.OperationDeclarationContext ctx) { }
+	@Override public void exitVariableAssignment(ExprParser.VariableAssignmentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDoBlock(ExprParser.DoBlockContext ctx) { }
+	@Override public void enterIfStatement(ExprParser.IfStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDoBlock(ExprParser.DoBlockContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAttributeAssignment(ExprParser.AttributeAssignmentContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAttributeAssignment(ExprParser.AttributeAssignmentContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterMultiplication(ExprParser.MultiplicationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMultiplication(ExprParser.MultiplicationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAddition(ExprParser.AdditionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAddition(ExprParser.AdditionContext ctx) { }
+	@Override public void exitIfStatement(ExprParser.IfStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -151,13 +115,61 @@ public class ExprBaseListener implements ExprListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNumber(ExprParser.NumberContext ctx) { }
+	@Override public void enterBooleanLiteral(ExprParser.BooleanLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNumber(ExprParser.NumberContext ctx) { }
+	@Override public void exitBooleanLiteral(ExprParser.BooleanLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBinaryExpr(ExprParser.BinaryExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBinaryExpr(ExprParser.BinaryExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterParenExpr(ExprParser.ParenExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParenExpr(ExprParser.ParenExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumberLiteral(ExprParser.NumberLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumberLiteral(ExprParser.NumberLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterType(ExprParser.TypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitType(ExprParser.TypeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
