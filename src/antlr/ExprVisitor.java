@@ -1,6 +1,6 @@
 // Generated from Expr.g4 by ANTLR 4.13.2
 
-	package antlr;
+    package antlr;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -27,61 +27,39 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitClassDeclaration(ExprParser.ClassDeclarationContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code AttributesSection}
-	 * labeled alternative in {@link ExprParser#attributes_section}.
+	 * Visit a parse tree produced by the {@code ClassBody}
+	 * labeled alternative in {@link ExprParser#class_body}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAttributesSection(ExprParser.AttributesSectionContext ctx);
+	T visitClassBody(ExprParser.ClassBodyContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code AttributeDeclaration}
-	 * labeled alternative in {@link ExprParser#attribute}.
+	 * Visit a parse tree produced by {@link ExprParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAttributeDeclaration(ExprParser.AttributeDeclarationContext ctx);
+	T visitStatement(ExprParser.StatementContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code OperationsSection}
-	 * labeled alternative in {@link ExprParser#operations_section}.
+	 * Visit a parse tree produced by the {@code DeclarationWithOptionalAssignment}
+	 * labeled alternative in {@link ExprParser#declaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOperationsSection(ExprParser.OperationsSectionContext ctx);
+	T visitDeclarationWithOptionalAssignment(ExprParser.DeclarationWithOptionalAssignmentContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code OperationDeclaration}
-	 * labeled alternative in {@link ExprParser#operation}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitOperationDeclaration(ExprParser.OperationDeclarationContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code DoBlock}
-	 * labeled alternative in {@link ExprParser#do_block}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDoBlock(ExprParser.DoBlockContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code AttributeAssignment}
+	 * Visit a parse tree produced by the {@code VariableAssignment}
 	 * labeled alternative in {@link ExprParser#assignment}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAttributeAssignment(ExprParser.AttributeAssignmentContext ctx);
+	T visitVariableAssignment(ExprParser.VariableAssignmentContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Multiplication}
-	 * labeled alternative in {@link ExprParser#expr}.
+	 * Visit a parse tree produced by the {@code IfStatement}
+	 * labeled alternative in {@link ExprParser#conditional}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMultiplication(ExprParser.MultiplicationContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code Addition}
-	 * labeled alternative in {@link ExprParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAddition(ExprParser.AdditionContext ctx);
+	T visitIfStatement(ExprParser.IfStatementContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link ExprParser#expr}.
@@ -90,10 +68,37 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariable(ExprParser.VariableContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Number}
+	 * Visit a parse tree produced by the {@code BooleanLiteral}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNumber(ExprParser.NumberContext ctx);
+	T visitBooleanLiteral(ExprParser.BooleanLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BinaryExpr}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBinaryExpr(ExprParser.BinaryExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ParenExpr}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParenExpr(ExprParser.ParenExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code NumberLiteral}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumberLiteral(ExprParser.NumberLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExprParser#type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitType(ExprParser.TypeContext ctx);
 }

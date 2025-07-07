@@ -1,41 +1,56 @@
 grammar Expr;
 
 @header {
-	package antlr;
+    package antlr;
 }
 
-prog:(class_decl)+ EOF #Program
-	;
+// PROGRAM STRUCTURE
+prog: (class_decl)+ EOF #Program;
 
-class_decl: 'class' ID '{' attributes_section operations_section '}' #ClassDeclaration
-	;
+class_decl: 
+    'class' ID ( 'extends' ID )? '{' class_body '}' #ClassDeclaration;
 
-attributes_section: 'attributes' (attribute)* #AttributesSection
-	;
+class_body:
+    (statement)* #ClassBody;
 
-attribute: ID ':' INT_TYPE #AttributeDeclaration
-	;
+// STATEMENTS
+statement:
+      declaration
+    | assignment
+    | conditional
+    ;
 
-operations_section: 'operations' (operation)* #OperationsSection
-	;
+// DECLARATIONS
+declaration:
+      ID ':' type ('=' expr)? ';' #DeclarationWithOptionalAssignment;
 
-operation: ID do_block #OperationDeclaration
-	;
+// ASSIGNMENTS
+assignment:
+      ID '=' expr ';' #VariableAssignment;
 
-do_block: 'do' (assignment)* 'end' #DoBlock
-	;
+// CONDITIONALS
+conditional:
+    'IF' '(' expr ')' '{' (statement)* '}' #IfStatement;
 
-assignment: ID '=' expr #AttributeAssignment
-	;
+// EXPRESSIONS
+expr:
+      expr op=('*' | '/' | '%' | '+' | '-' | '==' | '!=' | '<' | '>' | '<=' | '>=' | '&&' | '||') expr #BinaryExpr
+    | '(' expr ')' #ParenExpr
+    | ID #Variable
+    | BOOL #BooleanLiteral
+    | NUM #NumberLiteral
+    ;
 
-expr: expr '*' expr	#Multiplication
-	| expr '+' expr	#Addition
-	| ID	#Variable
-	| NUM	#Number
-	;
+// TYPES
+type: INT_TYPE | BOOL_TYPE;
 
+// LEXICAL TOKENS
 INT_TYPE: 'INT';
-ID:[a-zA-Z][a-zA-Z0-9_]*;
+BOOL_TYPE: 'BOOL';
+BOOL: 'True' | 'False';
+ID: [a-zA-Z][a-zA-Z0-9_]*;
 NUM: '0' | '-'?[1-9][0-9]*;
-COMMENT: '--' ~[\r\n]* ->skip;
-WS: [ \t\n\r]+ -> skip;
+
+// WHITESPACE AND COMMENTS
+COMMENT: '--' ~[\r\n]* -> skip;
+WS: [ \t\r\n]+ -> skip;
