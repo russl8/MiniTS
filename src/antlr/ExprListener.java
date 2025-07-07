@@ -34,18 +34,6 @@ public interface ExprListener extends ParseTreeListener {
 	 */
 	void exitClassDeclaration(ExprParser.ClassDeclarationContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ClassBody}
-	 * labeled alternative in {@link ExprParser#class_body}.
-	 * @param ctx the parse tree
-	 */
-	void enterClassBody(ExprParser.ClassBodyContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ClassBody}
-	 * labeled alternative in {@link ExprParser#class_body}.
-	 * @param ctx the parse tree
-	 */
-	void exitClassBody(ExprParser.ClassBodyContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ExprParser#statement}.
 	 * @param ctx the parse tree
 	 */
@@ -92,6 +80,30 @@ public interface ExprListener extends ParseTreeListener {
 	 */
 	void exitIfStatement(ExprParser.IfStatementContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code Multiplication}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiplication(ExprParser.MultiplicationContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Multiplication}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiplication(ExprParser.MultiplicationContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Addition}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterAddition(ExprParser.AdditionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Addition}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitAddition(ExprParser.AdditionContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
@@ -103,6 +115,30 @@ public interface ExprListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVariable(ExprParser.VariableContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NotEqual}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterNotEqual(ExprParser.NotEqualContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NotEqual}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitNotEqual(ExprParser.NotEqualContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Or}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterOr(ExprParser.OrContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Or}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitOr(ExprParser.OrContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code BooleanLiteral}
 	 * labeled alternative in {@link ExprParser#expr}.
@@ -116,29 +152,137 @@ public interface ExprListener extends ParseTreeListener {
 	 */
 	void exitBooleanLiteral(ExprParser.BooleanLiteralContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code BinaryExpr}
+	 * Enter a parse tree produced by the {@code Modulo}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterBinaryExpr(ExprParser.BinaryExprContext ctx);
+	void enterModulo(ExprParser.ModuloContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code BinaryExpr}
+	 * Exit a parse tree produced by the {@code Modulo}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitBinaryExpr(ExprParser.BinaryExprContext ctx);
+	void exitModulo(ExprParser.ModuloContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ParenExpr}
+	 * Enter a parse tree produced by the {@code Not}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterParenExpr(ExprParser.ParenExprContext ctx);
+	void enterNot(ExprParser.NotContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ParenExpr}
+	 * Exit a parse tree produced by the {@code Not}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitParenExpr(ExprParser.ParenExprContext ctx);
+	void exitNot(ExprParser.NotContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Parenthesis}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterParenthesis(ExprParser.ParenthesisContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Parenthesis}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitParenthesis(ExprParser.ParenthesisContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LessThan}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterLessThan(ExprParser.LessThanContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LessThan}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitLessThan(ExprParser.LessThanContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Subtraction}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterSubtraction(ExprParser.SubtractionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Subtraction}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitSubtraction(ExprParser.SubtractionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code GreaterThan}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterGreaterThan(ExprParser.GreaterThanContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code GreaterThan}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitGreaterThan(ExprParser.GreaterThanContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Equal}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqual(ExprParser.EqualContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Equal}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqual(ExprParser.EqualContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code GreaterEqualThan}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterGreaterEqualThan(ExprParser.GreaterEqualThanContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code GreaterEqualThan}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitGreaterEqualThan(ExprParser.GreaterEqualThanContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code And}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterAnd(ExprParser.AndContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code And}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitAnd(ExprParser.AndContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LessEqualThan}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterLessEqualThan(ExprParser.LessEqualThanContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LessEqualThan}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitLessEqualThan(ExprParser.LessEqualThanContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Division}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterDivision(ExprParser.DivisionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Division}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitDivision(ExprParser.DivisionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code NumberLiteral}
 	 * labeled alternative in {@link ExprParser#expr}.

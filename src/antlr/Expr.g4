@@ -8,10 +8,7 @@ grammar Expr;
 prog: (class_decl)+ EOF #Program;
 
 class_decl: 
-    'class' ID ( 'extends' ID )? '{' class_body '}' #ClassDeclaration;
-
-class_body:
-    (statement)* #ClassBody;
+    'class' ID ( 'extends' ID )? '{' (declaration | assignment | conditional)* '}' #ClassDeclaration;
 
 // STATEMENTS
 statement:
@@ -33,12 +30,25 @@ conditional:
     'IF' '(' expr ')' '{' (statement)* '}' #IfStatement;
 
 // EXPRESSIONS
-expr:
-      expr op=('*' | '/' | '%' | '+' | '-' | '==' | '!=' | '<' | '>' | '<=' | '>=' | '&&' | '||') expr #BinaryExpr
-    | '(' expr ')' #ParenExpr
-    | ID #Variable
-    | BOOL #BooleanLiteral
-    | NUM #NumberLiteral
+expr
+    : '!' expr             			       # Not
+    | expr '*' expr                        # Multiplication
+    | expr '/' expr                        # Division
+    | expr '%' expr                        # Modulo
+    | expr '+' expr                        # Addition
+    | expr '-' expr                        # Subtraction
+    | expr '<' expr                        # LessThan
+    | expr '<=' expr                       # LessEqualThan
+    | expr '>' expr                        # GreaterThan
+    | expr '>=' expr                       # GreaterEqualThan
+    | expr '==' expr                       # Equal
+    | expr '!=' expr                       # NotEqual
+    | expr '&&' expr                       # And
+    | expr '||' expr                       # Or
+    | '(' expr ')'                         # Parenthesis
+    | ID                                   # Variable
+    | NUM                                  # NumberLiteral
+    | BOOL                                 # BooleanLiteral
     ;
 
 // TYPES

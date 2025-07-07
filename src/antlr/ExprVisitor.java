@@ -27,13 +27,6 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitClassDeclaration(ExprParser.ClassDeclarationContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ClassBody}
-	 * labeled alternative in {@link ExprParser#class_body}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitClassBody(ExprParser.ClassBodyContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link ExprParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -61,12 +54,40 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIfStatement(ExprParser.IfStatementContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Multiplication}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiplication(ExprParser.MultiplicationContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Addition}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAddition(ExprParser.AdditionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitVariable(ExprParser.VariableContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code NotEqual}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNotEqual(ExprParser.NotEqualContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Or}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOr(ExprParser.OrContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code BooleanLiteral}
 	 * labeled alternative in {@link ExprParser#expr}.
@@ -75,19 +96,82 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBooleanLiteral(ExprParser.BooleanLiteralContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code BinaryExpr}
+	 * Visit a parse tree produced by the {@code Modulo}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBinaryExpr(ExprParser.BinaryExprContext ctx);
+	T visitModulo(ExprParser.ModuloContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ParenExpr}
+	 * Visit a parse tree produced by the {@code Not}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParenExpr(ExprParser.ParenExprContext ctx);
+	T visitNot(ExprParser.NotContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Parenthesis}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParenthesis(ExprParser.ParenthesisContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code LessThan}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLessThan(ExprParser.LessThanContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Subtraction}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSubtraction(ExprParser.SubtractionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code GreaterThan}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGreaterThan(ExprParser.GreaterThanContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Equal}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqual(ExprParser.EqualContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code GreaterEqualThan}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGreaterEqualThan(ExprParser.GreaterEqualThanContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code And}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAnd(ExprParser.AndContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code LessEqualThan}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLessEqualThan(ExprParser.LessEqualThanContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Division}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDivision(ExprParser.DivisionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code NumberLiteral}
 	 * labeled alternative in {@link ExprParser#expr}.

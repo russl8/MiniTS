@@ -1,6 +1,9 @@
-In MyClass1:
-	# of attributes: 1
-	# of operations: 1
-
-List of attributes changed by operation `fun`:
-	a1: final value is 46 
+class MyClass  {
+    x : INT = 5;
+    y : BOOL;
+    y = False;
+    
+    IF (x > 0 && y) {
+        x = x + 1;
+    }
+}

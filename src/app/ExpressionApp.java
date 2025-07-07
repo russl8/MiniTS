@@ -3,6 +3,10 @@ package app;
 import antlr.ExprLexer;
 import antlr.ExprParser;
 import model.*;
+import model.Expression.Expression;
+import model.Program.AntlrToProgram;
+import model.Program.Program;
+
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
