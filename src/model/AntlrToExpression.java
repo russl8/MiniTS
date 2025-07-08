@@ -47,7 +47,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
         String type = ctx.type().getText();  // "INT" or "BOOL"
 
         if (variables.containsKey(name)) {
-            throw new RuntimeException("Variable '" + name + "' already declared.");
+        	semanticErrors.add("Variable '" + name + "' already declared.");
         }
 
         Variable var;
@@ -68,13 +68,13 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
     	String name = ctx.ID().getText();
 
         if (!variables.containsKey(name)) {
-            throw new RuntimeException("Variable '" + name + "' not declared.");
+        	semanticErrors.add("Variable '" + name + "' not declared.");
         }
 
         Variable var = variables.get(name);
 
         if (ctx.expr() == null) {
-            throw new RuntimeException("No value provided for variable assignment.");
+        	semanticErrors.add("No value provided for variable assignment.");
         }
 
         Object value = visit(ctx.expr());
@@ -113,7 +113,9 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
         } else if (left instanceof BooleanVal && right instanceof BooleanVal) {
             return new BinaryOperation((BooleanVal) left, op, (BooleanVal) right).evaluate();
         } else {
-            throw new RuntimeException("Invalid operand types for operator '" + op + "'");
+        	semanticErrors.add("Invalid operand types for operator '" + op + "'");
+            return new BinaryOperation(new Number (0), "+", new Number (0)).evaluate();
+
         }
     }
 	
@@ -122,18 +124,21 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
         String name = ctx.ID().getText();
 
         if (!variables.containsKey(name)) {
-            throw new RuntimeException("Variable '" + name + "' not declared.");
+        	semanticErrors.add("Variable '" + name + "' not declared.");
+        	return null;
+        } else {
+	        System.out.println(variables);
+	        System.out.println(semanticErrors);
+	        Variable var = variables.get(name);
+	        Expression value = var.value;
+	
+	        if (value == null) {
+	        	semanticErrors.add("Variable '" + name + "' has not been assigned a value.");
+	        }
+	
+	        System.out.println("Variable lookup: " + name + " = " + value);
+	        return value;
         }
-
-        Variable var = variables.get(name);
-        Expression value = var.value;
-
-        if (value == null) {
-            throw new RuntimeException("Variable '" + name + "' has not been assigned a value.");
-        }
-
-        System.out.println("Variable lookup: " + name + " = " + value);
-        return value;
     }
 
     @Override

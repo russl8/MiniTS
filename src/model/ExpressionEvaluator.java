@@ -1,42 +1,45 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ExpressionEvaluator {
-    private Map<String, Integer> variables;
-
-    public ExpressionEvaluator() {
-        this.variables = new HashMap<>();
-    }
-
-    public void setVariable(String name, int value) {
-        variables.put(name, value);
-    }
-
-    public int getVariable(String name) {
-        return variables.getOrDefault(name, 0);
-    }
-
-    public int evaluate(Expression expr) {
+	List<Expression> list;
+	public Map<String, String> values;
+	
+	public ExpressionEvaluator(List<Expression> list) {
+		this.list = list;
+		values = new HashMap<>();
+	}
+	
+	public List<String> getEvaluationResults() {
+		List<String> evaluations = new ArrayList<>();
+		
+		for (Expression e: list) {
+			if (e instanceof Variable) {
+				Variable decl = (Variable) e;
+				values.put(decl.name, decl.value.toString());
+			}
+			else {
+				String input = e.toString();
+				String result = getEvalResult(e);
+				evaluations.add(input + " is " + result);
+			}
+		}
+		
+		return evaluations;
+	}
+	
+	private String getEvalResult(Expression expr) {
         if (expr instanceof Number) {
-            return ((Number) expr).value;
+            return ((Number) expr).toString();
         } else if (expr instanceof Variable) {
-            return getVariable(((Variable) expr).name);
+            return ((Variable) expr).toString();
         } else if (expr instanceof BinaryOperation binOp) {
-            int leftValue = evaluate(binOp.left);
-            int rightValue = evaluate(binOp.right);
-
-            if ("+".equals(binOp.operator)) {
-                return leftValue + rightValue;
-            } else if ("*".equals(binOp.operator)) {
-                return leftValue * rightValue;
-            }
+            return binOp.evaluate().toString();
         }
-        return 0;
-    }
-
-    public Map<String, Integer> getVariables() {
-        return new HashMap<>(variables);
+        return "";
     }
 }
