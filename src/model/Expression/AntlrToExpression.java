@@ -84,8 +84,21 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		// TODO Auto-generated method stub
 		String var = ctx.getChild(0).getText();
 		Expression expr = visit(ctx.getChild(2));
-		// get all vars in expr and make sure matching with var.
-//		System.out.println(expr.getVariables());
+		int lineNum = ctx.getStart().getLine();
+		// open up parenthesis to get the inside expr
+		Expression cleanedExpr = expr instanceof Parenthesis ? ((Parenthesis) expr).expr : expr;
+		ReturnType exprType = cleanedExpr.getReturnType();
+		// make sure that the variable is being assigned properly
+		// (int -> int, bool -> bool)
+
+		if (this.vars.get(var) == ReturnType.BOOL && exprType != ReturnType.BOOL) {
+			semanticErrors.add("Type mismatch at line " + lineNum + ": expected BOOL = BOOL assignment but got BOOL = "
+					+ exprType);
+		} else if (this.vars.get(var) == ReturnType.INT && exprType != ReturnType.INT) {
+			semanticErrors.add(
+					"Type mismatch at line " + lineNum + ": expected INT = INT assignment but got INT = " + exprType);
+		}
+
 		return new Assignment(var, expr);
 	}
 

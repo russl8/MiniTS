@@ -5,5 +5,6 @@ class MyClass extends BaseClass {
     
     IF (x > 0 && y) {
         x = x + 1;
+        y = x;
     }
 }

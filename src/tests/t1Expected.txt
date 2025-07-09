@@ -1,0 +1,1 @@
+Type mismatch at line 8: expected BOOL = BOOL assignment but got BOOL = INT
