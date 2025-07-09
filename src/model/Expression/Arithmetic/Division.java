@@ -1,9 +1,11 @@
-package model.Expression;
+package model.Expression.Arithmetic;
 
+import model.Expression.BinaryExpression;
+import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 
-public class Multiplication extends BinaryExpression implements ArithmeticExpression {
+public class Division extends BinaryExpression  {
 
 	@Override
 	public ReturnType getReturnType() {
@@ -15,8 +17,8 @@ public class Multiplication extends BinaryExpression implements ArithmeticExpres
 		return ExprType.ARITHMETIC;
 	}
 
-	public Multiplication(Expression left, Expression right) {
+	public Division(Expression left, Expression right) {
 		super.init(left, right);
-		this.operation = "*";
+		this.operation = "==";
 	}
 }

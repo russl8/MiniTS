@@ -1,12 +1,13 @@
-package model.Expression;
+package model.Expression.Logical;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 
-public class BooleanLiteral extends Expression implements LogicalExpression {
+public class BooleanLiteral extends Expression  {
 	public boolean val;
 
 	public ReturnType getReturnType() {

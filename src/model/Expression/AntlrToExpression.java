@@ -3,8 +3,27 @@ package model.Expression;
 import antlr.ExprBaseVisitor;
 import antlr.ExprParser;
 import antlr.ExprParser.*;
+import model.Expression.Arithmetic.Addition;
+import model.Expression.Arithmetic.Division;
+import model.Expression.Arithmetic.Modulo;
+import model.Expression.Arithmetic.Multiplication;
+import model.Expression.Arithmetic.NumberLiteral;
+import model.Expression.Arithmetic.Subtraction;
+import model.Expression.Equality.Equal;
+import model.Expression.Equality.NotEqual;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
+import model.Expression.Logical.And;
+import model.Expression.Logical.BooleanLiteral;
+import model.Expression.Logical.Not;
+import model.Expression.Logical.Or;
+import model.Expression.Relational.GreaterEqualThan;
+import model.Expression.Relational.GreaterThan;
+import model.Expression.Relational.LessEqualThan;
+import model.Expression.Relational.LessThan;
+import model.Expression.Statement.ClassDeclaration;
+import model.Expression.Statement.Declaration;
+import model.Expression.Statement.IfStatement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,7 +105,9 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		Expression expr = visit(ctx.getChild(2));
 		int lineNum = ctx.getStart().getLine();
 		// open up parenthesis to get the inside expr
-		Expression cleanedExpr = expr instanceof Parenthesis ? ((Parenthesis) expr).expr : expr;
+//		Expression cleanedExpr = expr instanceof Parenthesis ? ((Parenthesis) expr).expr : expr;
+		Expression cleanedExpr = Utils.unwrapParentheses(expr);
+
 		ReturnType exprType = cleanedExpr.getReturnType();
 		// make sure that the variable is being assigned properly
 		// (int -> int, bool -> bool)
@@ -283,10 +304,11 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	private void checkIfArgsValidBinary(ExprType exprType, Expression left, Expression right, int lineNum) {
 		boolean isValid = true;
 
-		Expression leftEval = left instanceof Parenthesis ? ((Parenthesis) left).expr : left;
-		Expression rightEval = right instanceof Parenthesis ? ((Parenthesis) right).expr : right;
-		ReturnType leftReturnType = leftEval.getReturnType();
-		ReturnType rightReturnType = rightEval.getReturnType();
+		Expression unwrappedLeft = Utils.unwrapParentheses(left);
+		Expression unwrappedRight = Utils.unwrapParentheses(right);
+
+		ReturnType leftReturnType = unwrappedLeft.getReturnType();
+		ReturnType rightReturnType = unwrappedRight.getReturnType();
 
 		String typeOfExpression = "";
 		String expectedTypes = "";

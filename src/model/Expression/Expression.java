@@ -2,6 +2,8 @@ package model.Expression;
 
 import java.util.Set;
 
+import model.Expression.Statement.Statement;
+
 public abstract class Expression extends Statement {
 	public abstract Set<String> getVariables();
 
