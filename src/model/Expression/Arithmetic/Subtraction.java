@@ -1,12 +1,13 @@
-package model.Expression;
+package model.Expression.Arithmetic;
 
+import model.Expression.BinaryExpression;
+import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 
-public class Subtraction extends BinaryExpression implements ArithmeticExpression {
+public class Subtraction extends BinaryExpression  {
 	@Override
 	public ReturnType getReturnType() {
-		// TODO Auto-generated method stub
 		return ReturnType.INT;
 	}
 

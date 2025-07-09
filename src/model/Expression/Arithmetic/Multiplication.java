@@ -1,9 +1,12 @@
-package model.Expression;
+package model.Expression.Arithmetic;
 
+import model.Expression.BinaryExpression;
+import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 
-public class Modulo extends BinaryExpression implements ArithmeticExpression {
+public class Multiplication extends BinaryExpression  {
+
 	@Override
 	public ReturnType getReturnType() {
 		// TODO Auto-generated method stub
@@ -14,8 +17,8 @@ public class Modulo extends BinaryExpression implements ArithmeticExpression {
 		return ExprType.ARITHMETIC;
 	}
 
-	public Modulo(Expression left, Expression right) {
+	public Multiplication(Expression left, Expression right) {
 		super.init(left, right);
-		operation = "%";
+		this.operation = "*";
 	}
 }

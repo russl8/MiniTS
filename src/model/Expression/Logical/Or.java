@@ -1,9 +1,11 @@
-package model.Expression;
+package model.Expression.Logical;
 
+import model.Expression.BinaryExpression;
+import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 
-public class Or extends BinaryExpression implements LogicalExpression {
+public class Or extends BinaryExpression  {
 
 	@Override
 	public ReturnType getReturnType() {

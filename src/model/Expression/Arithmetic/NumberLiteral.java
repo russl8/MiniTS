@@ -1,12 +1,13 @@
-package model.Expression;
+package model.Expression.Arithmetic;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 
-public class NumberLiteral extends Expression implements ArithmeticExpression {
+public class NumberLiteral extends Expression  {
 	public int val;
 
 	public ReturnType getReturnType() {

@@ -31,11 +31,20 @@ class MyClass extends BaseClass {
         //  Error: Logical OR between INTs
         x = x || x;
         
+        //  Error: Equality of different type
+        y = x == (True && False);
+        
+        // Error : spot type mismatch in many parentheses
+        y = (((x))) == (True && False);
+        
+         //  Error: Equality of different type (nested)
+        y = x ==  (True && ( 2 <= (False) ) ) ;
+        
         //  Valid: Relational
         y = x < z;
         
         //  Valid: Equality of same type
-        y = y == b;
+        y = y == (True && False);
         
         //  Valid: Arithmetic
         x = x + z;

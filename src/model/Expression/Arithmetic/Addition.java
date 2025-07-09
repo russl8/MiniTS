@@ -1,6 +1,11 @@
-package model.Expression;
+package model.Expression.Arithmetic;
 
-public class Addition extends BinaryExpression implements ArithmeticExpression {
+import model.Expression.BinaryExpression;
+import model.Expression.Expression;
+import model.Expression.Expression.ExprType;
+import model.Expression.Expression.ReturnType;
+
+public class Addition extends BinaryExpression  {
 
 	@Override
 	public ReturnType getReturnType() {
