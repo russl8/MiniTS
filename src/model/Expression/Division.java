@@ -3,7 +3,7 @@ package model.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 
-public class Multiplication extends BinaryExpression implements ArithmeticExpression {
+public class Division extends BinaryExpression implements ArithmeticExpression {
 
 	@Override
 	public ReturnType getReturnType() {
@@ -15,8 +15,8 @@ public class Multiplication extends BinaryExpression implements ArithmeticExpres
 		return ExprType.ARITHMETIC;
 	}
 
-	public Multiplication(Expression left, Expression right) {
+	public Division(Expression left, Expression right) {
 		super.init(left, right);
-		this.operation = "*";
+		this.operation = "==";
 	}
 }

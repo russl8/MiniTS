@@ -1,12 +1,13 @@
-class MyClass2 {
-	attributes
-		a1: INT
-		a2: INT
-	operations
-		fun
-			do
-				a1 = 23
-				a2 = a1 * 2
-				a1 = a2 * 4
-			end
+class MyClass {
+    x : INT = 5;
+    y : BOOL;
+    y = False;
+    
+    IF (x > 0 && y ) {
+        x = x + 1;
+        x = x * 2;
+        x = x - 1;
+        x = x / 2;
+        
+    }
 }

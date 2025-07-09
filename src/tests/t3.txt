@@ -1,19 +1,49 @@
-class MyClass3 {
-	attributes
-		a1: INT
-		a2: INT
-		a3: INT
-	operations
-		fun1
-			do
-				a1 = 23
-				a2 = a1 * 2
-				a1 = a2 * 4
-			end
-		fun2
-			do
-				a2 = 46
-				a3 = a1 * 2
-				a2 = a2 * 4
-			end
+class MyClass extends BaseClass {
+    x : INT = 5;
+    y : BOOL;
+    z : INT = 10;
+    b : BOOL = True;
+
+    y = False;
+
+    IF (x > 0 && y) {
+        //  Error: Arithmetic expression used in logical OR
+        x = (5 + 3) || False;
+        
+        //  Error: INT used in logical AND
+        x = 5 && y;
+        
+        //  Error: Logical OR between INT values
+        x = 2 || 5;
+        
+        //  Error: BOOL used in arithmetic ADD
+        x = y + 4;
+        
+        //  Error: BOOL in relational comparison with INT
+        y = y > 5;
+        
+        //  Error: Type mismatch in equality expression (INT vs BOOL)
+        y = x == y;
+        
+        //  Error: NOT applied to INT
+        y = !5;
+        
+        //  Error: Logical OR between INTs
+        x = x || x;
+        
+        //  Valid: Relational
+        y = x < z;
+        
+        //  Valid: Equality of same type
+        y = y == b;
+        
+        //  Valid: Arithmetic
+        x = x + z;
+        
+        //  Valid: Logical AND between bools
+        y = y && b;
+        
+        //  Valid: NOT on bool
+        y = !y;
+    }
 }

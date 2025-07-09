@@ -3,7 +3,7 @@ package model.Expression;
 import java.util.HashSet;
 import java.util.Set;
 
-public class BinaryExpression extends Expression {
+public abstract class BinaryExpression extends Expression {
 	public Expression left, right;
 	public String operation;
 
@@ -21,7 +21,7 @@ public class BinaryExpression extends Expression {
 
 	@Override
 	public String toString() {
-		return "(" + left.toString() + ")" + " " + operation + " " + "(" + right.toString() + ")";
+		return left.toString() + " " + operation + " " + right.toString();
 	}
 
 }

@@ -1,35 +1,36 @@
 package model.Expression;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 
-public class Assignment extends Expression {
+public class BooleanLiteral extends Expression implements LogicalExpression {
+	public boolean val;
+
 	public ReturnType getReturnType() {
-		return ReturnType.NONE;
+		return ReturnType.BOOL;
 	}
 
 	public ExprType getExprType() {
-		return ExprType.NONE;
+		return ExprType.LOGICAL;
 	}
-
-	public Expression expr;
-	public String var;
 
 	@Override
 	public Set<String> getVariables() {
-		return expr.getVariables();
+		Set<String> res = new HashSet<>();
+		res.add("" + val);
+		return res;
 	}
 
-	public Assignment(String var, Expression expr) {
-		this.var = var;
-		this.expr = expr;
+	public BooleanLiteral(boolean val) {
+		this.val = val;
 	}
 
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return var + " = " + expr;
+		return "" + val;
 	}
 }

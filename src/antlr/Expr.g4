@@ -62,5 +62,5 @@ ID: [a-zA-Z][a-zA-Z0-9_]*;
 NUM: '0' | '-'?[1-9][0-9]*;
 
 // WHITESPACE AND COMMENTS
-COMMENT: '--' ~[\r\n]* -> skip;
+COMMENT: '//' ~[\r\n]* -> skip;
 WS: [ \t\r\n]+ -> skip;
