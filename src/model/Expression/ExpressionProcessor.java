@@ -35,7 +35,7 @@ public class ExpressionProcessor {
 	public void processExpression(Expression e) {
 		if (e instanceof Declaration) {
 			Declaration d = (Declaration) e;
-			System.out.println("Looking at declaration " + d);
+//			System.out.println("Looking at declaration " + d);
 			Expression expr = Utils.unwrapParentheses(d.expr);
 			Value val;
 
@@ -50,11 +50,11 @@ public class ExpressionProcessor {
 			}
 
 			this.values.put(d.var, val);
-			System.out.println(e + " " + this.values);
+//			System.out.println(e + " " + this.values);
 		} else if (e instanceof Assignment) {
 			Assignment a = (Assignment) e;
 			Value val;
-			System.out.println("Looking at assignment " + a);
+//			System.out.println("Looking at assignment " + a);
 			Expression expr = Utils.unwrapParentheses(a.expr);
 			if (expr.getReturnType() == ReturnType.BOOL) {
 				val = new Value(ReturnType.BOOL, evaluateBoolean(expr));
@@ -64,11 +64,11 @@ public class ExpressionProcessor {
 				throw new IllegalArgumentException("Unsupported expression type: " + expr.getReturnType());
 			}
 			this.values.put(a.var, val);
-			System.out.println(e + " " + this.values);
+//			System.out.println(e + " " + this.values);
 		} else if (e instanceof IfStatement) {
 			// evaluate expression. if true then evaluate all of its expressions
 			IfStatement ifs = (IfStatement) e;
-			System.out.println("Looking at ifStatement " + ifs);
+//			System.out.println("Looking at ifStatement " + ifs);
 			Expression condition = Utils.unwrapParentheses(ifs.cond);
 			boolean conditionEvaluation = evaluateBoolean(condition);
 
@@ -81,7 +81,7 @@ public class ExpressionProcessor {
 			}
 		} else {
 			// not a declaration/assignment/if. ignore for now
-			System.out.println("Warning: ignoring " + e);
+			System.err.println("Warning, unhandled statement, ignoring for now: " + e);
 		}
 	}
 
@@ -95,7 +95,7 @@ public class ExpressionProcessor {
 			return evaluateInteger(s.left) - evaluateInteger(s.right);
 		} else if (e instanceof Multiplication) {
 			Multiplication m = (Multiplication) e;
-			return evaluateInteger(m.left) - evaluateInteger(m.right);
+			return evaluateInteger(m.left) * evaluateInteger(m.right);
 		} else if (e instanceof Division) {
 			Division d = (Division) e;
 			if (evaluateInteger(d.right) == 0)

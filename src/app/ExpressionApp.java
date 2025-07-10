@@ -53,13 +53,15 @@ public class ExpressionApp {
 	}
 
 	private static void processClasses(List<Expression> expressions) {
-		System.out.println("========================================");
-
 		for (Expression c : expressions) {
 			ClassDeclaration cd = (ClassDeclaration) c;
+			System.out.println("class " + cd.className + (cd.superClass != null ? " extends " + cd.superClass : ""));
 			ExpressionProcessor ep = new ExpressionProcessor();
 			for (Expression e : cd.expressions) {
 				ep.processExpression(e);
+			}
+			for (String var : ep.values.keySet()) {
+				System.out.println("    " + var + " : " + ep.values.get(var));
 			}
 		}
 	}

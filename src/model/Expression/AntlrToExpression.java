@@ -71,7 +71,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		for (int i = startOfExpressions; i < ctx.getChildCount() - 1; i++) {
 			cd.addExpression(visit(ctx.getChild(i)));
 		}
-		System.out.println(cd);
+//		System.out.println(cd);
 		return cd;
 	}
 

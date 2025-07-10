@@ -3,11 +3,9 @@ class MyClass {
     y : BOOL;
     y = False;
     
-    IF (x > 0 && y ) {
+    // this if statement should be true
+    IF (x > 0 && !y ) { 
         x = x + 1;
-        x = x * 2;
-        x = x - 1;
-        x = x / 2;
-        
+		x = x + 1;
     }
 }

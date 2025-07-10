@@ -11,5 +11,6 @@ Type mismatch in logical expression at line 29: expected ( BOOL ) but got ( INT 
 Type mismatch in logical expression at line 32: expected (BOOL, BOOL) but got (INT, INT)
 Type mismatch at line 32: expected INT = INT assignment but got INT = BOOL
 Type mismatch in equality expression at line 35: expected (INT, INT) or (BOOL, BOOL) but got (INT, BOOL)
-Type mismatch in relational expression at line 38: expected (INT, INT) but got (INT, BOOL)
 Type mismatch in equality expression at line 38: expected (INT, INT) or (BOOL, BOOL) but got (INT, BOOL)
+Type mismatch in relational expression at line 41: expected (INT, INT) but got (INT, BOOL)
+Type mismatch in equality expression at line 41: expected (INT, INT) or (BOOL, BOOL) but got (INT, BOOL)
