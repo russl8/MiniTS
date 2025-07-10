@@ -15,11 +15,11 @@ public class Declaration extends Expression {
 	public boolean isInitialized;
 
 	public ReturnType getReturnType() {
-		return ReturnType.NONE;
+		return type;
 	}
 
 	public ExprType getExprType() {
-		return ExprType.NONE;
+		return expr.getExprType();
 	}
 
 	@Override
