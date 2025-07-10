@@ -2,7 +2,6 @@ class MyClass extends BaseClass {
     x : INT = 5;
     y : BOOL;
     y = False;
-    
     IF (x > 0 && y) {
         x = x + 1;
         y = x;

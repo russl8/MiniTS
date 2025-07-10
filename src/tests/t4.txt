@@ -1,0 +1,14 @@
+class MyClass {
+    x : INT = 5;
+    y : BOOL;
+    y = False;
+	z : BOOL = True;
+    
+    IF (x > 0 && y ) {
+        y = y; // False
+      	y = y && False; // False
+        y = y ||  True ; // True
+        y = !y; // True 
+      	
+    }
+}

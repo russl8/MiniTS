@@ -21,6 +21,7 @@ import model.Expression.Relational.GreaterEqualThan;
 import model.Expression.Relational.GreaterThan;
 import model.Expression.Relational.LessEqualThan;
 import model.Expression.Relational.LessThan;
+import model.Expression.Statement.Assignment;
 import model.Expression.Statement.ClassDeclaration;
 import model.Expression.Statement.Declaration;
 import model.Expression.Statement.IfStatement;
@@ -136,6 +137,11 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	@Override
 	public Expression visitIfStatement(IfStatementContext ctx) {
 		Expression cond = visit(ctx.getChild(2));
+		// cond must be a boolean expression
+		if (cond.getReturnType() != ReturnType.BOOL) {
+			semanticErrors.add("Type mismatch in logical expression at line " + ctx.getStart().getLine()
+					+ ": expected ( BOOL ) but got ( " + cond.getReturnType() + " )");
+		}
 		IfStatement ifs = new IfStatement(cond);
 		for (int i = 5; i < ctx.getChildCount() - 1; i++) {
 			ifs.addExpression(visit(ctx.getChild(i)));
