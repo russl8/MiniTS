@@ -15,7 +15,10 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.w3c.dom.CDATASection;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,12 +30,15 @@ import java.util.Set;
  */
 
 public class ExpressionApp {
+
+	private static String filePath;
+
 	public static void main(String[] args) {
 		if (args.length != 1) {
-			System.err.print("file name");
+			System.err.println("Error: missing filename argument");
 		} else {
-			String fileName = args[0];
-			ExprParser parser = getParser(fileName);
+			filePath = args[0];
+			ExprParser parser = getParser(filePath);
 			ParseTree AST = parser.prog();
 
 			if (MyErrorListener.hasError) {
@@ -44,25 +50,57 @@ public class ExpressionApp {
 					processClasses(prog.expressions);
 
 				} else {
-					for (String err : progVisitor.semanticErrors) {
-						System.out.println(err);
+
+					try {
+						String fileName = new File(filePath).getName();
+						fileName = fileName.substring(0, fileName.lastIndexOf('.'));
+						PrintWriter writer = new PrintWriter(
+								new FileWriter("tests/output/" + fileName + "output.html"));
+						writer.println("<html><body>");
+
+						for (String err : progVisitor.semanticErrors) {
+							writer.println("<p>" + err + "</p>");
+						}
+						writer.println("</body></html>");
+						writer.close();
+						System.out
+								.println("Generated file output in " + "src/tests/output/" + fileName + "output.html");
+					} catch (Exception e) {
+						System.out.println("Error: " + e);
 					}
+
 				}
+
 			}
+
 		}
 	}
 
 	private static void processClasses(List<Expression> expressions) {
-		for (Expression c : expressions) {
-			ClassDeclaration cd = (ClassDeclaration) c;
-			System.out.println("class " + cd.className + (cd.superClass != null ? " extends " + cd.superClass : ""));
-			ExpressionProcessor ep = new ExpressionProcessor();
-			for (Expression e : cd.expressions) {
-				ep.processExpression(e);
+		try {
+			String fileName = new File(filePath).getName();
+			fileName = fileName.substring(0, fileName.lastIndexOf('.'));
+			PrintWriter writer = new PrintWriter(new FileWriter("tests/output/" + fileName + "output.html"));
+			writer.println("<html><body>");
+
+			for (Expression c : expressions) {
+				ClassDeclaration cd = (ClassDeclaration) c;
+				writer.println("<p>class " + cd.className + (cd.superClass != null ? " extends " + cd.superClass : "")
+						+ "</p>");
+				ExpressionProcessor ep = new ExpressionProcessor();
+				for (Expression e : cd.expressions) {
+					ep.processExpression(e);
+				}
+				for (String var : ep.values.keySet()) {
+					writer.println("<p>&#9;" + var + " : " + ep.values.get(var) + "</p>");
+				}
 			}
-			for (String var : ep.values.keySet()) {
-				System.out.println("    " + var + " : " + ep.values.get(var));
-			}
+
+			writer.println("</body></html>");
+			writer.close();
+			System.out.println("Generated file output in " + "src/tests/output/" + fileName + "output.html");
+		} catch (Exception e) {
+			System.out.println("Error: " + e);
 		}
 	}
 

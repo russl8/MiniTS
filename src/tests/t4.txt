@@ -6,8 +6,7 @@ class MyClass {
     
     IF (!y) {
         y = y; 
-      	y = False || (((( !y ) && True)));  
-      	
-      	x = x * 2;
+      	y = False || (((( !y ) && True)));  // y should now be true
+      	x = x * 2;							// x should now be 10
     }
 }
