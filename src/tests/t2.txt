@@ -5,7 +5,7 @@ class MyClass {
     
     // this if statement should be true
     IF (x > 0 && !y ) { 
-        x = x + 1;
-		x = x + 1;
+        x = x + 1; // x=6
+		x = x + 1; // x=7
     }
 }

@@ -1,9 +1,9 @@
 class MyClass extends BaseClass {
-    x : INT = 5;
+    x : INT = False; // Error: assigning bool to int variable
     y : BOOL;
     y = False;
     IF (x > 0 && y) {
         x = x + 1;
-        y = x;
+        y = x; // Error: assigning int to bool variable
     }
 }

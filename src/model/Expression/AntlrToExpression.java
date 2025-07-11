@@ -91,8 +91,15 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		} else {
 			vars.put(var, varType);
 		}
+		// expr is initialized
 		if (ctx.getChildCount() > 4) {
 			Expression expr = visit(ctx.expr());
+			int lineNum = ctx.getStart().getLine();
+			// initializing type error
+			if (varType != expr.getReturnType()) {
+				semanticErrors.add("Type mismatch at line " + lineNum + ": expected " + varType + " = " + varType
+						+ " assignment but got " + varType + " = " + expr.getReturnType());
+			}
 			return new Declaration(var, varType, expr);
 		} else {
 			return new Declaration(var, varType);
