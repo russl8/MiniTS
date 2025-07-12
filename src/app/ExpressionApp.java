@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -44,8 +45,11 @@ public class ExpressionApp {
 			if (MyErrorListener.hasError) {
 
 			} else {
-				AntlrToProgram progVisitor = new AntlrToProgram();
+				List<String> semanticErrors = new ArrayList<>();
+
+				AntlrToProgram progVisitor = new AntlrToProgram(semanticErrors);
 				Program prog = progVisitor.visit(AST);
+
 				if (progVisitor.semanticErrors.isEmpty()) {
 					processClasses(prog.expressions);
 
@@ -80,7 +84,7 @@ public class ExpressionApp {
 		try {
 			String fileName = new File(filePath).getName();
 			fileName = fileName.substring(0, fileName.lastIndexOf('.'));
-			PrintWriter writer = new PrintWriter(new FileWriter("tests/output/" + fileName + "output.html"));
+			PrintWriter writer = new PrintWriter(new FileWriter("src/tests/output/" + fileName + "output.html"));
 			writer.println("<html><body>");
 
 			for (Expression c : expressions) {
