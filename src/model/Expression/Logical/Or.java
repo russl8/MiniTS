@@ -4,8 +4,9 @@ import model.Expression.BinaryExpression;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
+import model.Expression.OperationVisitor.OperationVisitor;
 
-public class Or extends BinaryExpression  {
+public class Or extends BinaryExpression {
 
 	@Override
 	public ReturnType getReturnType() {
@@ -19,5 +20,11 @@ public class Or extends BinaryExpression  {
 	public Or(Expression left, Expression right) {
 		super.init(left, right);
 		this.operation = "||";
+	}
+
+	@Override
+	public <T> T accept(OperationVisitor T) {
+		// TODO Auto-generated method stub
+		return T.visitOr(this);
 	}
 }

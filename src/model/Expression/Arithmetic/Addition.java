@@ -4,8 +4,9 @@ import model.Expression.BinaryExpression;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
+import model.Expression.OperationVisitor.OperationVisitor;
 
-public class Addition extends BinaryExpression  {
+public class Addition extends BinaryExpression {
 
 	@Override
 	public ReturnType getReturnType() {
@@ -20,5 +21,10 @@ public class Addition extends BinaryExpression  {
 	public Addition(Expression left, Expression right) {
 		super.init(left, right);
 		this.operation = "+";
+	}
+
+	@Override
+	public <T> T accept(OperationVisitor T) {
+		return T.visitAddition(this);
 	}
 }

@@ -4,8 +4,9 @@ import model.Expression.Expression;
 import model.Expression.UnaryExpression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
+import model.Expression.OperationVisitor.OperationVisitor;
 
-public class Not extends UnaryExpression  {
+public class Not extends UnaryExpression {
 
 	@Override
 	public ReturnType getReturnType() {
@@ -23,5 +24,11 @@ public class Not extends UnaryExpression  {
 
 	public String toString() {
 		return "!" + "(" + expr + ")";
+	}
+
+	@Override
+	public <T> T accept(OperationVisitor T) {
+		// TODO Auto-generated method stub
+		return T.visitNot(this);
 	}
 }

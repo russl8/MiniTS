@@ -3,6 +3,8 @@ package model.Expression;
 import java.util.HashSet;
 import java.util.Set;
 
+import model.Expression.OperationVisitor.OperationVisitor;
+
 public class Variable extends Expression {
 	public String var;
 	public ReturnType returnType;
@@ -36,6 +38,11 @@ public class Variable extends Expression {
 	@Override
 	public String toString() {
 		return var;
+	}
+
+	@Override
+	public <T> T accept(OperationVisitor T) {
+		return T.visitVariable(this);
 	}
 
 }

@@ -2,6 +2,7 @@ package model.Expression;
 
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
+import model.Expression.OperationVisitor.OperationVisitor;
 
 public class Parenthesis extends UnaryExpression {
 	public ReturnType getReturnType() {
@@ -20,5 +21,10 @@ public class Parenthesis extends UnaryExpression {
 
 	public String toString() {
 		return "(" + expr + ")";
+	}
+
+	@Override
+	public <T> T accept(OperationVisitor T) {
+		return T.visitParenthesis(this);
 	}
 }

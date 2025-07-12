@@ -4,6 +4,7 @@ import model.Expression.BinaryExpression;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
+import model.Expression.OperationVisitor.OperationVisitor;
 
 public class LessThan extends BinaryExpression  {
 	public ReturnType getReturnType() {
@@ -18,5 +19,10 @@ public class LessThan extends BinaryExpression  {
 	public LessThan(Expression left, Expression right) {
 		super.init(left, right);
 		this.operation = "<";
+	}
+	
+	@Override
+	public <T> T accept(OperationVisitor T) {
+		return T.visitLessThan(this);
 	}
 }

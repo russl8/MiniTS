@@ -6,8 +6,9 @@ import java.util.Set;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
+import model.Expression.OperationVisitor.OperationVisitor;
 
-public class NumberLiteral extends Expression  {
+public class NumberLiteral extends Expression {
 	public int val;
 
 	public ReturnType getReturnType() {
@@ -34,4 +35,12 @@ public class NumberLiteral extends Expression  {
 		// TODO Auto-generated method stub
 		return "" + val;
 	}
+
+	@Override
+	public <T> T accept(OperationVisitor T) {
+		// TODO Auto-generated method stub
+		return T.visitNumberLiteral(this);
+
+	}
+
 }

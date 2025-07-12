@@ -5,6 +5,7 @@ import antlr.ExprParser;
 import model.*;
 import model.Expression.Expression;
 import model.Expression.ExpressionProcessor;
+import model.Expression.OperationVisitor.ExpressionTypeChecker;
 import model.Expression.Statement.ClassDeclaration;
 import model.Program.AntlrToProgram;
 import model.Program.Program;
@@ -46,20 +47,24 @@ public class ExpressionApp {
 
 			} else {
 				List<String> semanticErrors = new ArrayList<>();
-
+				
+				// Visitors
 				AntlrToProgram progVisitor = new AntlrToProgram(semanticErrors);
 				Program prog = progVisitor.visit(AST);
 
-				if (progVisitor.semanticErrors.isEmpty()) {
-					processClasses(prog.expressions);
+				// Type checking visitor
+				ExpressionTypeChecker typeCheckerVisitor = new ExpressionTypeChecker(semanticErrors);
+				
 
+				if (semanticErrors.isEmpty()) {
+					processClasses(prog.expressions);
 				} else {
 
 					try {
 						String fileName = new File(filePath).getName();
 						fileName = fileName.substring(0, fileName.lastIndexOf('.'));
 						PrintWriter writer = new PrintWriter(
-								new FileWriter("tests/output/" + fileName + "output.html"));
+								new FileWriter("src/tests/output/" + fileName + "output.html"));
 						writer.println("<html><body>");
 
 						for (String err : progVisitor.semanticErrors) {

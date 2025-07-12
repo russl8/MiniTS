@@ -138,9 +138,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		return super.visitType(ctx);
 	}
 
-	/**
-	 * Binary expressions
-	 */
+
 	@Override
 	public Expression visitIfStatement(IfStatementContext ctx) {
 		Expression cond = visit(ctx.getChild(2));
@@ -155,6 +153,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		}
 		return ifs;
 	}
+
 
 	@Override
 	public Expression visitMultiplication(MultiplicationContext ctx) {

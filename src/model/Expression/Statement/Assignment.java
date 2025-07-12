@@ -5,6 +5,7 @@ import java.util.Set;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
+import model.Expression.OperationVisitor.OperationVisitor;
 
 public class Assignment extends Expression {
 	public ReturnType getReturnType() {
@@ -32,5 +33,10 @@ public class Assignment extends Expression {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return var + " = " + expr;
+	}
+
+	@Override
+	public <T> T accept(OperationVisitor T) {
+		return T.visitAssignment(this);
 	}
 }

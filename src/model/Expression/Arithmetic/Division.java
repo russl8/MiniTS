@@ -4,8 +4,9 @@ import model.Expression.BinaryExpression;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
+import model.Expression.OperationVisitor.OperationVisitor;
 
-public class Division extends BinaryExpression  {
+public class Division extends BinaryExpression {
 
 	@Override
 	public ReturnType getReturnType() {
@@ -20,5 +21,11 @@ public class Division extends BinaryExpression  {
 	public Division(Expression left, Expression right) {
 		super.init(left, right);
 		this.operation = "==";
+	}
+
+	@Override
+	public <T> T accept(OperationVisitor T) {
+		// TODO Auto-generated method stub
+		return T.visitDivision(this);
 	}
 }

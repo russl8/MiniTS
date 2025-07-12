@@ -4,8 +4,9 @@ import model.Expression.BinaryExpression;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
+import model.Expression.OperationVisitor.OperationVisitor;
 
-public class GreaterEqualThan extends BinaryExpression  {
+public class GreaterEqualThan extends BinaryExpression {
 	public ReturnType getReturnType() {
 		return ReturnType.BOOL;
 	}
@@ -18,4 +19,10 @@ public class GreaterEqualThan extends BinaryExpression  {
 		super.init(left, right);
 		this.operation = ">=";
 	}
+
+	@Override
+	public <T> T accept(OperationVisitor T) {
+		return T.visitGreaterEqualThan(this);
+	}
+
 }

@@ -8,6 +8,7 @@ import java.util.Set;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
+import model.Expression.OperationVisitor.OperationVisitor;
 
 public class ClassDeclaration extends Expression {
 	public List<Expression> expressions;
@@ -53,5 +54,10 @@ public class ClassDeclaration extends Expression {
 		res += "}\n";
 		return res;
 
+	}
+
+	@Override
+	public <T> T accept(OperationVisitor T) {
+		return T.visitClassDeclaration(this);
 	}
 }

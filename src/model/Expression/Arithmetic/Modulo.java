@@ -4,8 +4,9 @@ import model.Expression.BinaryExpression;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
+import model.Expression.OperationVisitor.OperationVisitor;
 
-public class Modulo extends BinaryExpression  {
+public class Modulo extends BinaryExpression {
 	@Override
 	public ReturnType getReturnType() {
 		// TODO Auto-generated method stub
@@ -19,5 +20,11 @@ public class Modulo extends BinaryExpression  {
 	public Modulo(Expression left, Expression right) {
 		super.init(left, right);
 		operation = "%";
+	}
+
+	@Override
+	public <T> T accept(OperationVisitor T) {
+		// TODO Auto-generated method stub
+		return T.visitModulo(this);
 	}
 }

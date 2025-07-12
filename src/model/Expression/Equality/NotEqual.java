@@ -4,8 +4,9 @@ import model.Expression.BinaryExpression;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
+import model.Expression.OperationVisitor.OperationVisitor;
 
-public class NotEqual extends BinaryExpression  {
+public class NotEqual extends BinaryExpression {
 
 	@Override
 	public ReturnType getReturnType() {
@@ -21,4 +22,12 @@ public class NotEqual extends BinaryExpression  {
 		super.init(left, right);
 		this.operation = "!=";
 	}
+
+	@Override
+	public <T> T accept(OperationVisitor T) {
+		// TODO Auto-generated method stub
+		return T.visitNotEqual(this);
+	}
+	
+
 }
