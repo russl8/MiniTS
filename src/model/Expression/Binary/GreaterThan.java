@@ -1,30 +1,26 @@
-package model.Expression.Arithmetic;
+package model.Expression.Binary;
 
-import model.Expression.BinaryExpression;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
-public class Addition extends BinaryExpression {
-
-	@Override
+public class GreaterThan extends BinaryExpression {
 	public ReturnType getReturnType() {
-		// TODO Auto-generated method stub
-		return ReturnType.INT;
+		return ReturnType.BOOL;
 	}
 
 	public ExprType getExprType() {
-		return ExprType.ARITHMETIC;
+		return ExprType.RELATIONAL;
 	}
 
-	public Addition(Expression left, Expression right) {
+	public GreaterThan(Expression left, Expression right) {
 		super.init(left, right);
-		this.operation = "+";
+		this.operation = ">";
 	}
 
 	@Override
 	public <T> T accept(OperationVisitor T) {
-		return T.visitAddition(this);
+		return T.visitGreaterThan(this);
 	}
 }

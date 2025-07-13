@@ -22,9 +22,23 @@ public class IfStatement extends Expression {
 		return ExprType.NONE;
 	}
 
-	public IfStatement(Expression cond) {
+	public IfStatement(Expression cond, int line, int col) {
 		this.cond = cond;
 		this.expressions = new ArrayList<>();
+		this.line = line;
+		this.col = col;
+	}
+
+	@Override
+	public int getLine() {
+		// TODO Auto-generated method stub
+		return line;
+	}
+
+	@Override
+	public int getCol() {
+		// TODO Auto-generated method stub
+		return col;
 	}
 
 	public Set<String> getVariables() {

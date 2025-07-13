@@ -1,28 +1,30 @@
-package model.Expression.Relational;
+package model.Expression.Binary;
 
-import model.Expression.BinaryExpression;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
-public class GreaterEqualThan extends BinaryExpression {
+public class Division extends BinaryExpression {
+
+	@Override
 	public ReturnType getReturnType() {
-		return ReturnType.BOOL;
+		// TODO Auto-generated method stub
+		return ReturnType.INT;
 	}
 
 	public ExprType getExprType() {
-		return ExprType.RELATIONAL;
+		return ExprType.ARITHMETIC;
 	}
 
-	public GreaterEqualThan(Expression left, Expression right) {
+	public Division(Expression left, Expression right) {
 		super.init(left, right);
-		this.operation = ">=";
+		this.operation = "==";
 	}
 
 	@Override
 	public <T> T accept(OperationVisitor T) {
-		return T.visitGreaterEqualThan(this);
+		// TODO Auto-generated method stub
+		return T.visitDivision(this);
 	}
-
 }

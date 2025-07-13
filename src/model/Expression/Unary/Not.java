@@ -1,12 +1,12 @@
-package model.Expression.Logical;
+package model.Expression.Unary;
 
-import model.Expression.BinaryExpression;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
-public class And extends BinaryExpression  {
+public class Not extends UnaryExpression {
+
 	@Override
 	public ReturnType getReturnType() {
 		return ReturnType.BOOL;
@@ -16,14 +16,24 @@ public class And extends BinaryExpression  {
 		return ExprType.LOGICAL;
 	}
 
-	public And(Expression left, Expression right) {
-		super.init(left, right);
-		this.operation = "&&";
+	public Not(Expression expr) {
+		super.init(expr);
+		operation = "!";
 	}
-	
+
+	@Override
+	public int getCol() {
+		// subtract 1 due to adding a character '!' to the left of the expression
+		return expr.getCol() - 1;
+	}
+
+	public String toString() {
+		return "!" + expr;
+	}
+
 	@Override
 	public <T> T accept(OperationVisitor T) {
 		// TODO Auto-generated method stub
-		return T.visitAnd(this);
+		return T.visitNot(this);
 	}
 }

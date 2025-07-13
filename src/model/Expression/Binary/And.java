@@ -1,28 +1,28 @@
-package model.Expression.Relational;
+package model.Expression.Binary;
 
-import model.Expression.BinaryExpression;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
-public class LessThan extends BinaryExpression  {
+public class And extends BinaryExpression  {
+	@Override
 	public ReturnType getReturnType() {
 		return ReturnType.BOOL;
 	}
 
 	public ExprType getExprType() {
-		return ExprType.RELATIONAL;
-
+		return ExprType.LOGICAL;
 	}
 
-	public LessThan(Expression left, Expression right) {
+	public And(Expression left, Expression right) {
 		super.init(left, right);
-		this.operation = "<";
+		this.operation = "&&";
 	}
 	
 	@Override
 	public <T> T accept(OperationVisitor T) {
-		return T.visitLessThan(this);
+		// TODO Auto-generated method stub
+		return T.visitAnd(this);
 	}
 }

@@ -1,6 +1,5 @@
-package model.Expression.Arithmetic;
+package model.Expression.Binary;
 
-import model.Expression.BinaryExpression;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;

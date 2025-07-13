@@ -1,31 +1,29 @@
-package model.Expression.Arithmetic;
+package model.Expression.Binary;
 
-import model.Expression.BinaryExpression;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
-public class Division extends BinaryExpression {
+public class Or extends BinaryExpression {
 
 	@Override
 	public ReturnType getReturnType() {
-		// TODO Auto-generated method stub
-		return ReturnType.INT;
+		return ReturnType.BOOL;
 	}
 
 	public ExprType getExprType() {
-		return ExprType.ARITHMETIC;
+		return ExprType.LOGICAL;
 	}
 
-	public Division(Expression left, Expression right) {
+	public Or(Expression left, Expression right) {
 		super.init(left, right);
-		this.operation = "==";
+		this.operation = "||";
 	}
 
 	@Override
 	public <T> T accept(OperationVisitor T) {
 		// TODO Auto-generated method stub
-		return T.visitDivision(this);
+		return T.visitOr(this);
 	}
 }

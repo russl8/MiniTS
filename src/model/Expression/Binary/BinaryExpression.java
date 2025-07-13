@@ -1,7 +1,9 @@
-package model.Expression;
+package model.Expression.Binary;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import model.Expression.Expression;
 
 public abstract class BinaryExpression extends Expression {
 	public Expression left, right;
@@ -17,6 +19,16 @@ public abstract class BinaryExpression extends Expression {
 	protected void init(Expression left, Expression right) {
 		this.left = left;
 		this.right = right;
+	}
+
+	@Override
+	public int getLine() {
+		// TODO Auto-generated method stub
+		return left.getLine();
+	}
+
+	public int getCol() {
+		return left.getCol();
 	}
 
 	@Override

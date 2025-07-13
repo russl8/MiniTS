@@ -1,5 +1,7 @@
 package model.Expression;
 
+import model.Expression.Unary.Parenthesis;
+
 public class Utils {
 	/**
 	 * Takes an expression and removes its parentheses to get its return type.

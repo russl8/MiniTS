@@ -2,6 +2,7 @@ package model.Expression;
 
 import model.Expression.Expression.ReturnType;
 
+
 public class Value {
 	public ReturnType type;
 	private Object value;

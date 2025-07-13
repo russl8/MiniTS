@@ -1,5 +1,6 @@
-package model.Expression;
+package model.Expression.Unary;
 
+import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 import model.Expression.OperationVisitor.OperationVisitor;
@@ -21,6 +22,13 @@ public class Parenthesis extends UnaryExpression {
 
 	public String toString() {
 		return "(" + expr + ")";
+	}
+
+	
+	@Override
+	public int getCol() {
+		// subtract 1 due to adding a character '(' to the left of the expression
+		return expr.getCol() - 1;
 	}
 
 	@Override

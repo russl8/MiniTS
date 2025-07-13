@@ -1,12 +1,11 @@
-package model.Expression.Arithmetic;
+package model.Expression.Binary;
 
-import model.Expression.BinaryExpression;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
-public class Multiplication extends BinaryExpression {
+public class Addition extends BinaryExpression {
 
 	@Override
 	public ReturnType getReturnType() {
@@ -18,15 +17,13 @@ public class Multiplication extends BinaryExpression {
 		return ExprType.ARITHMETIC;
 	}
 
-	public Multiplication(Expression left, Expression right) {
+	public Addition(Expression left, Expression right) {
 		super.init(left, right);
-		this.operation = "*";
+		this.operation = "+";
 	}
 
 	@Override
 	public <T> T accept(OperationVisitor T) {
-		// TODO Auto-generated method stub
-		return T.visitMultiplication(this);
+		return T.visitAddition(this);
 	}
-
 }

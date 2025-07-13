@@ -31,15 +31,28 @@ public class Declaration extends Expression {
 		return vars;
 	}
 
-	public Declaration(String var, ReturnType type) {
+	public Declaration(String var, ReturnType type, int line, int col) {
 		this.var = var;
 		this.type = type;
 		this.isInitialized = false;
-		// type not int or bool error
+		this.line = line;
+		this.col = col;
 	}
 
-	public Declaration(String var, ReturnType type, Expression expr) {
-		this(var, type);
+	@Override
+	public int getLine() {
+		// TODO Auto-generated method stub
+		return line;
+	}
+
+	@Override
+	public int getCol() {
+		// TODO Auto-generated method stub
+		return col;
+	}
+
+	public Declaration(String var, ReturnType type, Expression expr, int line, int col) {
+		this(var, type, line, col);
 		this.expr = expr;
 		this.isInitialized = true;
 	}

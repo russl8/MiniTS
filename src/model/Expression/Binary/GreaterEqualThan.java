@@ -1,34 +1,27 @@
-package model.Expression.Logical;
+package model.Expression.Binary;
 
 import model.Expression.Expression;
-import model.Expression.UnaryExpression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
-public class Not extends UnaryExpression {
-
-	@Override
+public class GreaterEqualThan extends BinaryExpression {
 	public ReturnType getReturnType() {
 		return ReturnType.BOOL;
 	}
 
 	public ExprType getExprType() {
-		return ExprType.LOGICAL;
+		return ExprType.RELATIONAL;
 	}
 
-	public Not(Expression expr) {
-		super.init(expr);
-		operation = "!";
-	}
-
-	public String toString() {
-		return "!" + "(" + expr + ")";
+	public GreaterEqualThan(Expression left, Expression right) {
+		super.init(left, right);
+		this.operation = ">=";
 	}
 
 	@Override
 	public <T> T accept(OperationVisitor T) {
-		// TODO Auto-generated method stub
-		return T.visitNot(this);
+		return T.visitGreaterEqualThan(this);
 	}
+
 }

@@ -1,7 +1,9 @@
-package model.Expression;
+package model.Expression.Unary;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import model.Expression.Expression;
 
 public abstract class UnaryExpression extends Expression {
 	public Expression expr;
@@ -16,7 +18,13 @@ public abstract class UnaryExpression extends Expression {
 	protected void init(Expression expr) {
 		this.expr = expr;
 	}
-	
+
+	@Override
+	public int getLine() {
+		// TODO Auto-generated method stub
+		return expr.getLine();
+	}
+
 	public abstract String toString();
 
 }

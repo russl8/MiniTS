@@ -29,31 +29,31 @@ import antlr.ExprParser.SubtractionContext;
 import antlr.ExprParser.TypeContext;
 import antlr.ExprParser.VariableAssignmentContext;
 import antlr.ExprParser.VariableContext;
+import model.Expression.BooleanLiteral;
 import model.Expression.Expression;
+import model.Expression.NumberLiteral;
 import model.Expression.Utils;
 import model.Expression.Variable;
-import model.Expression.Arithmetic.Addition;
-import model.Expression.Arithmetic.Division;
-import model.Expression.Arithmetic.Modulo;
-import model.Expression.Arithmetic.Multiplication;
-import model.Expression.Arithmetic.NumberLiteral;
-import model.Expression.Arithmetic.Subtraction;
-import model.Expression.Equality.Equal;
-import model.Expression.Equality.NotEqual;
-import model.Expression.Logical.And;
-import model.Expression.Logical.BooleanLiteral;
-import model.Expression.Logical.Not;
-import model.Expression.Logical.Or;
-import model.Expression.Relational.GreaterEqualThan;
-import model.Expression.Relational.GreaterThan;
-import model.Expression.Relational.LessEqualThan;
-import model.Expression.Relational.LessThan;
+import model.Expression.Binary.Addition;
+import model.Expression.Binary.And;
+import model.Expression.Binary.Division;
+import model.Expression.Binary.Equal;
+import model.Expression.Binary.GreaterEqualThan;
+import model.Expression.Binary.GreaterThan;
+import model.Expression.Binary.LessEqualThan;
+import model.Expression.Binary.LessThan;
+import model.Expression.Binary.Modulo;
+import model.Expression.Binary.Multiplication;
+import model.Expression.Binary.NotEqual;
+import model.Expression.Binary.Or;
+import model.Expression.Binary.Subtraction;
 import model.Expression.Statement.Assignment;
 import model.Expression.Statement.ClassDeclaration;
 import model.Expression.Statement.Declaration;
 import model.Expression.Statement.IfStatement;
+import model.Expression.Unary.Not;
+import model.Expression.Unary.Parenthesis;
 import model.Expression.Expression.ReturnType;
-import model.Expression.Parenthesis;
 import model.Program.Program;
 
 public class ExpressionTypeChecker implements OperationVisitor {
@@ -74,7 +74,11 @@ public class ExpressionTypeChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitDeclarationWithOptionalAssignment(Declaration d) {
-		// TODO Auto-generated method stub
+		// If declaration is initialized, typecheck its expressoin
+		if (d.isInitialized) {
+			// todo: add line, col as a property of variables
+			// copy and paste typechecking logic 
+		}
 		return null;
 	}
 

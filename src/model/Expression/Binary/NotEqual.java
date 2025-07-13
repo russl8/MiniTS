@@ -1,13 +1,15 @@
-package model.Expression.Equality;
+package model.Expression.Binary;
 
-import model.Expression.BinaryExpression;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
-public class Equal extends BinaryExpression {
+public class NotEqual extends BinaryExpression {
+
+	@Override
 	public ReturnType getReturnType() {
+		// TODO Auto-generated method stub
 		return ReturnType.BOOL;
 	}
 
@@ -15,15 +17,16 @@ public class Equal extends BinaryExpression {
 		return ExprType.EQUALITY;
 	}
 
-	public Equal(Expression left, Expression right) {
+	public NotEqual(Expression left, Expression right) {
 		super.init(left, right);
-		this.operation = "==";
+		this.operation = "!=";
 	}
 
 	@Override
 	public <T> T accept(OperationVisitor T) {
 		// TODO Auto-generated method stub
-		return T.visitEqual(this);
+		return T.visitNotEqual(this);
 	}
+	
 
 }

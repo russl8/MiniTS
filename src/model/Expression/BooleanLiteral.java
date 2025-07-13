@@ -1,22 +1,21 @@
-package model.Expression.Arithmetic;
+package model.Expression;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
-public class NumberLiteral extends Expression {
-	public int val;
+public class BooleanLiteral extends Expression {
+	public boolean val;
 
 	public ReturnType getReturnType() {
-		return ReturnType.INT;
+		return ReturnType.BOOL;
 	}
 
 	public ExprType getExprType() {
-		return ExprType.ARITHMETIC;
+		return ExprType.LOGICAL;
 	}
 
 	@Override
@@ -26,8 +25,20 @@ public class NumberLiteral extends Expression {
 		return res;
 	}
 
-	public NumberLiteral(int val) {
+	public BooleanLiteral(boolean val, int line, int col) {
+		this.line = line;
+		this.col = col;
 		this.val = val;
+	}
+
+	@Override
+	public int getLine() {
+		return line;
+	}
+
+	@Override
+	public int getCol() {
+		return col;
 	}
 
 	@Override
@@ -39,8 +50,6 @@ public class NumberLiteral extends Expression {
 	@Override
 	public <T> T accept(OperationVisitor T) {
 		// TODO Auto-generated method stub
-		return T.visitNumberLiteral(this);
-
+		return T.visitBooleanLiteral(this);
 	}
-
 }

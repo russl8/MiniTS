@@ -1,33 +1,28 @@
-package model.Expression.Equality;
+package model.Expression.Binary;
 
-import model.Expression.BinaryExpression;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
-public class NotEqual extends BinaryExpression {
-
+public class Subtraction extends BinaryExpression {
 	@Override
 	public ReturnType getReturnType() {
-		// TODO Auto-generated method stub
-		return ReturnType.BOOL;
+		return ReturnType.INT;
 	}
 
 	public ExprType getExprType() {
-		return ExprType.EQUALITY;
+		return ExprType.ARITHMETIC;
 	}
 
-	public NotEqual(Expression left, Expression right) {
+	public Subtraction(Expression left, Expression right) {
 		super.init(left, right);
-		this.operation = "!=";
+		this.operation = "-";
 	}
 
 	@Override
 	public <T> T accept(OperationVisitor T) {
 		// TODO Auto-generated method stub
-		return T.visitNotEqual(this);
+		return T.visitSubtraction(this);
 	}
-	
-
 }

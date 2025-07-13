@@ -30,9 +30,23 @@ public class Variable extends Expression {
 		return res;
 	}
 
-	public Variable(String var, ReturnType returnType) {
+	public Variable(String var, ReturnType returnType, int line, int col) {
 		this.var = var;
 		this.returnType = returnType;
+		this.line = line;
+		this.col = col;
+	}
+
+	@Override
+	public int getLine() {
+		// TODO Auto-generated method stub
+		return line;
+	}
+
+	@Override
+	public int getCol() {
+		// TODO Auto-generated method stub
+		return col;
 	}
 
 	@Override

@@ -44,72 +44,63 @@ public class ExpressionApp {
 			ParseTree AST = parser.prog();
 
 			if (MyErrorListener.hasError) {
-
 			} else {
-				List<String> semanticErrors = new ArrayList<>();
-				
-				// Visitors
-				AntlrToProgram progVisitor = new AntlrToProgram(semanticErrors);
-				Program prog = progVisitor.visit(AST);
+				try {
+					String fileName = new File(filePath).getName();
+					fileName = fileName.substring(0, fileName.lastIndexOf('.'));
+					PrintWriter writer = new PrintWriter(
+							new FileWriter("src/tests/output/" + fileName + "output.html"));
+					writer.println("<html><body>");
+					List<String> semanticErrors = new ArrayList<>();
 
-				// Type checking visitor
-				ExpressionTypeChecker typeCheckerVisitor = new ExpressionTypeChecker(semanticErrors);
-				
+					// Visitors
+					AntlrToProgram progVisitor = new AntlrToProgram(semanticErrors);
+					Program prog = progVisitor.visit(AST);
 
-				if (semanticErrors.isEmpty()) {
-					processClasses(prog.expressions);
-				} else {
+					// Perform type checking on class expressions
+					for (Expression classExpr : prog.expressions) {
+						ClassDeclaration cd = (ClassDeclaration) classExpr;
+						for (Expression e : cd.expressions) {
+							ExpressionTypeChecker typeCheckerVisitor = new ExpressionTypeChecker(semanticErrors);
+							e.accept(typeCheckerVisitor);
+						}
+					}
 
-					try {
-						String fileName = new File(filePath).getName();
-						fileName = fileName.substring(0, fileName.lastIndexOf('.'));
-						PrintWriter writer = new PrintWriter(
-								new FileWriter("src/tests/output/" + fileName + "output.html"));
-						writer.println("<html><body>");
+					// Evaluation
+					if (semanticErrors.isEmpty()) {
+						for (Expression classExpr : prog.expressions) {
+							ClassDeclaration cd = (ClassDeclaration) classExpr;
+							writer.println("<p>class " + cd.className
+									+ (cd.superClass != null ? " extends " + cd.superClass : "") + "</p>");
+							ExpressionProcessor ep = new ExpressionProcessor();
+							for (Expression e : cd.expressions) {
+								ep.evaluateExpression(e);
+							}
+
+							/**
+							 * Replac all printing operations with e.accept(writerVisitor)
+							 */
+							for (String var : ep.values.keySet()) {
+								writer.println("<p>&#9;" + var + " : " + ep.values.get(var) + "</p>");
+							}
+						}
+					} else {
 
 						for (String err : progVisitor.semanticErrors) {
 							writer.println("<p>" + err + "</p>");
 						}
-						writer.println("</body></html>");
-						writer.close();
-						System.out
-								.println("Generated file output in " + "src/tests/output/" + fileName + "output.html");
-					} catch (Exception e) {
-						System.out.println("Error: " + e);
 					}
 
-				}
+					writer.println("</body></html>");
+					writer.close();
+					System.out.println("Generated file output in " + "src/tests/output/" + fileName + "output.html");
+
+				} catch (Exception e) {
+					System.out.println("Error: " + e);
+				} // end of try/catch
 
 			}
 
-		}
-	}
-
-	private static void processClasses(List<Expression> expressions) {
-		try {
-			String fileName = new File(filePath).getName();
-			fileName = fileName.substring(0, fileName.lastIndexOf('.'));
-			PrintWriter writer = new PrintWriter(new FileWriter("src/tests/output/" + fileName + "output.html"));
-			writer.println("<html><body>");
-
-			for (Expression c : expressions) {
-				ClassDeclaration cd = (ClassDeclaration) c;
-				writer.println("<p>class " + cd.className + (cd.superClass != null ? " extends " + cd.superClass : "")
-						+ "</p>");
-				ExpressionProcessor ep = new ExpressionProcessor();
-				for (Expression e : cd.expressions) {
-					ep.processExpression(e);
-				}
-				for (String var : ep.values.keySet()) {
-					writer.println("<p>&#9;" + var + " : " + ep.values.get(var) + "</p>");
-				}
-			}
-
-			writer.println("</body></html>");
-			writer.close();
-			System.out.println("Generated file output in " + "src/tests/output/" + fileName + "output.html");
-		} catch (Exception e) {
-			System.out.println("Error: " + e);
 		}
 	}
 
