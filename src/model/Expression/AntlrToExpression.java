@@ -43,8 +43,8 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Map<String, ReturnType> vars; // stores all the variables declared in the program so far
 	public List<String> semanticErrors; // 1. duplicate declaration 2. reference to undeclared variable
 
-	public AntlrToExpression(List<String> semanticErrors) {
-		this.vars = new HashMap<>();
+	public AntlrToExpression(List<String> semanticErrors, Map<String, ReturnType> vars) {
+		this.vars = vars;
 		this.semanticErrors = semanticErrors;
 	}
 
@@ -73,6 +73,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		for (int i = startOfExpressions; i < ctx.getChildCount() - 1; i++) {
 			cd.addExpression(visit(ctx.getChild(i)));
 		}
+
 //		System.out.println(cd);
 		return cd;
 	}
@@ -96,11 +97,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		// expr is initialized
 		if (ctx.getChildCount() > 4) {
 			Expression expr = visit(ctx.expr());
-			// initializing type error
-			if (varType != expr.getReturnType()) {
-				semanticErrors.add("Type mismatch at line " + line + ": expected " + varType + " = " + varType
-						+ " assignment but got " + varType + " = " + expr.getReturnType());
-			}
 			return new Declaration(var, varType, expr, line, col);
 		} else {
 			return new Declaration(var, varType, line, col);
@@ -114,20 +110,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		Token id = ctx.ID().getSymbol();
 		int lineNum = id.getLine();
 		int colNum = id.getCharPositionInLine() + 1;
-		// open up parenthesis to get the inside expr
-		Expression cleanedExpr = Utils.unwrapParentheses(expr);
-
-		ReturnType exprType = cleanedExpr.getReturnType();
-		// make sure that the variable is being assigned properly
-		// (int -> int, bool -> bool)
-		if (this.vars.get(var) == ReturnType.BOOL && exprType != ReturnType.BOOL) {
-			semanticErrors.add("Type mismatch at line " + lineNum + ": expected BOOL = BOOL assignment but got BOOL = "
-					+ exprType);
-		} else if (this.vars.get(var) == ReturnType.INT && exprType != ReturnType.INT) {
-			semanticErrors.add(
-					"Type mismatch at line " + lineNum + ": expected INT = INT assignment but got INT = " + exprType);
-		}
-
 		return new Assignment(var, expr, lineNum, colNum);
 	}
 
@@ -144,11 +126,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		int line = ctx.expr().getStart().getLine();
 		int col = ctx.expr().getStart().getCharPositionInLine() + 1;
 
-		// cond must be a boolean expression
-		if (cond.getReturnType() != ReturnType.BOOL) {
-			semanticErrors.add("Type mismatch in logical expression at line " + ctx.getStart().getLine()
-					+ ": expected ( BOOL ) but got ( " + cond.getReturnType() + " )");
-		}
 		IfStatement ifs = new IfStatement(cond, line, col);
 		for (int i = 5; i < ctx.getChildCount() - 1; i++) {
 			ifs.addExpression(visit(ctx.getChild(i)));
@@ -160,7 +137,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitMultiplication(MultiplicationContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.ARITHMETIC, left, right, ctx.getStart().getLine());
+		checkIfExprArgsValidBinary(ExprType.ARITHMETIC, left, right);
 		return new Multiplication(left, right);
 	}
 
@@ -168,7 +145,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitAddition(AdditionContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.ARITHMETIC, left, right, ctx.getStart().getLine());
+		checkIfExprArgsValidBinary(ExprType.ARITHMETIC, left, right);
 		return new Addition(left, right);
 	}
 
@@ -176,7 +153,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitLessThan(LessThanContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.RELATIONAL, left, right, ctx.getStart().getLine());
+		checkIfExprArgsValidBinary(ExprType.RELATIONAL, left, right);
 		return new LessThan(left, right);
 	}
 
@@ -184,7 +161,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitSubtraction(SubtractionContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.ARITHMETIC, left, right, ctx.getStart().getLine());
+		checkIfExprArgsValidBinary(ExprType.ARITHMETIC, left, right);
 		return new Subtraction(left, right);
 	}
 
@@ -192,7 +169,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitGreaterThan(GreaterThanContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.RELATIONAL, left, right, ctx.getStart().getLine());
+		checkIfExprArgsValidBinary(ExprType.RELATIONAL, left, right);
 		return new GreaterThan(left, right);
 	}
 
@@ -200,7 +177,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitEqual(EqualContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.EQUALITY, left, right, ctx.getStart().getLine());
+		checkIfExprArgsValidBinary(ExprType.EQUALITY, left, right);
 		return new Equal(left, right);
 	}
 
@@ -208,7 +185,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitGreaterEqualThan(GreaterEqualThanContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.RELATIONAL, left, right, ctx.getStart().getLine());
+		checkIfExprArgsValidBinary(ExprType.RELATIONAL, left, right);
 		return new GreaterEqualThan(left, right);
 	}
 
@@ -216,7 +193,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitAnd(AndContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.LOGICAL, left, right, ctx.getStart().getLine());
+		checkIfExprArgsValidBinary(ExprType.LOGICAL, left, right);
 		return new And(left, right);
 	}
 
@@ -224,7 +201,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitLessEqualThan(LessEqualThanContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.RELATIONAL, left, right, ctx.getStart().getLine());
+		checkIfExprArgsValidBinary(ExprType.RELATIONAL, left, right);
 		return new LessEqualThan(left, right);
 	}
 
@@ -232,7 +209,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitDivision(DivisionContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.ARITHMETIC, left, right, ctx.getStart().getLine());
+		checkIfExprArgsValidBinary(ExprType.ARITHMETIC, left, right);
 		return new Division(left, right);
 	}
 
@@ -240,7 +217,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitNotEqual(NotEqualContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.EQUALITY, left, right, ctx.getStart().getLine());
+		checkIfExprArgsValidBinary(ExprType.EQUALITY, left, right);
 		return new NotEqual(left, right);
 	}
 
@@ -248,7 +225,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitOr(OrContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.LOGICAL, left, right, ctx.getStart().getLine());
+		checkIfExprArgsValidBinary(ExprType.LOGICAL, left, right);
 		return new Or(left, right);
 	}
 
@@ -256,7 +233,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitModulo(ModuloContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.ARITHMETIC, left, right, ctx.getStart().getLine());
+		checkIfExprArgsValidBinary(ExprType.ARITHMETIC, left, right);
 		return new Modulo(left, right);
 	}
 
@@ -266,10 +243,10 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	@Override
 	public Expression visitNot(NotContext ctx) {
 		Expression expr = visit(ctx.getChild(1));
-		Expression exprInsideParenthesis = Utils.unwrapParentheses(expr);
-		if (exprInsideParenthesis.getReturnType() != ReturnType.BOOL) {
+//		Expression exprInsideParenthesis = Utils.unwrapParentheses(expr);
+		if (expr.getReturnType() != ReturnType.BOOL) {
 			semanticErrors.add("Type mismatch in logical expression at line " + ctx.getStart().getLine()
-					+ ": expected ( BOOL ) but got ( " + exprInsideParenthesis.getReturnType() + " )");
+					+ ": expected ( BOOL ) but got ( " + expr.getReturnType() + " )");
 		}
 		return new Not(expr);
 	}
@@ -327,17 +304,14 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	 * @param right
 	 * @param lineNum
 	 */
-	private void checkIfExprArgsValidBinary(ExprType exprType, Expression left, Expression right, int lineNum) {
+	private void checkIfExprArgsValidBinary(ExprType exprType, Expression left, Expression right) {
 		boolean isValid = true;
 
 		int line = left.getLine();
 		int col = left.getCol();
 
-		Expression unwrappedLeft = Utils.unwrapParentheses(left);
-		Expression unwrappedRight = Utils.unwrapParentheses(right);
-
-		ReturnType leftReturnType = unwrappedLeft.getReturnType();
-		ReturnType rightReturnType = unwrappedRight.getReturnType();
+		ReturnType leftReturnType = left.getReturnType();
+		ReturnType rightReturnType = right.getReturnType();
 
 		String typeOfExpression = "";
 		String expectedTypes = "";

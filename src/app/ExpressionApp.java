@@ -5,6 +5,7 @@ import antlr.ExprParser;
 import model.*;
 import model.Expression.Expression;
 import model.Expression.ExpressionProcessor;
+import model.Expression.Expression.ReturnType;
 import model.Expression.OperationVisitor.ExpressionTypeChecker;
 import model.Expression.Statement.ClassDeclaration;
 import model.Program.AntlrToProgram;
@@ -21,8 +22,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /*
@@ -46,22 +49,25 @@ public class ExpressionApp {
 			if (MyErrorListener.hasError) {
 			} else {
 				try {
+					// Scoping doesnt really work :(
+					List<String> semanticErrors = new ArrayList<>();
+					Map<String, ReturnType> vars = new HashMap<>();
+
 					String fileName = new File(filePath).getName();
 					fileName = fileName.substring(0, fileName.lastIndexOf('.'));
 					PrintWriter writer = new PrintWriter(
 							new FileWriter("src/tests/output/" + fileName + "output.html"));
 					writer.println("<html><body>");
-					List<String> semanticErrors = new ArrayList<>();
 
 					// Visitors
-					AntlrToProgram progVisitor = new AntlrToProgram(semanticErrors);
+					AntlrToProgram progVisitor = new AntlrToProgram(semanticErrors, vars);
 					Program prog = progVisitor.visit(AST);
 
 					// Perform type checking on class expressions
 					for (Expression classExpr : prog.expressions) {
 						ClassDeclaration cd = (ClassDeclaration) classExpr;
 						for (Expression e : cd.expressions) {
-							ExpressionTypeChecker typeCheckerVisitor = new ExpressionTypeChecker(semanticErrors);
+							ExpressionTypeChecker typeCheckerVisitor = new ExpressionTypeChecker(semanticErrors, vars);
 							e.accept(typeCheckerVisitor);
 						}
 					}
@@ -90,7 +96,6 @@ public class ExpressionApp {
 							writer.println("<p>" + err + "</p>");
 						}
 					}
-
 					writer.println("</body></html>");
 					writer.close();
 					System.out.println("Generated file output in " + "src/tests/output/" + fileName + "output.html");
