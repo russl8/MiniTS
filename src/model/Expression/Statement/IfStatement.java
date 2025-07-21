@@ -8,6 +8,7 @@ import java.util.Set;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.ReturnType;
+import model.Expression.OperationVisitor.OperationVisitor;
 
 public class IfStatement extends Expression {
 	public Expression cond;
@@ -21,9 +22,23 @@ public class IfStatement extends Expression {
 		return ExprType.NONE;
 	}
 
-	public IfStatement(Expression cond) {
+	public IfStatement(Expression cond, int line, int col) {
 		this.cond = cond;
 		this.expressions = new ArrayList<>();
+		this.line = line;
+		this.col = col;
+	}
+
+	@Override
+	public int getLine() {
+		// TODO Auto-generated method stub
+		return line;
+	}
+
+	@Override
+	public int getCol() {
+		// TODO Auto-generated method stub
+		return col;
 	}
 
 	public Set<String> getVariables() {
@@ -49,5 +64,10 @@ public class IfStatement extends Expression {
 		}
 		res += "    }";
 		return res;
+	}
+
+	@Override
+	public <T> T accept(OperationVisitor T) {
+		return T.visitIfStatement(this);
 	}
 }

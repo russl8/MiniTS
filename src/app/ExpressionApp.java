@@ -5,6 +5,8 @@ import antlr.ExprParser;
 import model.*;
 import model.Expression.Expression;
 import model.Expression.ExpressionProcessor;
+import model.Expression.Expression.ReturnType;
+import model.Expression.OperationVisitor.ExpressionTypeChecker;
 import model.Expression.Statement.ClassDeclaration;
 import model.Program.AntlrToProgram;
 import model.Program.Program;
@@ -19,8 +21,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /*
@@ -42,65 +47,69 @@ public class ExpressionApp {
 			ParseTree AST = parser.prog();
 
 			if (MyErrorListener.hasError) {
-
 			} else {
-				AntlrToProgram progVisitor = new AntlrToProgram();
-				Program prog = progVisitor.visit(AST);
-				if (progVisitor.semanticErrors.isEmpty()) {
-					processClasses(prog.expressions);
+				try {
+					// Scoping doesnt really work :(
+					List<String> semanticErrors = new ArrayList<>();
+					Map<String, ReturnType> vars = new HashMap<>();
 
-				} else {
+					String fileName = new File(filePath).getName();
+					fileName = fileName.substring(0, fileName.lastIndexOf('.'));
+					PrintWriter writer = new PrintWriter(
+							new FileWriter("src/tests/output/" + fileName + "output.html"));
+					writer.println("<html><body>");
 
-					try {
-						String fileName = new File(filePath).getName();
-						fileName = fileName.substring(0, fileName.lastIndexOf('.'));
-						PrintWriter writer = new PrintWriter(
-								new FileWriter("tests/output/" + fileName + "output.html"));
-						writer.println("<html><body>");
+					// Visitors
+					AntlrToProgram progVisitor = new AntlrToProgram(semanticErrors, vars);
+					Program prog = progVisitor.visit(AST);
+
+					
+					ExpressionTypeChecker typeCheckerVisitor = new ExpressionTypeChecker(semanticErrors, vars);
+					
+					for (Expression classExpr : prog.expressions) {
+						ClassDeclaration cd = (ClassDeclaration) classExpr;
+						// TODO: Perform type checking on class expressions
+						for (Expression e : cd.expressions) {
+							e.accept(typeCheckerVisitor);
+							// e.accept(vistior2)
+							// e.accept(vistior3)
+						}
+					}
+
+					// Evaluation
+					if (semanticErrors.isEmpty()) {
+						for (Expression classExpr : prog.expressions) {
+							ClassDeclaration cd = (ClassDeclaration) classExpr;
+							writer.println("<p>class " + cd.className
+									+ (cd.superClass != null ? " extends " + cd.superClass : "") + "</p>");
+							ExpressionProcessor ep = new ExpressionProcessor();
+							for (Expression e : cd.expressions) {
+								ep.evaluateExpression(e);
+							}
+
+							/**
+							 * Replac all printing operations with e.accept(writerVisitor)
+							 */
+							for (String var : ep.values.keySet()) {
+								writer.println("<p>&#9;" + var + " : " + ep.values.get(var) + "</p>");
+							}
+						}
+					} else {
 
 						for (String err : progVisitor.semanticErrors) {
 							writer.println("<p>" + err + "</p>");
 						}
-						writer.println("</body></html>");
-						writer.close();
-						System.out
-								.println("Generated file output in " + "src/tests/output/" + fileName + "output.html");
-					} catch (Exception e) {
-						System.out.println("Error: " + e);
 					}
+					writer.println("</body></html>");
+					writer.close();
+					System.out.println("Generated file output in " + "src/tests/output/" + fileName + "output.html");
 
-				}
+				} catch (Exception e) {
+					System.out.println("Error: " + e);
+				} // end of try/catch
 
 			}
 
-		}
-	}
-
-	private static void processClasses(List<Expression> expressions) {
-		try {
-			String fileName = new File(filePath).getName();
-			fileName = fileName.substring(0, fileName.lastIndexOf('.'));
-			PrintWriter writer = new PrintWriter(new FileWriter("tests/output/" + fileName + "output.html"));
-			writer.println("<html><body>");
-
-			for (Expression c : expressions) {
-				ClassDeclaration cd = (ClassDeclaration) c;
-				writer.println("<p>class " + cd.className + (cd.superClass != null ? " extends " + cd.superClass : "")
-						+ "</p>");
-				ExpressionProcessor ep = new ExpressionProcessor();
-				for (Expression e : cd.expressions) {
-					ep.processExpression(e);
-				}
-				for (String var : ep.values.keySet()) {
-					writer.println("<p>&#9;" + var + " : " + ep.values.get(var) + "</p>");
-				}
-			}
-
-			writer.println("</body></html>");
-			writer.close();
-			System.out.println("Generated file output in " + "src/tests/output/" + fileName + "output.html");
-		} catch (Exception e) {
-			System.out.println("Error: " + e);
 		}
 	}
 

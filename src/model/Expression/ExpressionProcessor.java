@@ -2,18 +2,25 @@ package model.Expression;
 
 import java.util.*;
 
-import model.Expression.*;
 import model.Expression.Expression.ReturnType;
-import model.Expression.Logical.*;
-import model.Expression.Relational.*;
-import model.Expression.Relational.GreaterThan;
-import model.Expression.Utils;
-import model.Expression.Arithmetic.*;
-import model.Expression.Equality.Equal;
-import model.Expression.Equality.NotEqual;
+import model.Expression.Binary.Addition;
+import model.Expression.Binary.And;
+import model.Expression.Binary.Division;
+import model.Expression.Binary.Equal;
+import model.Expression.Binary.GreaterEqualThan;
+import model.Expression.Binary.GreaterThan;
+import model.Expression.Binary.LessEqualThan;
+import model.Expression.Binary.LessThan;
+import model.Expression.Binary.Modulo;
+import model.Expression.Binary.Multiplication;
+import model.Expression.Binary.NotEqual;
+import model.Expression.Binary.Or;
+import model.Expression.Binary.Subtraction;
 import model.Expression.Statement.Assignment;
 import model.Expression.Statement.Declaration;
 import model.Expression.Statement.IfStatement;
+import model.Expression.Unary.Not;
+import model.Expression.Unary.Parenthesis;
 
 public class ExpressionProcessor {
 
@@ -32,11 +39,10 @@ public class ExpressionProcessor {
 		this.values = new HashMap<>();
 	}
 
-	public void processExpression(Expression e) {
+	public void evaluateExpression(Expression e) {
 		if (e instanceof Declaration) {
 			Declaration d = (Declaration) e;
-//			System.out.println("Looking at declaration " + d);
-			Expression expr = Utils.unwrapParentheses(d.expr);
+			Expression expr = d.expr;
 			Value val;
 
 			if (!d.isInitialized) {
@@ -55,7 +61,7 @@ public class ExpressionProcessor {
 			Assignment a = (Assignment) e;
 			Value val;
 //			System.out.println("Looking at assignment " + a);
-			Expression expr = Utils.unwrapParentheses(a.expr);
+			Expression expr = a.expr;
 			if (expr.getReturnType() == ReturnType.BOOL) {
 				val = new Value(ReturnType.BOOL, evaluateBoolean(expr));
 			} else if (expr.getReturnType() == ReturnType.INT) {
@@ -69,12 +75,12 @@ public class ExpressionProcessor {
 			// evaluate expression. if true then evaluate all of its expressions
 			IfStatement ifs = (IfStatement) e;
 //			System.out.println("Looking at ifStatement " + ifs);
-			Expression condition = Utils.unwrapParentheses(ifs.cond);
+			Expression condition = ifs.cond;
 			boolean conditionEvaluation = evaluateBoolean(condition);
 
 			if (conditionEvaluation == true) {
 				for (Expression ifsExpression : ifs.expressions) {
-					processExpression(ifsExpression);
+					evaluateExpression(ifsExpression);
 				}
 			} else {
 
@@ -123,7 +129,7 @@ public class ExpressionProcessor {
 			And a = (And) e;
 			return evaluateBoolean(a.left) && evaluateBoolean(a.right);
 		} else if (e instanceof Parenthesis) {
-			return evaluateBoolean(Utils.unwrapParentheses(e));
+			return evaluateBoolean(((Parenthesis) e).expr);
 		} else if (e instanceof Equal) {
 			Equal eq = (Equal) e;
 			return evaluateBoolean(eq.left) == evaluateBoolean(eq.right);
