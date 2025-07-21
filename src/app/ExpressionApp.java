@@ -63,12 +63,16 @@ public class ExpressionApp {
 					AntlrToProgram progVisitor = new AntlrToProgram(semanticErrors, vars);
 					Program prog = progVisitor.visit(AST);
 
-					// Perform type checking on class expressions
+					
+					ExpressionTypeChecker typeCheckerVisitor = new ExpressionTypeChecker(semanticErrors, vars);
+					
 					for (Expression classExpr : prog.expressions) {
 						ClassDeclaration cd = (ClassDeclaration) classExpr;
+						// TODO: Perform type checking on class expressions
 						for (Expression e : cd.expressions) {
-							ExpressionTypeChecker typeCheckerVisitor = new ExpressionTypeChecker(semanticErrors, vars);
 							e.accept(typeCheckerVisitor);
+							// e.accept(vistior2)
+							// e.accept(vistior3)
 						}
 					}
 

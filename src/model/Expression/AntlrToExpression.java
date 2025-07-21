@@ -137,7 +137,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitMultiplication(MultiplicationContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.ARITHMETIC, left, right);
 		return new Multiplication(left, right);
 	}
 
@@ -145,7 +144,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitAddition(AdditionContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.ARITHMETIC, left, right);
 		return new Addition(left, right);
 	}
 
@@ -153,7 +151,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitLessThan(LessThanContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.RELATIONAL, left, right);
 		return new LessThan(left, right);
 	}
 
@@ -161,7 +158,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitSubtraction(SubtractionContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.ARITHMETIC, left, right);
 		return new Subtraction(left, right);
 	}
 
@@ -169,7 +165,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitGreaterThan(GreaterThanContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.RELATIONAL, left, right);
 		return new GreaterThan(left, right);
 	}
 
@@ -177,7 +172,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitEqual(EqualContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.EQUALITY, left, right);
 		return new Equal(left, right);
 	}
 
@@ -185,7 +179,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitGreaterEqualThan(GreaterEqualThanContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.RELATIONAL, left, right);
 		return new GreaterEqualThan(left, right);
 	}
 
@@ -193,7 +186,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitAnd(AndContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.LOGICAL, left, right);
 		return new And(left, right);
 	}
 
@@ -201,7 +193,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitLessEqualThan(LessEqualThanContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.RELATIONAL, left, right);
 		return new LessEqualThan(left, right);
 	}
 
@@ -209,7 +200,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitDivision(DivisionContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.ARITHMETIC, left, right);
 		return new Division(left, right);
 	}
 
@@ -217,7 +207,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitNotEqual(NotEqualContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.EQUALITY, left, right);
 		return new NotEqual(left, right);
 	}
 
@@ -225,7 +214,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitOr(OrContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.LOGICAL, left, right);
 		return new Or(left, right);
 	}
 
@@ -233,7 +221,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitModulo(ModuloContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		checkIfExprArgsValidBinary(ExprType.ARITHMETIC, left, right);
 		return new Modulo(left, right);
 	}
 
@@ -244,10 +231,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitNot(NotContext ctx) {
 		Expression expr = visit(ctx.getChild(1));
 //		Expression exprInsideParenthesis = Utils.unwrapParentheses(expr);
-		if (expr.getReturnType() != ReturnType.BOOL) {
-			semanticErrors.add("Type mismatch in logical expression at line " + ctx.getStart().getLine()
-					+ ": expected ( BOOL ) but got ( " + expr.getReturnType() + " )");
-		}
+		
 		return new Not(expr);
 	}
 
@@ -295,55 +279,5 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		return new NumberLiteral(Integer.parseInt(value), line, col);
 	}
 
-	/**
-	 * Given an binary expression's type, type-check the expression's left and right
-	 * hand arguments. On failure, append to semantic errors.
-	 * 
-	 * @param exprType
-	 * @param left
-	 * @param right
-	 * @param lineNum
-	 */
-	private void checkIfExprArgsValidBinary(ExprType exprType, Expression left, Expression right) {
-		boolean isValid = true;
-
-		int line = left.getLine();
-		int col = left.getCol();
-
-		ReturnType leftReturnType = left.getReturnType();
-		ReturnType rightReturnType = right.getReturnType();
-
-		String typeOfExpression = "";
-		String expectedTypes = "";
-		String actualTypes = "(" + leftReturnType + ", " + rightReturnType + ")";
-
-		if (exprType == ExprType.LOGICAL) {
-			typeOfExpression = "logical";
-			expectedTypes = "(BOOL, BOOL)";
-			isValid = leftReturnType == ReturnType.BOOL && rightReturnType == ReturnType.BOOL;
-
-		} else if (exprType == ExprType.ARITHMETIC) {
-			typeOfExpression = "arithmetic";
-			expectedTypes = "(INT, INT)";
-			isValid = leftReturnType == ReturnType.INT && rightReturnType == ReturnType.INT;
-
-		} else if (exprType == ExprType.RELATIONAL) {
-			typeOfExpression = "relational";
-			expectedTypes = "(INT, INT)";
-			isValid = leftReturnType == ReturnType.INT && rightReturnType == ReturnType.INT;
-
-		} else if (exprType == ExprType.EQUALITY) {
-			typeOfExpression = "equality";
-			expectedTypes = "(INT, INT) or (BOOL, BOOL)";
-			isValid = (leftReturnType == rightReturnType)
-					&& (leftReturnType == ReturnType.INT || leftReturnType == ReturnType.BOOL);
-		}
-
-		if (!isValid) {
-			semanticErrors.add("Type mismatch in " + typeOfExpression + " expression at [" + line + ", " + col
-					+ "]: expected " + expectedTypes + " but got " + actualTypes + "");
-
-		}
-	}
-
+	
 }

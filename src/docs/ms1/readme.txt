@@ -17,6 +17,15 @@
 5. Support for float datatype (integer division for now)
 6. Enforce operator precedence in grammar (ie. * vs +)
 
+// make type checking more complicated 
+// add string, array
+// add 	loop, else if, forloop syntax
+// loop must be int 	
+// function declaration
+// function parameters 
+// focus on type chekcing arrays, function arguments, 
+// make the html look nicer
+// inheritance is bonus marks, focus on above procedural functions 
 
 # Syntax
 
