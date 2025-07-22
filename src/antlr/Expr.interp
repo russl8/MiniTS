@@ -7,7 +7,7 @@ null
 ':'
 '='
 ';'
-'IF'
+'if'
 '('
 ')'
 '!'
@@ -24,8 +24,8 @@ null
 '!='
 '&&'
 '||'
-'INT'
-'BOOL'
+'int'
+'bool'
 null
 null
 null
@@ -58,8 +58,8 @@ null
 null
 null
 null
-INT_TYPE
-BOOL_TYPE
+null
+null
 BOOL
 ID
 NUM

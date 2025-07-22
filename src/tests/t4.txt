@@ -1,10 +1,10 @@
 class MyClass {
-    x : INT = 5;
-    y : BOOL;
+    x : int = 5;
+    y : bool;
     y = False;
-	z : BOOL;
+	z : bool;
     
-    IF (!y) {
+    if (!y) {
         y = y; 
       	y = False || (((( !y ) && True)));  // y should now be true
       	x = x * 2;							// x should now be 10

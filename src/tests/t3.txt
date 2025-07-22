@@ -1,12 +1,12 @@
 class MyClass extends BaseClass {
-    x : INT = 5;
-    y : BOOL;
-    z : INT = 10;
-    b : BOOL = True;
+    x : int = 5;
+    y : bool;
+    z : int = 10;
+    b : bool = True;
 
     y = False;
 
-    IF (x > 0 && y) {
+    if (x > 0 && y) {
         //  Error: Arithmetic expression used in logical OR
         x = (5 + 3) || False;
         

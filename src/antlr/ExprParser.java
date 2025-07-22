@@ -22,7 +22,7 @@ public class ExprParser extends Parser {
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
-		INT_TYPE=25, BOOL_TYPE=26, BOOL=27, ID=28, NUM=29, COMMENT=30, WS=31;
+		T__24=25, T__25=26, BOOL=27, ID=28, NUM=29, COMMENT=30, WS=31;
 	public static final int
 		RULE_prog = 0, RULE_class_decl = 1, RULE_statement = 2, RULE_declaration = 3, 
 		RULE_assignment = 4, RULE_conditional = 5, RULE_expr = 6, RULE_type = 7;
@@ -36,9 +36,9 @@ public class ExprParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'class'", "'extends'", "'{'", "'}'", "':'", "'='", "';'", "'IF'", 
+			null, "'class'", "'extends'", "'{'", "'}'", "':'", "'='", "';'", "'if'", 
 			"'('", "')'", "'!'", "'*'", "'/'", "'%'", "'+'", "'-'", "'<'", "'<='", 
-			"'>'", "'>='", "'=='", "'!='", "'&&'", "'||'", "'INT'", "'BOOL'"
+			"'>'", "'>='", "'=='", "'!='", "'&&'", "'||'", "'int'", "'bool'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -46,7 +46,7 @@ public class ExprParser extends Parser {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, "INT_TYPE", "BOOL_TYPE", "BOOL", "ID", "NUM", "COMMENT", "WS"
+			null, null, null, "BOOL", "ID", "NUM", "COMMENT", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -1265,8 +1265,6 @@ public class ExprParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class TypeContext extends ParserRuleContext {
-		public TerminalNode INT_TYPE() { return getToken(ExprParser.INT_TYPE, 0); }
-		public TerminalNode BOOL_TYPE() { return getToken(ExprParser.BOOL_TYPE, 0); }
 		public TypeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1295,7 +1293,7 @@ public class ExprParser extends Parser {
 			{
 			setState(128);
 			_la = _input.LA(1);
-			if ( !(_la==INT_TYPE || _la==BOOL_TYPE) ) {
+			if ( !(_la==T__24 || _la==T__25) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {

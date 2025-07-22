@@ -22,7 +22,7 @@ public class ExprLexer extends Lexer {
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
-		INT_TYPE=25, BOOL_TYPE=26, BOOL=27, ID=28, NUM=29, COMMENT=30, WS=31;
+		T__24=25, T__25=26, BOOL=27, ID=28, NUM=29, COMMENT=30, WS=31;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
 	};
@@ -35,17 +35,17 @@ public class ExprLexer extends Lexer {
 		return new String[] {
 			"T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", "T__7", "T__8", 
 			"T__9", "T__10", "T__11", "T__12", "T__13", "T__14", "T__15", "T__16", 
-			"T__17", "T__18", "T__19", "T__20", "T__21", "T__22", "T__23", "INT_TYPE", 
-			"BOOL_TYPE", "BOOL", "ID", "NUM", "COMMENT", "WS"
+			"T__17", "T__18", "T__19", "T__20", "T__21", "T__22", "T__23", "T__24", 
+			"T__25", "BOOL", "ID", "NUM", "COMMENT", "WS"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'class'", "'extends'", "'{'", "'}'", "':'", "'='", "';'", "'IF'", 
+			null, "'class'", "'extends'", "'{'", "'}'", "':'", "'='", "';'", "'if'", 
 			"'('", "')'", "'!'", "'*'", "'/'", "'%'", "'+'", "'-'", "'<'", "'<='", 
-			"'>'", "'>='", "'=='", "'!='", "'&&'", "'||'", "'INT'", "'BOOL'"
+			"'>'", "'>='", "'=='", "'!='", "'&&'", "'||'", "'int'", "'bool'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -53,7 +53,7 @@ public class ExprLexer extends Lexer {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, "INT_TYPE", "BOOL_TYPE", "BOOL", "ID", "NUM", "COMMENT", "WS"
+			null, null, null, "BOOL", "ID", "NUM", "COMMENT", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -186,7 +186,7 @@ public class ExprLexer extends Lexer {
 		"\u0000\u0000OP\u0005}\u0000\u0000P\b\u0001\u0000\u0000\u0000QR\u0005:"+
 		"\u0000\u0000R\n\u0001\u0000\u0000\u0000ST\u0005=\u0000\u0000T\f\u0001"+
 		"\u0000\u0000\u0000UV\u0005;\u0000\u0000V\u000e\u0001\u0000\u0000\u0000"+
-		"WX\u0005I\u0000\u0000XY\u0005F\u0000\u0000Y\u0010\u0001\u0000\u0000\u0000"+
+		"WX\u0005i\u0000\u0000XY\u0005f\u0000\u0000Y\u0010\u0001\u0000\u0000\u0000"+
 		"Z[\u0005(\u0000\u0000[\u0012\u0001\u0000\u0000\u0000\\]\u0005)\u0000\u0000"+
 		"]\u0014\u0001\u0000\u0000\u0000^_\u0005!\u0000\u0000_\u0016\u0001\u0000"+
 		"\u0000\u0000`a\u0005*\u0000\u0000a\u0018\u0001\u0000\u0000\u0000bc\u0005"+
@@ -200,10 +200,10 @@ public class ExprLexer extends Lexer {
 		"\u0005!\u0000\u0000xy\u0005=\u0000\u0000y,\u0001\u0000\u0000\u0000z{\u0005"+
 		"&\u0000\u0000{|\u0005&\u0000\u0000|.\u0001\u0000\u0000\u0000}~\u0005|"+
 		"\u0000\u0000~\u007f\u0005|\u0000\u0000\u007f0\u0001\u0000\u0000\u0000"+
-		"\u0080\u0081\u0005I\u0000\u0000\u0081\u0082\u0005N\u0000\u0000\u0082\u0083"+
-		"\u0005T\u0000\u0000\u00832\u0001\u0000\u0000\u0000\u0084\u0085\u0005B"+
-		"\u0000\u0000\u0085\u0086\u0005O\u0000\u0000\u0086\u0087\u0005O\u0000\u0000"+
-		"\u0087\u0088\u0005L\u0000\u0000\u00884\u0001\u0000\u0000\u0000\u0089\u008a"+
+		"\u0080\u0081\u0005i\u0000\u0000\u0081\u0082\u0005n\u0000\u0000\u0082\u0083"+
+		"\u0005t\u0000\u0000\u00832\u0001\u0000\u0000\u0000\u0084\u0085\u0005b"+
+		"\u0000\u0000\u0085\u0086\u0005o\u0000\u0000\u0086\u0087\u0005o\u0000\u0000"+
+		"\u0087\u0088\u0005l\u0000\u0000\u00884\u0001\u0000\u0000\u0000\u0089\u008a"+
 		"\u0005T\u0000\u0000\u008a\u008b\u0005r\u0000\u0000\u008b\u008c\u0005u"+
 		"\u0000\u0000\u008c\u0093\u0005e\u0000\u0000\u008d\u008e\u0005F\u0000\u0000"+
 		"\u008e\u008f\u0005a\u0000\u0000\u008f\u0090\u0005l\u0000\u0000\u0090\u0091"+

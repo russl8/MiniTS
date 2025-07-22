@@ -1,10 +1,10 @@
 class MyClass {
-    x : INT = 5;
-    y : BOOL;
+    x : int = 5;
+    y : bool;
     y = False;
     
     // this if statement should be true
-    IF (x > 0 && !y ) { 
+    if (x > 0 && !y ) { 
         x = x + 1; // x=6
 		x = x + 1; // x=7
     }
