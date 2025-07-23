@@ -7,7 +7,7 @@ import java.util.Set;
 
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
-import model.Expression.Expression.ReturnType;
+import model.Expression.Expression.PrimitiveType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
 public class ClassDeclaration extends Expression {
@@ -15,8 +15,8 @@ public class ClassDeclaration extends Expression {
 	public String className;
 	public String superClass;
 
-	public ReturnType getReturnType() {
-		return ReturnType.NONE;
+	public PrimitiveType getReturnType() {
+		return PrimitiveType.NONE;
 	}
 
 	public ExprType getExprType() {

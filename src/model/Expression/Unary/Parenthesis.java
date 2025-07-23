@@ -2,11 +2,11 @@ package model.Expression.Unary;
 
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
-import model.Expression.Expression.ReturnType;
+import model.Expression.Expression.PrimitiveType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
 public class Parenthesis extends UnaryExpression {
-	public ReturnType getReturnType() {
+	public PrimitiveType getReturnType() {
 		// TODO Auto-generated method stub
 		return expr.getReturnType();
 	}

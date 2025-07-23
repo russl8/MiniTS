@@ -50,10 +50,11 @@ expr
     | NUM                                  # NumberLiteral
     | BOOL                                 # BooleanLiteral
     | CHAR								   # CharacterLiteral
+    | '[' expr? (',' expr)* ']'            # ListLiteral
     ;
 
 // TYPES
-type: 'int' | 'bool' | 'char';
+type: 'int' | 'bool' | 'char' | 'list' '[' type ']';
 
 // LEXICAL TOKENS
 BOOL: 'True' | 'False';

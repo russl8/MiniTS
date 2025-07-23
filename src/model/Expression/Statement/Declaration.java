@@ -5,17 +5,17 @@ import java.util.Set;
 
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
-import model.Expression.Expression.ReturnType;
+import model.Expression.Expression.PrimitiveType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
 public class Declaration extends Expression {
 
 	public String var;
-	public ReturnType type;
+	public PrimitiveType type;
 	public Expression expr;
 	public boolean isInitialized;
 
-	public ReturnType getReturnType() {
+	public PrimitiveType getReturnType() {
 		return type;
 	}
 
@@ -31,7 +31,7 @@ public class Declaration extends Expression {
 		return vars;
 	}
 
-	public Declaration(String var, ReturnType type, int line, int col) {
+	public Declaration(String var, PrimitiveType type, int line, int col) {
 		this.var = var;
 		this.type = type;
 		this.isInitialized = false;
@@ -51,7 +51,7 @@ public class Declaration extends Expression {
 		return col;
 	}
 
-	public Declaration(String var, ReturnType type, Expression expr, int line, int col) {
+	public Declaration(String var, PrimitiveType type, Expression expr, int line, int col) {
 		this(var, type, line, col);
 		this.expr = expr;
 		this.isInitialized = true;

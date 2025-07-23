@@ -5,7 +5,7 @@ import antlr.ExprParser;
 import model.*;
 import model.Expression.Expression;
 import model.Expression.ExpressionProcessor;
-import model.Expression.Expression.ReturnType;
+import model.Expression.Expression.PrimitiveType;
 import model.Expression.OperationVisitor.ExpressionTypeChecker;
 import model.Expression.Statement.ClassDeclaration;
 import model.Program.AntlrToProgram;
@@ -15,7 +15,6 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.w3c.dom.CDATASection;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -51,7 +50,7 @@ public class ExpressionApp {
 				try {
 					// Scoping doesnt really work :(
 					List<String> semanticErrors = new ArrayList<>();
-					Map<String, ReturnType> vars = new HashMap<>();
+					Map<String, PrimitiveType> vars = new HashMap<>();
 
 					String fileName = new File(filePath).getName();
 					fileName = fileName.substring(0, fileName.lastIndexOf('.'));

@@ -2,14 +2,14 @@ package model.Expression.Unary;
 
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
-import model.Expression.Expression.ReturnType;
+import model.Expression.Expression.PrimitiveType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
 public class Not extends UnaryExpression {
 
 	@Override
-	public ReturnType getReturnType() {
-		return ReturnType.BOOL;
+	public PrimitiveType getReturnType() {
+		return PrimitiveType.BOOL;
 	}
 
 	public ExprType getExprType() {

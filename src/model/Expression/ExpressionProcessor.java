@@ -2,7 +2,7 @@ package model.Expression;
 
 import java.util.*;
 
-import model.Expression.Expression.ReturnType;
+import model.Expression.Expression.PrimitiveType;
 import model.Expression.Binary.Addition;
 import model.Expression.Binary.And;
 import model.Expression.Binary.Division;
@@ -85,19 +85,19 @@ public class ExpressionProcessor {
 		}
 	}
 
-	private Value getValue(ReturnType type, Expression expr) {
+	private Value getValue(PrimitiveType type, Expression expr) {
 		/**
 		 * Helper to evaluate an expression given a type.
 		 * 
 		 * Ex: getValue(bool, expr=[true && (p && q)]) -> Value[{type=bool, value=true}]
 		 */
 		Value val;
-		if (type == ReturnType.BOOL) {
-			val = new Value(ReturnType.BOOL, evaluateBoolean(expr));
-		} else if (type == ReturnType.INT) {
-			val = new Value(ReturnType.INT, evaluateInteger(expr));
-		} else if (type == ReturnType.CHAR) {
-			val = new Value(ReturnType.CHAR, evaluateCharacter(expr));
+		if (type == PrimitiveType.BOOL) {
+			val = new Value(PrimitiveType.BOOL, evaluateBoolean(expr));
+		} else if (type == PrimitiveType.INT) {
+			val = new Value(PrimitiveType.INT, evaluateInteger(expr));
+		} else if (type == PrimitiveType.CHAR) {
+			val = new Value(PrimitiveType.CHAR, evaluateCharacter(expr));
 		} else {
 			throw new IllegalArgumentException("Unsupported expression type: " + type);
 		}

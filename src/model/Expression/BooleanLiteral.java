@@ -4,14 +4,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import model.Expression.Expression.ExprType;
-import model.Expression.Expression.ReturnType;
+import model.Expression.Expression.PrimitiveType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
 public class BooleanLiteral extends Expression {
 	public boolean val;
 
-	public ReturnType getReturnType() {
-		return ReturnType.BOOL;
+	public PrimitiveType getReturnType() {
+		return PrimitiveType.BOOL;
 	}
 
 	public ExprType getExprType() {

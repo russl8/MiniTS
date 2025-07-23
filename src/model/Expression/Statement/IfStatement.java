@@ -7,15 +7,15 @@ import java.util.Set;
 
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
-import model.Expression.Expression.ReturnType;
+import model.Expression.Expression.PrimitiveType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
 public class IfStatement extends Expression {
 	public Expression cond;
 	public List<Expression> expressions;
 
-	public ReturnType getReturnType() {
-		return ReturnType.NONE;
+	public PrimitiveType getReturnType() {
+		return PrimitiveType.NONE;
 	}
 
 	public ExprType getExprType() {

@@ -2,13 +2,13 @@ package model.Expression.Binary;
 
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
-import model.Expression.Expression.ReturnType;
+import model.Expression.Expression.PrimitiveType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
 public class And extends BinaryExpression  {
 	@Override
-	public ReturnType getReturnType() {
-		return ReturnType.BOOL;
+	public PrimitiveType getReturnType() {
+		return PrimitiveType.BOOL;
 	}
 
 	public ExprType getExprType() {

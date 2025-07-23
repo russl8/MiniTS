@@ -1,0 +1,7 @@
+class testList {
+	l1 : list[int] = [1, 2, 3, 2+3, (3*3) ];
+	
+	l2 : list[char] = [ '1', 'g' , 'j'];
+	
+	l3: list[bool] = [];
+}

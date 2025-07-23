@@ -1,17 +1,17 @@
 package model.Expression;
 
-import model.Expression.Expression.ReturnType;
+import model.Expression.Expression.PrimitiveType;
 
 public class Value {
-	public ReturnType type;
+	public PrimitiveType type;
 	private Object value;
 
-	public Value(ReturnType type) {
+	public Value(PrimitiveType type) {
 		this.type = type;
 		this.value = null;
 	}
 
-	public Value(ReturnType type, Object value) {
+	public Value(PrimitiveType type, Object value) {
 		this.type = type;
 		this.value = value;
 	}

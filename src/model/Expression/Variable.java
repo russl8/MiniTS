@@ -7,17 +7,17 @@ import model.Expression.OperationVisitor.OperationVisitor;
 
 public class Variable extends Expression {
 	public String var;
-	public ReturnType returnType;
+	public PrimitiveType returnType;
 
 	@Override
-	public ReturnType getReturnType() {
+	public PrimitiveType getReturnType() {
 		return returnType;
 	}
 
 	public ExprType getExprType() {
-		if (this.returnType == ReturnType.INT) {
+		if (this.returnType == PrimitiveType.INT) {
 			return ExprType.ARITHMETIC;
-		} else if (this.returnType == ReturnType.BOOL) {
+		} else if (this.returnType == PrimitiveType.BOOL) {
 			return ExprType.LOGICAL;
 		}
 		return ExprType.NONE;
@@ -30,7 +30,7 @@ public class Variable extends Expression {
 		return res;
 	}
 
-	public Variable(String var, ReturnType returnType, int line, int col) {
+	public Variable(String var, PrimitiveType returnType, int line, int col) {
 		this.var = var;
 		this.returnType = returnType;
 		this.line = line;

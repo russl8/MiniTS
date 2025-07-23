@@ -2,15 +2,15 @@ package model.Expression.Binary;
 
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
-import model.Expression.Expression.ReturnType;
+import model.Expression.Expression.PrimitiveType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
 public class Addition extends BinaryExpression {
 
 	@Override
-	public ReturnType getReturnType() {
+	public PrimitiveType getReturnType() {
 		// TODO Auto-generated method stub
-		return ReturnType.INT;
+		return PrimitiveType.INT;
 	}
 
 	public ExprType getExprType() {

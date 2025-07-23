@@ -117,6 +117,13 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParenthesis(ExprParser.ParenthesisContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ListLiteral}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitListLiteral(ExprParser.ListLiteralContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code LessThan}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree

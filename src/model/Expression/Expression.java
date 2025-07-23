@@ -17,7 +17,7 @@ public abstract class Expression {
 
 	public abstract int getCol();
 
-	public enum ReturnType {
+	public enum PrimitiveType {
 		INT, BOOL, NONE, CHAR
 	};
 
@@ -25,7 +25,7 @@ public abstract class Expression {
 		LOGICAL, RELATIONAL, EQUALITY, ARITHMETIC, NONE
 	};
 
-	public abstract ReturnType getReturnType();
+	public abstract PrimitiveType getReturnType();
 
 	public abstract ExprType getExprType();
 

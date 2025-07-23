@@ -4,14 +4,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import model.Expression.Expression.ExprType;
-import model.Expression.Expression.ReturnType;
+import model.Expression.Expression.PrimitiveType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
 public class NumberLiteral extends Expression {
 	public int val;
 
-	public ReturnType getReturnType() {
-		return ReturnType.INT;
+	public PrimitiveType getReturnType() {
+		return PrimitiveType.INT;
 	}
 
 	public ExprType getExprType() {

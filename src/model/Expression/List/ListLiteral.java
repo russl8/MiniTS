@@ -1,18 +1,15 @@
-package model.Expression;
+package model.Expression.List;
 
 import java.util.Set;
 
+import model.Expression.Expression;
 import model.Expression.OperationVisitor.OperationVisitor;
 
-public class CharacterLiteral extends Expression {
-	public char val;
-
-	public CharacterLiteral(char val, int line, int col) {
-		this.val = val;
-		this.line = line;
-		this.col = col;
-	}
-
+public class ListLiteral extends Expression {
+	
+	public ExprType exprType;
+	
+	
 	@Override
 	public Set<String> getVariables() {
 		// TODO Auto-generated method stub
@@ -22,32 +19,27 @@ public class CharacterLiteral extends Expression {
 	@Override
 	public <T> T accept(OperationVisitor T) {
 		// TODO Auto-generated method stub
-		return T.visitCharacterLiteral(this);
+		return null;
 	}
 
 	@Override
 	public int getLine() {
-		return this.line;
+		return 0;
 	}
 
 	@Override
 	public int getCol() {
-		return this.col;
+		return 0;
 	}
 
 	@Override
 	public PrimitiveType getReturnType() {
-		return PrimitiveType.CHAR;
+		return PrimitiveType.NONE;
 	}
 
 	@Override
 	public ExprType getExprType() {
 		return ExprType.NONE;
-	}
-
-	@Override
-	public String toString() {
-		return "" + val;
 	}
 
 }

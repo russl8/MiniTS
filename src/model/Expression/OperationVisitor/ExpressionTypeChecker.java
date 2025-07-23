@@ -56,15 +56,15 @@ import model.Expression.Statement.IfStatement;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
 import model.Expression.Expression.ExprType;
-import model.Expression.Expression.ReturnType;
+import model.Expression.Expression.PrimitiveType;
 import model.Program.Program;
 
 public class ExpressionTypeChecker implements OperationVisitor {
 
 	public List<String> semanticErrors;
-	public Map<String, ReturnType> vars; // stores all the variables declared in the program so far
+	public Map<String, PrimitiveType> vars; // stores all the variables declared in the program so far
 
-	public ExpressionTypeChecker(List<String> semanticErrors, Map<String, ReturnType> vars) {
+	public ExpressionTypeChecker(List<String> semanticErrors, Map<String, PrimitiveType> vars) {
 		this.vars = vars;
 		this.semanticErrors = semanticErrors;
 	}
@@ -76,10 +76,10 @@ public class ExpressionTypeChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitDeclarationWithOptionalAssignment(Declaration d) {
-		ReturnType varType = vars.get(d.var);
+		PrimitiveType varType = vars.get(d.var);
 		// If declaration is initialized, typecheck its expressoin
 		if (d.isInitialized) {
-			ReturnType exprType = d.expr.getReturnType();
+			PrimitiveType exprType = d.expr.getReturnType();
 			if (varType != exprType) {
 				semanticErrors.add("Type mismatch at [" + d.getLine() + ", " + d.getCol() + "]: expected " + varType
 						+ " = " + varType + " assignment but got " + varType + " = " + exprType);
@@ -98,14 +98,14 @@ public class ExpressionTypeChecker implements OperationVisitor {
 
 		String var = a.var;
 		// open up parenthesis to get the inside expr
-		ReturnType exprReturnType = a.expr.getReturnType();
+		PrimitiveType exprReturnType = a.expr.getReturnType();
 
 		// make sure that the variable is being assigned properly
 		// (int -> int, bool -> bool)
-		if (this.vars.get(var) == ReturnType.BOOL && exprReturnType != ReturnType.BOOL) {
+		if (this.vars.get(var) == PrimitiveType.BOOL && exprReturnType != PrimitiveType.BOOL) {
 			semanticErrors.add("Type mismatch at [" + a.getLine() + ", " + a.getCol()
 					+ "]: expected BOOL = BOOL assignment but got BOOL = " + exprReturnType);
-		} else if (this.vars.get(var) == ReturnType.INT && exprReturnType != ReturnType.INT) {
+		} else if (this.vars.get(var) == PrimitiveType.INT && exprReturnType != PrimitiveType.INT) {
 			semanticErrors.add("Type mismatch at line [" + a.getLine() + ", " + a.getCol()
 					+ "]: expected INT = INT assignment but got INT = " + a.expr.getReturnType());
 		}
@@ -121,7 +121,7 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		Expression cond = ifs.cond;
 
 		// cond must be a boolean expression
-		if (cond.getReturnType() != ReturnType.BOOL) {
+		if (cond.getReturnType() != PrimitiveType.BOOL) {
 			semanticErrors.add("Type mismatch in logical expression at [" + ifs.getLine() + ", " + ifs.getCol()
 					+ "] expected ( BOOL ) but got ( " + cond.getReturnType() + " )");
 		}
@@ -215,7 +215,7 @@ public class ExpressionTypeChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitNot(Not not) {
-		if (not.getReturnType() != ReturnType.BOOL) {
+		if (not.getReturnType() != PrimitiveType.BOOL) {
 			semanticErrors.add("Type mismatch in logical expression at [" + not.getLine() + ", " + not.getCol()
 					+ "] : expected ( BOOL ) but got ( " + not.getReturnType() + " )");
 		}
@@ -274,8 +274,8 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		int line = left.getLine();
 		int col = left.getCol();
 
-		ReturnType leftReturnType = left.getReturnType();
-		ReturnType rightReturnType = right.getReturnType();
+		PrimitiveType leftReturnType = left.getReturnType();
+		PrimitiveType rightReturnType = right.getReturnType();
 
 		String typeOfExpression = "";
 		String expectedTypes = "";
@@ -284,23 +284,23 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		if (exprType == ExprType.LOGICAL) {
 			typeOfExpression = "logical";
 			expectedTypes = "(BOOL, BOOL)";
-			isValid = leftReturnType == ReturnType.BOOL && rightReturnType == ReturnType.BOOL;
+			isValid = leftReturnType == PrimitiveType.BOOL && rightReturnType == PrimitiveType.BOOL;
 
 		} else if (exprType == ExprType.ARITHMETIC) {
 			typeOfExpression = "arithmetic";
 			expectedTypes = "(INT, INT)";
-			isValid = leftReturnType == ReturnType.INT && rightReturnType == ReturnType.INT;
+			isValid = leftReturnType == PrimitiveType.INT && rightReturnType == PrimitiveType.INT;
 
 		} else if (exprType == ExprType.RELATIONAL) {
 			typeOfExpression = "relational";
 			expectedTypes = "(INT, INT)";
-			isValid = leftReturnType == ReturnType.INT && rightReturnType == ReturnType.INT;
+			isValid = leftReturnType == PrimitiveType.INT && rightReturnType == PrimitiveType.INT;
 
 		} else if (exprType == ExprType.EQUALITY) {
 			typeOfExpression = "equality";
 			expectedTypes = "(INT, INT) or (BOOL, BOOL)";
 			isValid = (leftReturnType == rightReturnType)
-					&& (leftReturnType == ReturnType.INT || leftReturnType == ReturnType.BOOL);
+					&& (leftReturnType == PrimitiveType.INT || leftReturnType == PrimitiveType.BOOL);
 		}
 
 		if (!isValid) {

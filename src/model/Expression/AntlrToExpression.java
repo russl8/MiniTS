@@ -16,8 +16,9 @@ import model.Expression.Binary.Multiplication;
 import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
+import model.Expression.List.ListLiteral;
 import model.Expression.Expression.ExprType;
-import model.Expression.Expression.ReturnType;
+import model.Expression.Expression.PrimitiveType;
 import model.Expression.Statement.Assignment;
 import model.Expression.Statement.ClassDeclaration;
 import model.Expression.Statement.Declaration;
@@ -40,10 +41,10 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	 * sure that the order in which we add declared variables in the `vars` is
 	 * identical to how they are declared in the input program.
 	 */
-	public Map<String, ReturnType> vars; // stores all the variables declared in the program so far
+	public Map<String, PrimitiveType> vars; // stores all the variables declared in the program so far
 	public List<String> semanticErrors; // 1. duplicate declaration 2. reference to undeclared variable
 
-	public AntlrToExpression(List<String> semanticErrors, Map<String, ReturnType> vars) {
+	public AntlrToExpression(List<String> semanticErrors, Map<String, PrimitiveType> vars) {
 		this.vars = vars;
 		this.semanticErrors = semanticErrors;
 	}
@@ -80,13 +81,13 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 
 	@Override
 	public Expression visitDeclarationWithOptionalAssignment(DeclarationWithOptionalAssignmentContext ctx) {
-		Map<String, ReturnType> varTypes = Map.of("bool", ReturnType.BOOL, "int", ReturnType.INT, "char",
-				ReturnType.CHAR);
+		Map<String, PrimitiveType> varTypes = Map.of("bool", PrimitiveType.BOOL, "int", PrimitiveType.INT, "char",
+				PrimitiveType.CHAR);
 		String var = ctx.getChild(0).getText();
 		String type = ctx.type().getText();
 
 		// get variable type
-		ReturnType varType = varTypes.get(ctx.getChild(2).getText());
+		PrimitiveType varType = varTypes.get(ctx.getChild(2).getText());
 
 		// get line and col
 		Token id = ctx.ID().getSymbol();
@@ -250,6 +251,14 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	/**
 	 * Variables, Literals
 	 */
+	
+	@Override
+	public Expression visitListLiteral(ListLiteralContext ctx) {
+		
+		
+		return new ListLiteral();
+	}
+
 
 	@Override
 	public Expression visitVariable(VariableContext ctx) {
@@ -263,9 +272,10 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 			semanticErrors.add("Variable '" + var + "' not declared, line=" + line + " col=" + col);
 		}
 
-		ReturnType returnType = vars.get(var);
-		return new Variable(var, returnType, line, col);
+		PrimitiveType type = vars.get(var);
+		return new Variable(var, type, line, col);
 	}
+
 
 	@Override
 	public Expression visitBooleanLiteral(BooleanLiteralContext ctx) {
