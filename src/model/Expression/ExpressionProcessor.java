@@ -33,11 +33,13 @@ public class ExpressionProcessor {
 	 * 2. no redeclaration of variables
 	 */
 	public List<String> printStatements;
-	public Map<String, Value> values; // key=var
+	public Map<String, Value> primitiveVars; // Stores values for primitive variables only
+	public Map<String, Object> objectVars;
 
 	public ExpressionProcessor() {
 		this.printStatements = new ArrayList<>();
-		this.values = new HashMap<>();
+		this.primitiveVars = new HashMap<>();
+		this.objectVars = new HashMap<>();
 	}
 
 	public void evaluateExpression(Expression e) {
@@ -49,20 +51,21 @@ public class ExpressionProcessor {
 			if (!d.isInitialized) {
 				val = new Value(d.getReturnType());
 			} else if (d.isInitialized) {
-				val = getValue(d.getReturnType(), expr);
+				val = evaluateExpression(d.getReturnType(), expr);
 			} else {
 				throw new IllegalArgumentException("Unsupported expression type: " + d.getReturnType());
 			}
 
 			// update the values map
-			this.values.put(d.var, val);
+			this.primitiveVars.put(d.var, val);
 
 		} else if (e instanceof Assignment) {
-			Assignment a = (Assignment) e;
-			Expression expr = a.expr;
-			Value val = getValue(expr.getReturnType(), expr);
-
-			this.values.put(a.var, val);
+			// TODO: primitave vs obj assignment
+//			Assignment a = (Assignment) e;
+//			Expression expr = a.expr;
+//			Value val = evaluateExpression(expr.getReturnType(), expr);
+//
+//			this.values.put(a.var, val);
 		} else if (e instanceof IfStatement) {
 			// evaluate expression. if true then evaluate all of its expressions
 			IfStatement ifs = (IfStatement) e;
@@ -78,13 +81,15 @@ public class ExpressionProcessor {
 			}
 		} else if (e instanceof ListDeclaration) {
 			System.out.println(e + " is a list declaration ");
+			ListDeclaration ld = (ListDeclaration) e;
+			this.objectVars.put(ld.var, ld.items);
 		} else {
 			// not a declaration/assignment/if. ignore for now
 			System.err.println("Warning, unhandled statement, ignoring for now: " + e);
 		}
 	}
 
-	private Value getValue(PrimitiveType type, Expression expr) {
+	private Value evaluateExpression(PrimitiveType type, Expression expr) {
 		/**
 		 * Helper to evaluate an expression given a type.
 		 * 
@@ -123,7 +128,7 @@ public class ExpressionProcessor {
 			Modulo m = (Modulo) e;
 			return evaluateInteger(m.left) % evaluateInteger(m.right);
 		} else if (e instanceof Variable) {
-			return this.values.get(((Variable) e).var).getValueAsInt();
+			return this.primitiveVars.get(((Variable) e).var).getValueAsInt();
 		} else if (e instanceof NumberLiteral) {
 			return ((NumberLiteral) e).val;
 		}
@@ -171,11 +176,12 @@ public class ExpressionProcessor {
 			LessEqualThan lte = (LessEqualThan) e;
 			return evaluateInteger(lte.left) <= evaluateInteger(lte.right);
 		} else if (e instanceof Variable) {
-			return this.values.get(((Variable) e).var).getValueAsBool();
+			return this.primitiveVars.get(((Variable) e).var).getValueAsBool();
 		} else if (e instanceof BooleanLiteral) {
 			return ((BooleanLiteral) e).val;
 		}
 		System.err.println("Could not properly evaluate boolean expression " + e);
 		return false;
 	}
+
 }

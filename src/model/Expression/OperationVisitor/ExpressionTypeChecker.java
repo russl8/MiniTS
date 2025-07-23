@@ -52,6 +52,7 @@ import model.Expression.Binary.Subtraction;
 import model.Expression.Declaration.ClassDeclaration;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
+import model.Expression.List.ListLiteral;
 import model.Expression.Statement.Assignment;
 import model.Expression.Statement.IfStatement;
 import model.Expression.Unary.Not;
@@ -95,12 +96,25 @@ public class ExpressionTypeChecker implements OperationVisitor {
 	@Override
 	public <T> T visitListDeclaration(ListDeclaration ld) {
 		PrimitiveType listType = ld.itemType;
-		for (Expression e : ld.items) {
-			if (e.getReturnType() != listType) {
-				semanticErrors.add("Type mismatch in list declaration at [" + ld.getLine() + ", " + ld.getCol() + "] "
-						+ e.getReturnType() + " found in list[" + listType + "]");
+
+		if (ld.isInitialized) {
+			// make sure the RHS of declaration is a list
+			if (!(ld.items instanceof ListLiteral)) {
+				semanticErrors.add("Error with declaration at [" + ld.items.getLine() + ", " + ld.items.getCol() + "], "
+						+ ld.items.getReturnType() + " cannot be assigned to a list");
+				return null;
+			}
+			// if RHS is a list, typecheck its items
+			ListLiteral ll = (ListLiteral) ld.items;
+			for (Expression e : ll.items) {
+				if (e.getReturnType() != listType) {
+					semanticErrors.add("Type mismatch in list declaration at [" + e.getLine() + ", " + e.getCol() + "] "
+							+ e.getReturnType() + " found in list[" + listType + "]");
+				}
+				break;
 			}
 		}
+
 		return null;
 	}
 

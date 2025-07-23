@@ -11,22 +11,25 @@ import model.Expression.OperationVisitor.OperationVisitor;
 
 public class ListDeclaration extends Expression implements Declaration {
 
-	public List<Expression> items;
+	public Expression items;
 	public PrimitiveType itemType;
 	public String var;
 	private int line;
 	private int col;
+	public boolean isInitialized;
 
 	public ListDeclaration(String var, PrimitiveType itemType, int line, int col) {
-		this.items = new ArrayList<>();
 		this.itemType = itemType;
 		this.var = var;
 		this.line = line;
 		this.col = col;
+		this.isInitialized = false;
 	}
 
-	public void add(Expression e) {
-		this.items.add(e);
+	public ListDeclaration(String var, Expression items, PrimitiveType itemType, int line, int col) {
+		this(var, itemType, line, col);
+		this.items = items;
+		this.isInitialized = true;
 	}
 
 	@Override
@@ -63,11 +66,7 @@ public class ListDeclaration extends Expression implements Declaration {
 
 	@Override
 	public String toString() {
-		String res = this.var + " : list [" + itemType + "] = [ ";
-		for (Expression e : items) {
-			res += e.toString() + ", ";
-		}
-		res += "] ";
+		String res = this.var + " : list [" + itemType + "] = " + this.items;
 		return res;
 	}
 }

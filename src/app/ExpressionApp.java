@@ -62,9 +62,8 @@ public class ExpressionApp {
 					AntlrToProgram progVisitor = new AntlrToProgram(semanticErrors, vars);
 					Program prog = progVisitor.visit(AST);
 
-					
 					ExpressionTypeChecker typeCheckerVisitor = new ExpressionTypeChecker(semanticErrors, vars);
-					
+
 					for (Expression classExpr : prog.expressions) {
 						ClassDeclaration cd = (ClassDeclaration) classExpr;
 						// TODO: Perform type checking on class expressions
@@ -87,10 +86,13 @@ public class ExpressionApp {
 							}
 
 							/**
-							 * Replac all printing operations with e.accept(writerVisitor)
+							 * Replace all printing operations with e.accept(writerVisitor)
 							 */
-							for (String var : ep.values.keySet()) {
-								writer.println("<p>&#9;" + var + " : " + ep.values.get(var) + "</p>");
+							for (String var : ep.primitiveVars.keySet()) {
+								writer.println("<p>&#9;" + var + " : " + ep.primitiveVars.get(var) + "</p>");
+							}
+							for (String var : ep.objectVars.keySet()) {
+								writer.println("<p>&#9;" + var + " : " + ep.objectVars.get(var) + "</p>");
 							}
 						}
 					} else {

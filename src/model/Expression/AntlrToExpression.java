@@ -116,6 +116,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		 */
 		else {
 			String objectType = declType.getChild(0).getText();
+			// Var already declared error
 			if (vars.keySet().contains(var)) {
 				semanticErrors.add("Variable " + var + " already declared,  line=" + line + " col=" + col);
 			} else {
@@ -124,16 +125,14 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 
 			if (objectType.equals("list")) {
 				String itemType = declType.getChild(2).getText();
-				ListDeclaration ld = new ListDeclaration(var, primitaveTypes.get(itemType), line, col);
-
+				Expression ld;
 				if (isInitialized) {
 					// Populate list
-					ParseTree listContext = ctx.getChild(4);
-					boolean isNonEmptyInitialization = listContext.getChildCount() > 2;
-
-					for (int i = 1; isNonEmptyInitialization && i < listContext.getChildCount(); i += 2) {
-						ld.add(visit(listContext.getChild(i)));
-					}
+					Expression uncheckedListLiteral = visit(ctx.getChild(4));
+					ld = new ListDeclaration(var, uncheckedListLiteral, primitaveTypes.get(itemType), line, col);
+//					System.out.println(uncheckedListLiteral);
+				} else {
+					ld = new ListDeclaration(var, primitaveTypes.get(itemType), line, col);
 				}
 				return ld;
 			} else {
@@ -297,8 +296,18 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		 * 
 		 * iterate through ctx.expr[1:]. visit those and add them to the List
 		 */
+		Token id = ctx.getStart();
+		int line = id.getLine();
+		int col = id.getCharPositionInLine() + 1;
 
-		return new ListLiteral();
+		ListLiteral ll = new ListLiteral(line, col);
+
+		boolean isNonEmptyInitialization = ctx.getChildCount() > 2;
+
+		for (int i = 1; isNonEmptyInitialization && i < ctx.getChildCount(); i += 2) {
+			ll.add(visit(ctx.getChild(i)));
+		}
+		return ll;
 	}
 
 	@Override
