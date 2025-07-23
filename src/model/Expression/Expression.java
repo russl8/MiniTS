@@ -18,7 +18,7 @@ public abstract class Expression {
 	public abstract int getCol();
 
 	public enum ReturnType {
-		INT, BOOL, NONE
+		INT, BOOL, NONE, CHAR
 	};
 
 	public enum ExprType {

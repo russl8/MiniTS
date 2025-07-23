@@ -47,28 +47,22 @@ public class ExpressionProcessor {
 
 			if (!d.isInitialized) {
 				val = new Value(d.getReturnType());
-			} else if (d.getReturnType() == ReturnType.BOOL) {
-				val = new Value(ReturnType.BOOL, evaluateBoolean(expr));
-			} else if (d.getReturnType() == ReturnType.INT) {
-				val = new Value(ReturnType.INT, evaluateInteger(expr));
+			} else if (d.isInitialized) {
+				val = getValue(d.getReturnType(), expr);
 			} else {
 				throw new IllegalArgumentException("Unsupported expression type: " + d.getReturnType());
 			}
 
+			// update the values map
 			this.values.put(d.var, val);
+
 //			System.out.println(e + " " + this.values);
 		} else if (e instanceof Assignment) {
 			Assignment a = (Assignment) e;
-			Value val;
 //			System.out.println("Looking at assignment " + a);
 			Expression expr = a.expr;
-			if (expr.getReturnType() == ReturnType.BOOL) {
-				val = new Value(ReturnType.BOOL, evaluateBoolean(expr));
-			} else if (expr.getReturnType() == ReturnType.INT) {
-				val = new Value(ReturnType.INT, evaluateInteger(expr));
-			} else {
-				throw new IllegalArgumentException("Unsupported expression type: " + expr.getReturnType());
-			}
+			Value val = getValue(expr.getReturnType(), expr);
+
 			this.values.put(a.var, val);
 //			System.out.println(e + " " + this.values);
 		} else if (e instanceof IfStatement) {
@@ -89,6 +83,25 @@ public class ExpressionProcessor {
 			// not a declaration/assignment/if. ignore for now
 			System.err.println("Warning, unhandled statement, ignoring for now: " + e);
 		}
+	}
+
+	private Value getValue(ReturnType type, Expression expr) {
+		/**
+		 * Helper to evaluate an expression given a type.
+		 * 
+		 * Ex: getValue(bool, expr=[true && (p && q)]) -> Value[{type=bool, value=true}]
+		 */
+		Value val;
+		if (type == ReturnType.BOOL) {
+			val = new Value(ReturnType.BOOL, evaluateBoolean(expr));
+		} else if (type == ReturnType.INT) {
+			val = new Value(ReturnType.INT, evaluateInteger(expr));
+		} else if (type == ReturnType.CHAR) {
+			val = new Value(ReturnType.CHAR, evaluateCharacter(expr));
+		} else {
+			throw new IllegalArgumentException("Unsupported expression type: " + type);
+		}
+		return val;
 	}
 
 	private int evaluateInteger(Expression e) {
@@ -117,6 +130,16 @@ public class ExpressionProcessor {
 		}
 		System.err.println("Could not properly evaluate integer expression " + e);
 		return -1;
+	}
+
+	private char evaluateCharacter(Expression e) {
+		if (e instanceof CharacterLiteral) {
+			return ((CharacterLiteral) e).val;
+		} else {
+			System.err.println("Could not properly evaluate character expression " + e);
+			return '\0';
+		}
+
 	}
 
 	private boolean evaluateBoolean(Expression e) {

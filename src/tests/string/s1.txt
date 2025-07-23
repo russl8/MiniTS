@@ -1,0 +1,11 @@
+class MyClass extends BaseClass {
+    aa : char;
+	bbb : char = 'g';
+	c : char;
+	aa = '2';
+	bbb = 'h'; 
+	
+	//final aa=2
+	//final bbb=h
+	//final c=null
+}

@@ -49,15 +49,17 @@ expr
     | ID                                   # Variable
     | NUM                                  # NumberLiteral
     | BOOL                                 # BooleanLiteral
+    | CHAR								   # CharacterLiteral
     ;
 
 // TYPES
-type: 'int' | 'bool';
+type: 'int' | 'bool' | 'char';
 
 // LEXICAL TOKENS
 BOOL: 'True' | 'False';
-ID: [a-zA-Z][a-zA-Z0-9_]*;
 NUM: '0' | '-'?[1-9][0-9]*;
+CHAR: '\'' [a-zA-Z0-9_] '\'';
+ID: [a-zA-Z][a-zA-Z0-9_]*;
 
 // WHITESPACE AND COMMENTS
 COMMENT: '//' ~[\r\n]* -> skip;

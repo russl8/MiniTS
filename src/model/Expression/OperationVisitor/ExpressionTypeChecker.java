@@ -30,6 +30,7 @@ import antlr.ExprParser.TypeContext;
 import antlr.ExprParser.VariableAssignmentContext;
 import antlr.ExprParser.VariableContext;
 import model.Expression.BooleanLiteral;
+import model.Expression.CharacterLiteral;
 import model.Expression.Expression;
 import model.Expression.NumberLiteral;
 import model.Expression.Utils;
@@ -242,6 +243,11 @@ public class ExpressionTypeChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitNumberLiteral(NumberLiteral nl) {
+		return null;
+	}
+
+	@Override
+	public <T> T visitCharacterLiteral(CharacterLiteral cl) {
 		return null;
 	}
 
