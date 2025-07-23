@@ -27,7 +27,7 @@ assignment:
 
 // CONDITIONALS
 conditional:
-    'IF' '(' expr ')' '{' (statement)* '}' #IfStatement;
+    'if' '(' expr ')' '{' (statement)* '}' #IfStatement;
 
 // EXPRESSIONS
 expr
@@ -49,17 +49,17 @@ expr
     | ID                                   # Variable
     | NUM                                  # NumberLiteral
     | BOOL                                 # BooleanLiteral
+    | CHAR								   # CharacterLiteral
     ;
 
 // TYPES
-type: INT_TYPE | BOOL_TYPE;
+type: 'int' | 'bool' | 'char';
 
 // LEXICAL TOKENS
-INT_TYPE: 'INT';
-BOOL_TYPE: 'BOOL';
 BOOL: 'True' | 'False';
-ID: [a-zA-Z][a-zA-Z0-9_]*;
 NUM: '0' | '-'?[1-9][0-9]*;
+CHAR: '\'' [a-zA-Z0-9_] '\'';
+ID: [a-zA-Z][a-zA-Z0-9_]*;
 
 // WHITESPACE AND COMMENTS
 COMMENT: '//' ~[\r\n]* -> skip;

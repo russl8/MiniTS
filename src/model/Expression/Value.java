@@ -2,7 +2,6 @@ package model.Expression;
 
 import model.Expression.Expression.ReturnType;
 
-
 public class Value {
 	public ReturnType type;
 	private Object value;
@@ -23,6 +22,10 @@ public class Value {
 
 	public boolean getValueAsBool() {
 		return (Boolean) value;
+	}
+
+	public char getValueAsCharacter() {
+		return (Character) value;
 	}
 
 	public void setValue(Value value) {

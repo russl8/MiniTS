@@ -180,6 +180,13 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumberLiteral(ExprParser.NumberLiteralContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code CharacterLiteral}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCharacterLiteral(ExprParser.CharacterLiteralContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ExprParser#type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

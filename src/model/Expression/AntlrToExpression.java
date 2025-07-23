@@ -80,9 +80,15 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 
 	@Override
 	public Expression visitDeclarationWithOptionalAssignment(DeclarationWithOptionalAssignmentContext ctx) {
+		Map<String, ReturnType> varTypes = Map.of("bool", ReturnType.BOOL, "int", ReturnType.INT, "char",
+				ReturnType.CHAR);
 		String var = ctx.getChild(0).getText();
 		String type = ctx.type().getText();
-		ReturnType varType = type.equals("BOOL") ? ReturnType.BOOL : ReturnType.INT;
+
+		// get variable type
+		ReturnType varType = varTypes.get(ctx.getChild(2).getText());
+
+		// get line and col
 		Token id = ctx.ID().getSymbol();
 		int line = id.getLine();
 		int col = id.getCharPositionInLine() + 1;
@@ -231,7 +237,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	public Expression visitNot(NotContext ctx) {
 		Expression expr = visit(ctx.getChild(1));
 //		Expression exprInsideParenthesis = Utils.unwrapParentheses(expr);
-		
+
 		return new Not(expr);
 	}
 
@@ -279,5 +285,13 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		return new NumberLiteral(Integer.parseInt(value), line, col);
 	}
 
-	
+	@Override
+	public Expression visitCharacterLiteral(CharacterLiteralContext ctx) {
+		String value = ctx.getText();
+		Token id = ctx.CHAR().getSymbol();
+		int line = id.getLine();
+		int col = id.getCharPositionInLine() + 1;
+		return new CharacterLiteral(value.charAt(1), line, col);
+	}
+
 }

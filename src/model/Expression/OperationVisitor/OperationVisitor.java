@@ -62,4 +62,6 @@ public interface OperationVisitor {
 	public <T> T visitBooleanLiteral(BooleanLiteral bl);
 
 	public <T> T visitNumberLiteral(NumberLiteral nl);
+	
+	public <T> T visitCharacterLiteral(CharacterLiteral cl);
 }
