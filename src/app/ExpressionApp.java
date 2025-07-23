@@ -5,9 +5,9 @@ import antlr.ExprParser;
 import model.*;
 import model.Expression.Expression;
 import model.Expression.ExpressionProcessor;
+import model.Expression.Declaration.ClassDeclaration;
 import model.Expression.Expression.PrimitiveType;
 import model.Expression.OperationVisitor.ExpressionTypeChecker;
-import model.Expression.Statement.ClassDeclaration;
 import model.Program.AntlrToProgram;
 import model.Program.Program;
 

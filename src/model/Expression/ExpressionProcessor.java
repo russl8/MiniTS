@@ -16,8 +16,9 @@ import model.Expression.Binary.Multiplication;
 import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
+import model.Expression.Declaration.ListDeclaration;
+import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.Statement.Assignment;
-import model.Expression.Statement.Declaration;
 import model.Expression.Statement.IfStatement;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
@@ -40,8 +41,8 @@ public class ExpressionProcessor {
 	}
 
 	public void evaluateExpression(Expression e) {
-		if (e instanceof Declaration) {
-			Declaration d = (Declaration) e;
+		if (e instanceof PrimitaveDeclaration) {
+			PrimitaveDeclaration d = (PrimitaveDeclaration) e;
 			Expression expr = d.expr;
 			Value val;
 
@@ -56,19 +57,15 @@ public class ExpressionProcessor {
 			// update the values map
 			this.values.put(d.var, val);
 
-//			System.out.println(e + " " + this.values);
 		} else if (e instanceof Assignment) {
 			Assignment a = (Assignment) e;
-//			System.out.println("Looking at assignment " + a);
 			Expression expr = a.expr;
 			Value val = getValue(expr.getReturnType(), expr);
 
 			this.values.put(a.var, val);
-//			System.out.println(e + " " + this.values);
 		} else if (e instanceof IfStatement) {
 			// evaluate expression. if true then evaluate all of its expressions
 			IfStatement ifs = (IfStatement) e;
-//			System.out.println("Looking at ifStatement " + ifs);
 			Expression condition = ifs.cond;
 			boolean conditionEvaluation = evaluateBoolean(condition);
 
@@ -79,6 +76,8 @@ public class ExpressionProcessor {
 			} else {
 
 			}
+		} else if (e instanceof ListDeclaration) {
+			System.out.println(e + " is a list declaration ");
 		} else {
 			// not a declaration/assignment/if. ignore for now
 			System.err.println("Warning, unhandled statement, ignoring for now: " + e);

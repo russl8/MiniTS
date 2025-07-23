@@ -49,9 +49,10 @@ import model.Expression.Binary.Multiplication;
 import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
+import model.Expression.Declaration.ClassDeclaration;
+import model.Expression.Declaration.ListDeclaration;
+import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.Statement.Assignment;
-import model.Expression.Statement.ClassDeclaration;
-import model.Expression.Statement.Declaration;
 import model.Expression.Statement.IfStatement;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
@@ -75,7 +76,7 @@ public class ExpressionTypeChecker implements OperationVisitor {
 	}
 
 	@Override
-	public <T> T visitDeclarationWithOptionalAssignment(Declaration d) {
+	public <T> T visitPrimitaveDeclaration(PrimitaveDeclaration d) {
 		PrimitiveType varType = vars.get(d.var);
 		// If declaration is initialized, typecheck its expressoin
 		if (d.isInitialized) {
@@ -88,6 +89,18 @@ public class ExpressionTypeChecker implements OperationVisitor {
 			d.expr.accept(this);
 		}
 
+		return null;
+	}
+
+	@Override
+	public <T> T visitListDeclaration(ListDeclaration ld) {
+		PrimitiveType listType = ld.itemType;
+		for (Expression e : ld.items) {
+			if (e.getReturnType() != listType) {
+				semanticErrors.add("Type mismatch in list declaration at [" + ld.getLine() + ", " + ld.getCol() + "] "
+						+ e.getReturnType() + " found in list[" + listType + "]");
+			}
+		}
 		return null;
 	}
 

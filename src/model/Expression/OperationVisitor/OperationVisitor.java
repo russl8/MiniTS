@@ -14,6 +14,9 @@ import model.Expression.Binary.Multiplication;
 import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
+import model.Expression.Declaration.ClassDeclaration;
+import model.Expression.Declaration.ListDeclaration;
+import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.Statement.*;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
@@ -21,7 +24,9 @@ import model.Expression.Unary.Parenthesis;
 public interface OperationVisitor {
 	public <T> T visitClassDeclaration(ClassDeclaration cd);
 
-	public <T> T visitDeclarationWithOptionalAssignment(Declaration d);
+	public <T> T visitPrimitaveDeclaration(PrimitaveDeclaration d);
+	
+	public <T> T visitListDeclaration(ListDeclaration ld);
 
 	public <T> T visitAssignment(Assignment a);
 

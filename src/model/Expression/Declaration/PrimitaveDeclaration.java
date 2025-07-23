@@ -1,4 +1,4 @@
-package model.Expression.Statement;
+package model.Expression.Declaration;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -8,7 +8,7 @@ import model.Expression.Expression.ExprType;
 import model.Expression.Expression.PrimitiveType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
-public class Declaration extends Expression {
+public class PrimitaveDeclaration extends Expression implements Declaration {
 
 	public String var;
 	public PrimitiveType type;
@@ -31,7 +31,7 @@ public class Declaration extends Expression {
 		return vars;
 	}
 
-	public Declaration(String var, PrimitiveType type, int line, int col) {
+	public PrimitaveDeclaration(String var, PrimitiveType type, int line, int col) {
 		this.var = var;
 		this.type = type;
 		this.isInitialized = false;
@@ -51,7 +51,7 @@ public class Declaration extends Expression {
 		return col;
 	}
 
-	public Declaration(String var, PrimitiveType type, Expression expr, int line, int col) {
+	public PrimitaveDeclaration(String var, PrimitiveType type, Expression expr, int line, int col) {
 		this(var, type, line, col);
 		this.expr = expr;
 		this.isInitialized = true;
@@ -69,7 +69,7 @@ public class Declaration extends Expression {
 
 	@Override
 	public <T> T accept(OperationVisitor T) {
-		return T.visitDeclarationWithOptionalAssignment(this);
+		return T.visitPrimitaveDeclaration(this);
 	}
 
 }

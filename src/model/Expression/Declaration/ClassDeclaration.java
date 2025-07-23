@@ -1,4 +1,4 @@
-package model.Expression.Statement;
+package model.Expression.Declaration;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,7 +10,7 @@ import model.Expression.Expression.ExprType;
 import model.Expression.Expression.PrimitiveType;
 import model.Expression.OperationVisitor.OperationVisitor;
 
-public class ClassDeclaration extends Expression {
+public class ClassDeclaration extends Expression implements Declaration {
 	public List<Expression> expressions;
 	public String className;
 	public String superClass;

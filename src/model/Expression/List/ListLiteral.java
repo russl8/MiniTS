@@ -9,6 +9,13 @@ public class ListLiteral extends Expression {
 	
 	public ExprType exprType;
 	
+	/**
+	 * List<Value> Elements;
+	 * 
+	 * Constructor:
+	 * - get line, col
+	 * 
+	 */
 	
 	@Override
 	public Set<String> getVariables() {

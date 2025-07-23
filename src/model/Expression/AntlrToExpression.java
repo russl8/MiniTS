@@ -16,12 +16,13 @@ import model.Expression.Binary.Multiplication;
 import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
+import model.Expression.Declaration.ClassDeclaration;
+import model.Expression.Declaration.ListDeclaration;
+import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.List.ListLiteral;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.PrimitiveType;
 import model.Expression.Statement.Assignment;
-import model.Expression.Statement.ClassDeclaration;
-import model.Expression.Statement.Declaration;
 import model.Expression.Statement.IfStatement;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
@@ -31,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 
@@ -81,37 +83,72 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 
 	@Override
 	public Expression visitDeclarationWithOptionalAssignment(DeclarationWithOptionalAssignmentContext ctx) {
-		Map<String, PrimitiveType> varTypes = Map.of("bool", PrimitiveType.BOOL, "int", PrimitiveType.INT, "char",
+		Map<String, PrimitiveType> primitaveTypes = Map.of("bool", PrimitiveType.BOOL, "int", PrimitiveType.INT, "char",
 				PrimitiveType.CHAR);
 		String var = ctx.getChild(0).getText();
-		String type = ctx.type().getText();
-
-		// get variable type
-		PrimitiveType varType = varTypes.get(ctx.getChild(2).getText());
-
-		// get line and col
+		TypeContext declType = ctx.type();
 		Token id = ctx.ID().getSymbol();
 		int line = id.getLine();
 		int col = id.getCharPositionInLine() + 1;
+		boolean isInitialized = ctx.getChildCount() > 4;
 
-		// redecleard var error
-		if (vars.keySet().contains(var)) {
-			// add semantic error redeclared var @ line, col
-			semanticErrors.add("Variable " + var + " already declared,  line=" + line + " col=" + col);
-		} else {
-			vars.put(var, varType);
+		/**
+		 * Primitave type declaration (ex: int, bool, char)
+		 */
+		if (primitaveTypes.containsKey(declType.getText())) {
+			PrimitiveType varType = primitaveTypes.get(declType.getText());
+
+			if (vars.keySet().contains(var)) {
+				semanticErrors.add("Variable " + var + " already declared,  line=" + line + " col=" + col);
+			} else {
+				vars.put(var, varType);
+			}
+			// expr is initialized
+			if (isInitialized) {
+				Expression expr = visit(ctx.expr());
+				return new PrimitaveDeclaration(var, varType, expr, line, col);
+			} else {
+				return new PrimitaveDeclaration(var, varType, line, col);
+			}
 		}
-		// expr is initialized
-		if (ctx.getChildCount() > 4) {
-			Expression expr = visit(ctx.expr());
-			return new Declaration(var, varType, expr, line, col);
-		} else {
-			return new Declaration(var, varType, line, col);
+		/**
+		 * Non-primitave type declaration (ex: list[char], map[char, char])
+		 */
+		else {
+			String objectType = declType.getChild(0).getText();
+			if (vars.keySet().contains(var)) {
+				semanticErrors.add("Variable " + var + " already declared,  line=" + line + " col=" + col);
+			} else {
+				vars.put(var, PrimitiveType.NONE);
+			}
+
+			if (objectType.equals("list")) {
+				String itemType = declType.getChild(2).getText();
+				ListDeclaration ld = new ListDeclaration(var, primitaveTypes.get(itemType), line, col);
+
+				if (isInitialized) {
+					// Populate list
+					ParseTree listContext = ctx.getChild(4);
+					boolean isNonEmptyInitialization = listContext.getChildCount() > 2;
+
+					for (int i = 1; isNonEmptyInitialization && i < listContext.getChildCount(); i += 2) {
+						ld.add(visit(listContext.getChild(i)));
+					}
+				}
+				return ld;
+			} else {
+				System.err.println("Declaration with unknown object type: " + ctx.getText());
+			}
 		}
+		System.err.println("Could not process declaration " + ctx.getText());
+		return null;
 	}
 
 	@Override
 	public Expression visitVariableAssignment(VariableAssignmentContext ctx) {
+		/**
+		 * TODO: separate primitave vs object (eg. list) assignments
+		 */
 		String var = ctx.getChild(0).getText();
 		Expression expr = visit(ctx.getChild(2));
 		Token id = ctx.ID().getSymbol();
@@ -251,14 +288,18 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	/**
 	 * Variables, Literals
 	 */
-	
+
 	@Override
 	public Expression visitListLiteral(ListLiteralContext ctx) {
-		
-		
+
+		/**
+		 * Get var name, make sure not declared get type, make sure it is valid
+		 * 
+		 * iterate through ctx.expr[1:]. visit those and add them to the List
+		 */
+
 		return new ListLiteral();
 	}
-
 
 	@Override
 	public Expression visitVariable(VariableContext ctx) {
@@ -275,7 +316,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		PrimitiveType type = vars.get(var);
 		return new Variable(var, type, line, col);
 	}
-
 
 	@Override
 	public Expression visitBooleanLiteral(BooleanLiteralContext ctx) {

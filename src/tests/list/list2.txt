@@ -1,0 +1,12 @@
+class list2 {
+	// redeclared var
+	l0 : list[char] = [];
+	l0 : int = 4;
+	
+	
+	// type mismatch'
+	l1 : list[int] = [1, 4, False];
+	
+	// this should be okay
+	l2 : list[bool] = [True, False];
+}
