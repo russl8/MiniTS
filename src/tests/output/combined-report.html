@@ -16,12 +16,12 @@
 </head><body>
 <h1>Combined Compilation Report</h1>
 <div class="report">
-<h2><a href="list2-report.html">list2-report.html</a></h2>
+<h2><a href="list3-report.html">list3-report.html</a></h2>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>list2 Report</title>
+    <title>list3 Report</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
         h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
@@ -39,29 +39,24 @@
 <div class="container">
     <div class="left">
         <h2>File Path</h2>
-        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\list\list2.txt</code></pre>
+        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\list\list3.txt</code></pre>
         <h2>File Contents</h2>
-        <pre><code>class list2 {
-	// redeclared var
-	l0 : list[char] = [];
-	l0 : int = 4;
+        <pre><code>class list3 {
 	
+	// cannot reassign list_char to list_int
+	v0 : list[char] = [];
+	v0 = ['1', 'a', 'g' ];
+	v0 = [1, 2];
 	
-	// type mismatch'
-	l1 : list[int] = [1, 4, False];
+	// error
+	v1 : list[int] = [];
+	v1 = 4;
 	
-
-	// this should be okay
-	l2 : list[bool] = [True, False];
-	
-	// these shouldnt work
-	l3 : list[char] = 'd';	
-	l4 : list[int] = 2+2;
 }
 </code></pre>
     </div>
 
-<div class="right"><h2>Variables</h2><p>No variables found.</p><h2>Type Errors</h2><div class="error">Variable l0 already declared,  line=4 col=2</div><div class="error">Type mismatch at [4, 2]: expected LIST_CHAR = LIST_CHAR assignment but got LIST_CHAR = INT</div><div class="error">Error with declaration at [15, 20], CHAR cannot be assigned to a list</div><div class="error">Error with declaration at [16, 19], INT cannot be assigned to a list</div></div>
+<div class="right"><h2>Variables</h2><p>No variables found.</p><h2>Type Errors</h2><div class="error">Error in [6, 8] Cannot assign list[INT] to list[CHAR]</div><div class="error">Type mismatch at [10, 2]: expected LIST_INT = LIST_INT assignment but got LIST_INT = INT</div></div>
 </div>
 </body></html>
 </div>
