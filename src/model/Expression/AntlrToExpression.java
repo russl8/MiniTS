@@ -221,7 +221,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		for (int i = 5; i < ctx.getChildCount() - 1; i++) {
 			wl.addExpression(visit(ctx.getChild(i)));
 		}
-		System.out.println(wl);
 		return wl;
 	}
 
