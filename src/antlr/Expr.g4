@@ -27,10 +27,17 @@ assignment:
 
 // CONDITIONALS
 conditional:
-    'if' '(' expr ')' '{' (statement)* '}' #IfStatement;
+    'if' '(' expr ')' '{' (statement)* '}' #IfStatement
+    ;
+
+// LOOPS
+loop
+	: 'while' '(' expr ')' '{' (statement)* '}' # WhileLoop
+	; 
+	
 
 // EXPRESSIONS
-expr
+expr 
     : '!' expr             			       # Not
     | expr '*' expr                        # Multiplication
     | expr '/' expr                        # Division
