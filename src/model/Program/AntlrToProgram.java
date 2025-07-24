@@ -3,7 +3,8 @@ package model.Program;
 import antlr.ExprBaseVisitor;
 import antlr.ExprParser;
 import model.Expression.AntlrToExpression;
-import model.Expression.Expression.PrimitiveType;
+import model.Expression.Expression;
+import model.Expression.Expression.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,9 +12,9 @@ import java.util.Map;
 public class AntlrToProgram extends ExprBaseVisitor<Program> {
 
 	public List<String> semanticErrors; // to be accessed by the main application program
-	public Map<String, PrimitiveType> vars;
+	public Map<String, Type> vars;
 
-	public AntlrToProgram(List<String> semanticErrors, Map<String, PrimitiveType> vars) {
+	public AntlrToProgram(List<String> semanticErrors, Map<String, Type> vars) {
 		super();
 		this.semanticErrors = semanticErrors;
 		this.vars = vars;

@@ -17,15 +17,15 @@ public abstract class Expression {
 
 	public abstract int getCol();
 
-	public enum PrimitiveType {
-		INT, BOOL, NONE, CHAR
-	};
+	public enum Type {
+		INT, BOOL, NONE, CHAR, LIST_INT, LIST_BOOL, LIST_CHAR;
+	}
 
 	public enum ExprType {
 		LOGICAL, RELATIONAL, EQUALITY, ARITHMETIC, NONE
 	};
 
-	public abstract PrimitiveType getReturnType();
+	public abstract Type getReturnType();
 
 	public abstract ExprType getExprType();
 

@@ -28,7 +28,9 @@ public interface OperationVisitor {
 	
 	public <T> T visitListDeclaration(ListDeclaration ld);
 
-	public <T> T visitAssignment(Assignment a);
+	public <T> T visitPrimitiveAssignment(PrimitiveAssignment a);
+
+	public <T> T visitListAssignment(ListAssignment la);
 
 	public <T> T visitIfStatement(IfStatement ifs);
 

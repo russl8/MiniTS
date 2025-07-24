@@ -4,15 +4,15 @@ import java.util.Set;
 
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
-import model.Expression.Expression.PrimitiveType;
+import model.Expression.Expression.Type;
 import model.Expression.OperationVisitor.OperationVisitor;
 
-public class Assignment extends Expression {
+public class PrimitiveAssignment extends Expression {
 	public Expression expr;
 	public String var;
 
-	public PrimitiveType getReturnType() {
-		return PrimitiveType.NONE;
+	public Type getReturnType() {
+		return Type.NONE;
 	}
 
 	public ExprType getExprType() {
@@ -24,7 +24,7 @@ public class Assignment extends Expression {
 		return expr.getVariables();
 	}
 
-	public Assignment(String var, Expression expr, int line, int col) {
+	public PrimitiveAssignment(String var, Expression expr, int line, int col) {
 		this.var = var;
 		this.expr = expr;
 		this.line = line;
@@ -49,6 +49,6 @@ public class Assignment extends Expression {
 
 	@Override
 	public <T> T accept(OperationVisitor T) {
-		return T.visitAssignment(this);
+		return T.visitPrimitiveAssignment(this);
 	}
 }

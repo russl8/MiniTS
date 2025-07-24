@@ -53,20 +53,21 @@ import model.Expression.Declaration.ClassDeclaration;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.List.ListLiteral;
-import model.Expression.Statement.Assignment;
+import model.Expression.Statement.PrimitiveAssignment;
 import model.Expression.Statement.IfStatement;
+import model.Expression.Statement.ListAssignment;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
 import model.Expression.Expression.ExprType;
-import model.Expression.Expression.PrimitiveType;
+import model.Expression.Expression.Type;
 import model.Program.Program;
 
 public class ExpressionTypeChecker implements OperationVisitor {
 
 	public List<String> semanticErrors;
-	public Map<String, PrimitiveType> vars; // stores all the variables declared in the program so far
+	public Map<String, Type> vars; // stores all the variables declared in the program so far
 
-	public ExpressionTypeChecker(List<String> semanticErrors, Map<String, PrimitiveType> vars) {
+	public ExpressionTypeChecker(List<String> semanticErrors, Map<String, Type> vars) {
 		this.vars = vars;
 		this.semanticErrors = semanticErrors;
 	}
@@ -78,10 +79,10 @@ public class ExpressionTypeChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitPrimitaveDeclaration(PrimitaveDeclaration d) {
-		PrimitiveType varType = vars.get(d.var);
+		Type varType = vars.get(d.var);
 		// If declaration is initialized, typecheck its expressoin
 		if (d.isInitialized) {
-			PrimitiveType exprType = d.expr.getReturnType();
+			Type exprType = d.expr.getReturnType();
 			if (varType != exprType) {
 				semanticErrors.add("Type mismatch at [" + d.getLine() + ", " + d.getCol() + "]: expected " + varType
 						+ " = " + varType + " assignment but got " + varType + " = " + exprType);
@@ -95,21 +96,36 @@ public class ExpressionTypeChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitListDeclaration(ListDeclaration ld) {
-		PrimitiveType listType = ld.itemType;
+		Type listType = ld.type;
+		Type itemType;
+		switch (listType) {
+		case LIST_INT:
+			itemType = Type.INT;
+			break;
+		case LIST_BOOL:
+			itemType = Type.BOOL;
+			break;
+		case LIST_CHAR:
+			itemType = Type.CHAR;
+			break;
+		default:
+			itemType = Type.NONE;
+			System.out.println("Unexpected type: " + listType);
+		}
 
 		if (ld.isInitialized) {
 			// make sure the RHS of declaration is a list
-			if (!(ld.items instanceof ListLiteral)) {
-				semanticErrors.add("Error with declaration at [" + ld.items.getLine() + ", " + ld.items.getCol() + "], "
-						+ ld.items.getReturnType() + " cannot be assigned to a list");
+			if (!(ld.list instanceof ListLiteral)) {
+				semanticErrors.add("Error with declaration at [" + ld.list.getLine() + ", " + ld.list.getCol() + "], "
+						+ ld.list.getReturnType() + " cannot be assigned to a list");
 				return null;
 			}
 			// if RHS is a list, typecheck its items
-			ListLiteral ll = (ListLiteral) ld.items;
+			ListLiteral ll = (ListLiteral) ld.list;
 			for (Expression e : ll.items) {
-				if (e.getReturnType() != listType) {
+				if (e.getReturnType() != itemType) {
 					semanticErrors.add("Type mismatch in list declaration at [" + e.getLine() + ", " + e.getCol() + "] "
-							+ e.getReturnType() + " found in list[" + listType + "]");
+							+ e.getReturnType() + " found in list[" + itemType + "]");
 				}
 				break;
 			}
@@ -119,22 +135,18 @@ public class ExpressionTypeChecker implements OperationVisitor {
 	}
 
 	@Override
-	public <T> T visitAssignment(Assignment a) {
+	public <T> T visitPrimitiveAssignment(PrimitiveAssignment a) {
 		// TODO: Recursively visit the assignment left and right.
 		// do the same for visitBinaryExpression (ex: recursively visit left and right)
-
 		String var = a.var;
-		// open up parenthesis to get the inside expr
-		PrimitiveType exprReturnType = a.expr.getReturnType();
+		Type exprReturnType = a.expr.getReturnType();
 
 		// make sure that the variable is being assigned properly
-		// (int -> int, bool -> bool)
-		if (this.vars.get(var) == PrimitiveType.BOOL && exprReturnType != PrimitiveType.BOOL) {
-			semanticErrors.add("Type mismatch at [" + a.getLine() + ", " + a.getCol()
-					+ "]: expected BOOL = BOOL assignment but got BOOL = " + exprReturnType);
-		} else if (this.vars.get(var) == PrimitiveType.INT && exprReturnType != PrimitiveType.INT) {
-			semanticErrors.add("Type mismatch at line [" + a.getLine() + ", " + a.getCol()
-					+ "]: expected INT = INT assignment but got INT = " + a.expr.getReturnType());
+		// ex: (int -> int, bool -> bool)
+		if (this.vars.get(var) != exprReturnType) {
+			semanticErrors.add("Type mismatch at [" + a.getLine() + ", " + a.getCol() + "]: expected "
+					+ this.vars.get(var) + " = " + this.vars.get(var) + " assignment but got " + this.vars.get(var)
+					+ " = " + exprReturnType);
 		}
 
 		// Type check the assignment expression
@@ -144,11 +156,50 @@ public class ExpressionTypeChecker implements OperationVisitor {
 	}
 
 	@Override
+	public <T> T visitListAssignment(ListAssignment la) {
+		Type listType = vars.get(la.var);
+		Type itemType;
+		switch (listType) {
+		case LIST_INT:
+			itemType = Type.INT;
+			break;
+		case LIST_BOOL:
+			itemType = Type.BOOL;
+			break;
+		case LIST_CHAR:
+			itemType = Type.CHAR;
+			break;
+		default:
+			itemType = Type.NONE;
+			System.out.println("Unexpected type: " + listType);
+		}
+
+		if (!(la.list instanceof ListLiteral)) {
+			semanticErrors.add("Error at [" + la.getLine() + ", " + la.getCol() + "]: Assigning "
+					+ la.list.getExprType() + " to list. ");
+		} else {
+			ListLiteral ll = (ListLiteral) la.list;
+			for (Expression e : ll.items) {
+				if (e.getReturnType() != itemType) {
+					if (e.getReturnType() != itemType) {
+						semanticErrors.add("Error in [" + e.getLine() + ", " + e.getCol()
+								+ "] Cannot assign list[" + e.getReturnType() + "] to list[" + itemType + "]");
+					}
+					break;
+				}
+			}
+
+		}
+
+		return null;
+	}
+
+	@Override
 	public <T> T visitIfStatement(IfStatement ifs) {
 		Expression cond = ifs.cond;
 
 		// cond must be a boolean expression
-		if (cond.getReturnType() != PrimitiveType.BOOL) {
+		if (cond.getReturnType() != Type.BOOL) {
 			semanticErrors.add("Type mismatch in logical expression at [" + ifs.getLine() + ", " + ifs.getCol()
 					+ "] expected ( BOOL ) but got ( " + cond.getReturnType() + " )");
 		}
@@ -242,7 +293,7 @@ public class ExpressionTypeChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitNot(Not not) {
-		if (not.getReturnType() != PrimitiveType.BOOL) {
+		if (not.getReturnType() != Type.BOOL) {
 			semanticErrors.add("Type mismatch in logical expression at [" + not.getLine() + ", " + not.getCol()
 					+ "] : expected ( BOOL ) but got ( " + not.getReturnType() + " )");
 		}
@@ -301,8 +352,8 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		int line = left.getLine();
 		int col = left.getCol();
 
-		PrimitiveType leftReturnType = left.getReturnType();
-		PrimitiveType rightReturnType = right.getReturnType();
+		Type leftReturnType = left.getReturnType();
+		Type rightReturnType = right.getReturnType();
 
 		String typeOfExpression = "";
 		String expectedTypes = "";
@@ -311,23 +362,23 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		if (exprType == ExprType.LOGICAL) {
 			typeOfExpression = "logical";
 			expectedTypes = "(BOOL, BOOL)";
-			isValid = leftReturnType == PrimitiveType.BOOL && rightReturnType == PrimitiveType.BOOL;
+			isValid = leftReturnType == Type.BOOL && rightReturnType == Type.BOOL;
 
 		} else if (exprType == ExprType.ARITHMETIC) {
 			typeOfExpression = "arithmetic";
 			expectedTypes = "(INT, INT)";
-			isValid = leftReturnType == PrimitiveType.INT && rightReturnType == PrimitiveType.INT;
+			isValid = leftReturnType == Type.INT && rightReturnType == Type.INT;
 
 		} else if (exprType == ExprType.RELATIONAL) {
 			typeOfExpression = "relational";
 			expectedTypes = "(INT, INT)";
-			isValid = leftReturnType == PrimitiveType.INT && rightReturnType == PrimitiveType.INT;
+			isValid = leftReturnType == Type.INT && rightReturnType == Type.INT;
 
 		} else if (exprType == ExprType.EQUALITY) {
 			typeOfExpression = "equality";
 			expectedTypes = "(INT, INT) or (BOOL, BOOL)";
 			isValid = (leftReturnType == rightReturnType)
-					&& (leftReturnType == PrimitiveType.INT || leftReturnType == PrimitiveType.BOOL);
+					&& (leftReturnType == Type.INT || leftReturnType == Type.BOOL);
 		}
 
 		if (!isValid) {

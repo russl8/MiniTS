@@ -6,7 +6,7 @@ import model.*;
 import model.Expression.Expression;
 import model.Expression.ExpressionProcessor;
 import model.Expression.Declaration.ClassDeclaration;
-import model.Expression.Expression.PrimitiveType;
+import model.Expression.Expression.Type;
 import model.Expression.OperationVisitor.ExpressionTypeChecker;
 import model.Program.AntlrToProgram;
 import model.Program.Program;
@@ -50,7 +50,7 @@ public class ExpressionApp {
 				try {
 					// Scoping doesnt really work :(
 					List<String> semanticErrors = new ArrayList<>();
-					Map<String, PrimitiveType> vars = new HashMap<>();
+					Map<String, Type> vars = new HashMap<>();
 
 					String fileName = new File(filePath).getName();
 					fileName = fileName.substring(0, fileName.lastIndexOf('.'));
@@ -88,12 +88,10 @@ public class ExpressionApp {
 							/**
 							 * Replace all printing operations with e.accept(writerVisitor)
 							 */
-							for (String var : ep.primitiveVars.keySet()) {
-								writer.println("<p>&#9;" + var + " : " + ep.primitiveVars.get(var) + "</p>");
+							for (String var : ep.vars.keySet()) {
+								writer.println("<p>&#9;" + var + " : " + ep.vars.get(var) + "</p>");
 							}
-							for (String var : ep.objectVars.keySet()) {
-								writer.println("<p>&#9;" + var + " : " + ep.objectVars.get(var) + "</p>");
-							}
+
 						}
 					} else {
 

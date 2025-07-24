@@ -2,14 +2,14 @@ package model.Expression.Binary;
 
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
-import model.Expression.Expression.PrimitiveType;
+import model.Expression.Expression.Type;
 import model.Expression.OperationVisitor.OperationVisitor;
 
 public class Modulo extends BinaryExpression {
 	@Override
-	public PrimitiveType getReturnType() {
+	public Type getReturnType() {
 		// TODO Auto-generated method stub
-		return PrimitiveType.INT;
+		return Type.INT;
 	}
 
 	public ExprType getExprType() {

@@ -52,8 +52,8 @@ public class ListLiteral extends Expression {
 	}
 
 	@Override
-	public PrimitiveType getReturnType() {
-		return PrimitiveType.NONE;
+	public Type getReturnType() {
+		return Type.NONE;
 	}
 
 	@Override

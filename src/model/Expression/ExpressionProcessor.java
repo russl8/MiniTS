@@ -2,7 +2,8 @@ package model.Expression;
 
 import java.util.*;
 
-import model.Expression.Expression.PrimitiveType;
+import model.Expression.Expression.Type;
+import model.Value;
 import model.Expression.Binary.Addition;
 import model.Expression.Binary.And;
 import model.Expression.Binary.Division;
@@ -18,8 +19,10 @@ import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
-import model.Expression.Statement.Assignment;
+import model.Expression.Statement.PrimitiveAssignment;
 import model.Expression.Statement.IfStatement;
+import model.Expression.Statement.ListAssignment;
+import model.Expression.Statement.PrimitiveAssignment;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
 
@@ -33,13 +36,11 @@ public class ExpressionProcessor {
 	 * 2. no redeclaration of variables
 	 */
 	public List<String> printStatements;
-	public Map<String, Value> primitiveVars; // Stores values for primitive variables only
-	public Map<String, Object> objectVars;
+	public Map<String, Value> vars; // Stores values for primitive variables only
 
 	public ExpressionProcessor() {
 		this.printStatements = new ArrayList<>();
-		this.primitiveVars = new HashMap<>();
-		this.objectVars = new HashMap<>();
+		this.vars = new HashMap<>();
 	}
 
 	public void evaluateExpression(Expression e) {
@@ -57,15 +58,18 @@ public class ExpressionProcessor {
 			}
 
 			// update the values map
-			this.primitiveVars.put(d.var, val);
+			this.vars.put(d.var, val);
 
-		} else if (e instanceof Assignment) {
-			// TODO: primitave vs obj assignment
-//			Assignment a = (Assignment) e;
-//			Expression expr = a.expr;
-//			Value val = evaluateExpression(expr.getReturnType(), expr);
-//
-//			this.values.put(a.var, val);
+		} else if (e instanceof PrimitiveAssignment) {
+			PrimitiveAssignment a = (PrimitiveAssignment) e;
+			Expression expr = a.expr;
+			Value val = evaluateExpression(expr.getReturnType(), expr);
+			this.vars.put(a.var, val);
+		} else if (e instanceof ListAssignment) {
+			ListAssignment ld = (ListAssignment) e;
+			Value existingValue = this.vars.get(ld.var);
+			existingValue.setValue(ld.list);
+
 		} else if (e instanceof IfStatement) {
 			// evaluate expression. if true then evaluate all of its expressions
 			IfStatement ifs = (IfStatement) e;
@@ -76,32 +80,30 @@ public class ExpressionProcessor {
 				for (Expression ifsExpression : ifs.expressions) {
 					evaluateExpression(ifsExpression);
 				}
-			} else {
-
 			}
 		} else if (e instanceof ListDeclaration) {
-			System.out.println(e + " is a list declaration ");
+//			System.out.println(e + " is a list declaration ");
 			ListDeclaration ld = (ListDeclaration) e;
-			this.objectVars.put(ld.var, ld.items);
+			this.vars.put(ld.var, new Value(ld.type, ld.list));
 		} else {
 			// not a declaration/assignment/if. ignore for now
 			System.err.println("Warning, unhandled statement, ignoring for now: " + e);
 		}
 	}
 
-	private Value evaluateExpression(PrimitiveType type, Expression expr) {
+	private Value evaluateExpression(Type type, Expression expr) {
 		/**
 		 * Helper to evaluate an expression given a type.
 		 * 
 		 * Ex: getValue(bool, expr=[true && (p && q)]) -> Value[{type=bool, value=true}]
 		 */
 		Value val;
-		if (type == PrimitiveType.BOOL) {
-			val = new Value(PrimitiveType.BOOL, evaluateBoolean(expr));
-		} else if (type == PrimitiveType.INT) {
-			val = new Value(PrimitiveType.INT, evaluateInteger(expr));
-		} else if (type == PrimitiveType.CHAR) {
-			val = new Value(PrimitiveType.CHAR, evaluateCharacter(expr));
+		if (type == Type.BOOL) {
+			val = new Value(Type.BOOL, evaluateBoolean(expr));
+		} else if (type == Type.INT) {
+			val = new Value(Type.INT, evaluateInteger(expr));
+		} else if (type == Type.CHAR) {
+			val = new Value(Type.CHAR, evaluateCharacter(expr));
 		} else {
 			throw new IllegalArgumentException("Unsupported expression type: " + type);
 		}
@@ -128,7 +130,7 @@ public class ExpressionProcessor {
 			Modulo m = (Modulo) e;
 			return evaluateInteger(m.left) % evaluateInteger(m.right);
 		} else if (e instanceof Variable) {
-			return this.primitiveVars.get(((Variable) e).var).getValueAsInt();
+			return this.vars.get(((Variable) e).var).getValueAsInt();
 		} else if (e instanceof NumberLiteral) {
 			return ((NumberLiteral) e).val;
 		}
@@ -176,7 +178,7 @@ public class ExpressionProcessor {
 			LessEqualThan lte = (LessEqualThan) e;
 			return evaluateInteger(lte.left) <= evaluateInteger(lte.right);
 		} else if (e instanceof Variable) {
-			return this.primitiveVars.get(((Variable) e).var).getValueAsBool();
+			return this.vars.get(((Variable) e).var).getValueAsBool();
 		} else if (e instanceof BooleanLiteral) {
 			return ((BooleanLiteral) e).val;
 		}

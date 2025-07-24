@@ -2,13 +2,13 @@ package model.Expression.Binary;
 
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
-import model.Expression.Expression.PrimitiveType;
+import model.Expression.Expression.Type;
 import model.Expression.OperationVisitor.OperationVisitor;
 
 public class Subtraction extends BinaryExpression {
 	@Override
-	public PrimitiveType getReturnType() {
-		return PrimitiveType.INT;
+	public Type getReturnType() {
+		return Type.INT;
 	}
 
 	public ExprType getExprType() {

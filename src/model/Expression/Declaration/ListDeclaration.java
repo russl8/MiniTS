@@ -4,31 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import model.Value;
 import model.Expression.AntlrToExpression;
 import model.Expression.Expression;
-import model.Expression.Value;
 import model.Expression.OperationVisitor.OperationVisitor;
 
 public class ListDeclaration extends Expression implements Declaration {
 
-	public Expression items;
-	public PrimitiveType itemType;
+	public Expression list;
+	public Type type;
 	public String var;
 	private int line;
 	private int col;
 	public boolean isInitialized;
-
-	public ListDeclaration(String var, PrimitiveType itemType, int line, int col) {
-		this.itemType = itemType;
+	
+	public ListDeclaration(String var, Type type, int line, int col) {
+		this.type = type;
 		this.var = var;
 		this.line = line;
 		this.col = col;
 		this.isInitialized = false;
 	}
 
-	public ListDeclaration(String var, Expression items, PrimitiveType itemType, int line, int col) {
-		this(var, itemType, line, col);
-		this.items = items;
+	public ListDeclaration(String var, Expression list, Type type, int line, int col) {
+		this(var, type, line, col);
+		this.list = list;
 		this.isInitialized = true;
 	}
 
@@ -55,8 +55,8 @@ public class ListDeclaration extends Expression implements Declaration {
 	}
 
 	@Override
-	public PrimitiveType getReturnType() {
-		return this.itemType;
+	public Type getReturnType() {
+		return this.type;
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class ListDeclaration extends Expression implements Declaration {
 
 	@Override
 	public String toString() {
-		String res = this.var + " : list [" + itemType + "] = " + this.items;
+		String res = this.var + " : list [" + type + "] = " + this.list;
 		return res;
 	}
 }

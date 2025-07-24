@@ -1,0 +1,5 @@
+class list4 {
+
+	k1 : list[int] = [1,2];
+	k1 = [5];
+}

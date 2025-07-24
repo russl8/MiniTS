@@ -20,10 +20,13 @@ import model.Expression.Declaration.ClassDeclaration;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.List.ListLiteral;
+import model.Value;
 import model.Expression.Expression.ExprType;
-import model.Expression.Expression.PrimitiveType;
-import model.Expression.Statement.Assignment;
+import model.Expression.Expression.Type;
+import model.Expression.Statement.PrimitiveAssignment;
 import model.Expression.Statement.IfStatement;
+import model.Expression.Statement.ListAssignment;
+import model.Expression.Statement.PrimitiveAssignment;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
 
@@ -43,10 +46,10 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	 * sure that the order in which we add declared variables in the `vars` is
 	 * identical to how they are declared in the input program.
 	 */
-	public Map<String, PrimitiveType> vars; // stores all the variables declared in the program so far
+	public Map<String, Type> vars; // stores all the variables declared in the program so far
 	public List<String> semanticErrors; // 1. duplicate declaration 2. reference to undeclared variable
 
-	public AntlrToExpression(List<String> semanticErrors, Map<String, PrimitiveType> vars) {
+	public AntlrToExpression(List<String> semanticErrors, Map<String, Type> vars) {
 		this.vars = vars;
 		this.semanticErrors = semanticErrors;
 	}
@@ -83,8 +86,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 
 	@Override
 	public Expression visitDeclarationWithOptionalAssignment(DeclarationWithOptionalAssignmentContext ctx) {
-		Map<String, PrimitiveType> primitaveTypes = Map.of("bool", PrimitiveType.BOOL, "int", PrimitiveType.INT, "char",
-				PrimitiveType.CHAR);
+		Map<String, Type> primitaveTypes = Map.of("bool", Type.BOOL, "int", Type.INT, "char", Type.CHAR);
 		String var = ctx.getChild(0).getText();
 		TypeContext declType = ctx.type();
 		Token id = ctx.ID().getSymbol();
@@ -96,7 +98,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		 * Primitave type declaration (ex: int, bool, char)
 		 */
 		if (primitaveTypes.containsKey(declType.getText())) {
-			PrimitiveType varType = primitaveTypes.get(declType.getText());
+			Type varType = primitaveTypes.get(declType.getText());
 
 			if (vars.keySet().contains(var)) {
 				semanticErrors.add("Variable " + var + " already declared,  line=" + line + " col=" + col);
@@ -120,20 +122,38 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 			if (vars.keySet().contains(var)) {
 				semanticErrors.add("Variable " + var + " already declared,  line=" + line + " col=" + col);
 			} else {
-				vars.put(var, PrimitiveType.NONE);
+				vars.put(var, Type.NONE);
 			}
 
 			if (objectType.equals("list")) {
 				String itemType = declType.getChild(2).getText();
 				Expression ld;
+				Type listType;
+
+				switch (itemType) {
+				case "int":
+					listType = Type.LIST_INT;
+					break;
+				case "bool":
+					listType = Type.LIST_BOOL;
+					break;
+				case "char":
+					listType = Type.LIST_CHAR;
+					break;
+				default:
+					listType = Type.NONE;
+					System.out.println("Unexpected type: " + itemType);
+				}
+
 				if (isInitialized) {
 					// Populate list
 					Expression uncheckedListLiteral = visit(ctx.getChild(4));
-					ld = new ListDeclaration(var, uncheckedListLiteral, primitaveTypes.get(itemType), line, col);
-//					System.out.println(uncheckedListLiteral);
+					ld = new ListDeclaration(var, uncheckedListLiteral, listType, line, col);
 				} else {
-					ld = new ListDeclaration(var, primitaveTypes.get(itemType), line, col);
+					ld = new ListDeclaration(var, listType, line, col);
 				}
+				this.vars.put(var, listType);
+
 				return ld;
 			} else {
 				System.err.println("Declaration with unknown object type: " + ctx.getText());
@@ -146,14 +166,21 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	@Override
 	public Expression visitVariableAssignment(VariableAssignmentContext ctx) {
 		/**
-		 * TODO: separate primitave vs object (eg. list) assignments
+		 * TODO: separate primitave vs object (eg.list) assignments
 		 */
 		String var = ctx.getChild(0).getText();
 		Expression expr = visit(ctx.getChild(2));
 		Token id = ctx.ID().getSymbol();
 		int lineNum = id.getLine();
 		int colNum = id.getCharPositionInLine() + 1;
-		return new Assignment(var, expr, lineNum, colNum);
+
+		if (expr.getReturnType() != Type.NONE) {
+			return new PrimitiveAssignment(var, expr, lineNum, colNum);
+		} else if (expr instanceof ListLiteral) {
+			return new ListAssignment(var, expr, lineNum, colNum);
+		}
+		System.err.println("AntlrToExpression: Unexpected expression: " + ctx.getText());
+		return null;
 	}
 
 	@Override
@@ -322,7 +349,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 			semanticErrors.add("Variable '" + var + "' not declared, line=" + line + " col=" + col);
 		}
 
-		PrimitiveType type = vars.get(var);
+		Type type = vars.get(var);
 		return new Variable(var, type, line, col);
 	}
 

@@ -1,17 +1,18 @@
-package model.Expression;
+package model;
 
-import model.Expression.Expression.PrimitiveType;
+import model.Expression.Expression;
+import model.Expression.Expression.Type;
 
 public class Value {
-	public PrimitiveType type;
+	public Type type;
 	private Object value;
 
-	public Value(PrimitiveType type) {
+	public Value(Type type) {
 		this.type = type;
 		this.value = null;
 	}
 
-	public Value(PrimitiveType type, Object value) {
+	public Value(Type type, Object value) {
 		this.type = type;
 		this.value = value;
 	}
@@ -28,7 +29,11 @@ public class Value {
 		return (Character) value;
 	}
 
-	public void setValue(Value value) {
+	public Expression getValueAsExpression() {
+		return (Expression) value;
+	}
+
+	public void setValue(Object value) {
 		this.value = value;
 	}
 
