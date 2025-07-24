@@ -1,0 +1,69 @@
+<!DOCTYPE html><html><head>
+    <meta charset="UTF-8">
+    <title>Combined Report</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
+        h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
+        .container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .left, .right { padding: 20px; background-color: #ffffff; border: 1px solid #82c0cc; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        pre { background-color: #e9ecef; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 14px; }
+        .error { background-color: #f8d7da; border-left: 4px solid #d9534f; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #721c24; }
+        .variable { background-color: #489fb5; border-left: 4px solid #16697a; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #ffffff; }
+        h2 { color: #489fb5; margin-top: 0; }
+        footer { text-align: center; margin-top: 40px; font-size: 12px; color: #888; }
+    </style>
+
+</head><body>
+<h1>Combined Compilation Report</h1>
+<div class="report">
+<h2><a href="list2-report.html">list2-report.html</a></h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>list2 Report</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
+        h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
+        .container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .left, .right { padding: 20px; background-color: #ffffff; border: 1px solid #82c0cc; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        pre { background-color: #e9ecef; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 14px; }
+        .error { background-color: #f8d7da; border-left: 4px solid #d9534f; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #721c24; }
+        .variable { background-color: #489fb5; border-left: 4px solid #16697a; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #ffffff; }
+        h2 { color: #489fb5; margin-top: 0; }
+        footer { text-align: center; margin-top: 40px; font-size: 12px; color: #888; }
+    </style>
+
+</head><body>
+<h1>Compilation Report</h1>
+<div class="container">
+    <div class="left">
+        <h2>File Path</h2>
+        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\list\list2.txt</code></pre>
+        <h2>File Contents</h2>
+        <pre><code>class list2 {
+	// redeclared var
+	l0 : list[char] = [];
+	l0 : int = 4;
+	
+	
+	// type mismatch'
+	l1 : list[int] = [1, 4, False];
+	
+
+	// this should be okay
+	l2 : list[bool] = [True, False];
+	
+	// these shouldnt work
+	l3 : list[char] = 'd';	
+	l4 : list[int] = 2+2;
+}
+</code></pre>
+    </div>
+
+<div class="right"><h2>Variables</h2><p>No variables found.</p><h2>Type Errors</h2><div class="error">Variable l0 already declared,  line=4 col=2</div><div class="error">Type mismatch at [4, 2]: expected LIST_CHAR = LIST_CHAR assignment but got LIST_CHAR = INT</div><div class="error">Error with declaration at [15, 20], CHAR cannot be assigned to a list</div><div class="error">Error with declaration at [16, 19], INT cannot be assigned to a list</div></div>
+</div>
+</body></html>
+</div>
+<footer>team: russl8, jeffj4</footer>
+</body></html>
