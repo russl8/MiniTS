@@ -16,12 +16,12 @@
 </head><body>
 <h1>Combined Compilation Report</h1>
 <div class="report">
-<h2><a href="list3-report.html">list3-report.html</a></h2>
+<h2><a href="w2-report.html">w2-report.html</a></h2>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>list3 Report</title>
+    <title>w2 Report</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
         h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
@@ -39,24 +39,17 @@
 <div class="container">
     <div class="left">
         <h2>File Path</h2>
-        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\list\list3.txt</code></pre>
+        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\whileloop\w2.txt</code></pre>
         <h2>File Contents</h2>
-        <pre><code>class list3 {
-	
-	// cannot reassign list_char to list_int
-	v0 : list[char] = [];
-	v0 = ['1', 'a', 'g' ];
-	v0 = [1, 2];
-	
-	// error
-	v1 : list[int] = [];
-	v1 = 4;
-	
+        <pre><code>class w2 {
+	while (1+1) { //1+1 is not a boolean expression
+		x = 2; // undeclared var
+	}
 }
 </code></pre>
     </div>
 
-<div class="right"><h2>Variables</h2><p>No variables found.</p><h2>Type Errors</h2><div class="error">Error in [6, 8] Cannot assign list[INT] to list[CHAR]</div><div class="error">Type mismatch at [10, 2]: expected LIST_INT = LIST_INT assignment but got LIST_INT = INT</div></div>
+<div class="right"><h2>Variables</h2><p>No variables found.</p><h2>Type Errors</h2><div class="error">Assignment to an undeclared variable in [3, 3]: x</div><div class="error">Type mismatch in logical expression at [2, 9], while-loop condition must be boolean but got INT</div><div class="error">Type mismatch at [3, 3]: expected null = null assignment but got null = INT</div></div>
 </div>
 </body></html>
 </div>

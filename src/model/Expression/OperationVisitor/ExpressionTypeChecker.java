@@ -54,6 +54,7 @@ import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.List.ListLiteral;
 import model.Expression.Statement.PrimitiveAssignment;
+import model.Expression.Statement.WhileLoop;
 import model.Expression.Statement.IfStatement;
 import model.Expression.Statement.ListAssignment;
 import model.Expression.Unary.Not;
@@ -182,8 +183,8 @@ public class ExpressionTypeChecker implements OperationVisitor {
 			for (Expression e : ll.items) {
 				if (e.getReturnType() != itemType) {
 					if (e.getReturnType() != itemType) {
-						semanticErrors.add("Error in [" + e.getLine() + ", " + e.getCol()
-								+ "] Cannot assign list[" + e.getReturnType() + "] to list[" + itemType + "]");
+						semanticErrors.add("Error in [" + e.getLine() + ", " + e.getCol() + "] Cannot assign list["
+								+ e.getReturnType() + "] to list[" + itemType + "]");
 					}
 					break;
 				}
@@ -201,13 +202,36 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		// cond must be a boolean expression
 		if (cond.getReturnType() != Type.BOOL) {
 			semanticErrors.add("Type mismatch in logical expression at [" + ifs.getLine() + ", " + ifs.getCol()
-					+ "] expected ( BOOL ) but got ( " + cond.getReturnType() + " )");
+					+ "], if-statement condition must be boolean but got " + cond.getReturnType());
 		}
 		// Type check the condition
 		cond.accept(this);
 
 		// Type check all inner expressions
 		for (Expression e : ifs.expressions) {
+			e.accept(this);
+		}
+		return null;
+	}
+
+	@Override
+	public <T> T visitWhileLoop(WhileLoop wl) {
+		/*
+		 * make sure the whileloop condition has a returnType of BOOL typecheck the
+		 * condition typecheck all inner expressions
+		 */
+		Expression cond = wl.cond;
+
+		// cond must be a boolean expression
+		if (cond.getReturnType() != Type.BOOL) {
+			semanticErrors.add("Type mismatch in logical expression at [" + wl.getLine() + ", " + wl.getCol()
+					+ "], while-loop condition must be boolean but got " + cond.getReturnType());
+		}
+		// Type check the condition
+		cond.accept(this);
+
+		// Type check all inner expressions
+		for (Expression e : wl.expressions) {
 			e.accept(this);
 		}
 		return null;

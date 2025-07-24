@@ -20,6 +20,7 @@ import model.Expression.Binary.Subtraction;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.Statement.PrimitiveAssignment;
+import model.Expression.Statement.WhileLoop;
 import model.Expression.Statement.IfStatement;
 import model.Expression.Statement.ListAssignment;
 import model.Expression.Statement.PrimitiveAssignment;
@@ -81,8 +82,20 @@ public class ExpressionProcessor {
 					evaluateExpression(ifsExpression);
 				}
 			}
-		} else if (e instanceof ListDeclaration) {
-//			System.out.println(e + " is a list declaration ");
+		} else if (e instanceof WhileLoop) {
+			WhileLoop wl = (WhileLoop) e;
+			Expression condition = wl.cond;
+			boolean conditionEvaluation = evaluateBoolean(condition);
+			while (conditionEvaluation == true) {
+				for (Expression loopExpression : wl.expressions) {
+					evaluateExpression(loopExpression);
+				}
+				// important: evaluate loop condition after every iteration
+				conditionEvaluation = evaluateBoolean(condition);
+			}
+		}
+
+		else if (e instanceof ListDeclaration) {
 			ListDeclaration ld = (ListDeclaration) e;
 			this.vars.put(ld.var, new Value(ld.type, ld.list));
 		} else {
@@ -161,10 +174,18 @@ public class ExpressionProcessor {
 			return evaluateBoolean(((Parenthesis) e).expr);
 		} else if (e instanceof Equal) {
 			Equal eq = (Equal) e;
-			return evaluateBoolean(eq.left) == evaluateBoolean(eq.right);
+			if (eq.left.getReturnType() == Type.INT) {
+				return evaluateInteger(eq.left) == evaluateInteger(eq.right);
+			} else if (eq.left.getReturnType() == Type.BOOL) {
+				return evaluateBoolean(eq.left) == evaluateBoolean(eq.right);
+			}
 		} else if (e instanceof NotEqual) {
 			NotEqual neq = (NotEqual) e;
-			return evaluateBoolean(neq.left) != evaluateBoolean(neq.right);
+			if (neq.left.getReturnType() == Type.INT) {
+				return evaluateInteger(neq.left) == evaluateInteger(neq.right);
+			} else if (neq.left.getReturnType() == Type.BOOL) {
+				return evaluateBoolean(neq.left) == evaluateBoolean(neq.right);
+			}
 		} else if (e instanceof GreaterThan) {
 			GreaterThan gt = (GreaterThan) e;
 			return evaluateInteger(gt.left) > evaluateInteger(gt.right);
