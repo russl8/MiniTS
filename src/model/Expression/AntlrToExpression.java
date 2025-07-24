@@ -24,6 +24,7 @@ import model.Value;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.Type;
 import model.Expression.Statement.PrimitiveAssignment;
+import model.Expression.Statement.WhileLoop;
 import model.Expression.Statement.IfStatement;
 import model.Expression.Statement.ListAssignment;
 import model.Expression.Statement.PrimitiveAssignment;
@@ -174,6 +175,9 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		int lineNum = id.getLine();
 		int colNum = id.getCharPositionInLine() + 1;
 
+		if (!this.vars.containsKey(var)) {
+			semanticErrors.add("Assignment to an undeclared variable in [" + lineNum + ", " + colNum + "]: " + var);
+		}
 		if (expr.getReturnType() != Type.NONE) {
 			return new PrimitiveAssignment(var, expr, lineNum, colNum);
 		} else if (expr instanceof ListLiteral) {
@@ -201,6 +205,24 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 			ifs.addExpression(visit(ctx.getChild(i)));
 		}
 		return ifs;
+	}
+
+	@Override
+	public Expression visitWhileLoop(WhileLoopContext ctx) {
+		/*
+		 * get line, col, condition, create whileloop object WL for each statement in
+		 * the while loop, WL.addExpression(statement) return WL
+		 */
+		Expression cond = visit(ctx.getChild(2));
+		int line = ctx.expr().getStart().getLine();
+		int col = ctx.expr().getStart().getCharPositionInLine() + 1;
+		WhileLoop wl = new WhileLoop(cond, line, col);
+
+		for (int i = 5; i < ctx.getChildCount() - 1; i++) {
+			wl.addExpression(visit(ctx.getChild(i)));
+		}
+		System.out.println(wl);
+		return wl;
 	}
 
 	@Override

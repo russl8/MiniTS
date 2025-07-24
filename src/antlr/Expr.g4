@@ -8,13 +8,14 @@ grammar Expr;
 prog: (class_decl)+ EOF #Program;
 
 class_decl: 
-    'class' ID ( 'extends' ID )? '{' (declaration | assignment | conditional)* '}' #ClassDeclaration;
+    'class' ID ( 'extends' ID )? '{' (statement)* '}' #ClassDeclaration;
 
 // STATEMENTS
 statement:
       declaration
     | assignment
     | conditional
+    | loop
     ;
 
 // DECLARATIONS

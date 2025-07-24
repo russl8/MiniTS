@@ -26,6 +26,8 @@ public interface OperationVisitor {
 
 	public <T> T visitPrimitaveDeclaration(PrimitaveDeclaration d);
 	
+	public <T> T visitWhileLoop(WhileLoop wl);
+
 	public <T> T visitListDeclaration(ListDeclaration ld);
 
 	public <T> T visitPrimitiveAssignment(PrimitiveAssignment a);
