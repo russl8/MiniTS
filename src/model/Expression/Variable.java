@@ -54,6 +54,10 @@ public class Variable extends Expression {
 		return var;
 	}
 
+	public void setReturnType(Type type) {
+		this.returnType = type;
+	}
+
 	@Override
 	public <T> T accept(OperationVisitor T) {
 		return T.visitVariable(this);

@@ -54,14 +54,12 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitPrimitaveDeclaration(PrimitaveDeclaration d) {
-
 		// TODO Auto-generated method stub
 		String var = d.var;
 		if (this.vars.keySet().contains(var)) {
 			semanticErrors.add("Variable " + var + " already declared,  line=" + d.getLine() + " col=" + d.getCol());
 		} else {
 			this.vars.put(var, d.type);
-			System.out.println(vars);
 		}
 
 		d.expr.accept(this);
@@ -119,6 +117,7 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 	@Override
 	public <T> T visitIfStatement(IfStatement ifs) {
 		// TODO Auto-generated method stub
+		ifs.cond.accept(this);
 		return null;
 	}
 
@@ -141,6 +140,7 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 		if (!this.vars.containsKey(v.var)) {
 			semanticErrors.add("Variable '" + v.var + "' not declared, line=" + v.getLine() + " col=" + v.getCol());
 		}
+		v.setReturnType(this.vars.get(v.var));
 		return null;
 	}
 

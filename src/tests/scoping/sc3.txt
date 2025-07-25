@@ -1,0 +1,13 @@
+class crash1 {
+    a : int = 2;
+
+    if (True) {
+        b : int = 2;
+        b = b + 1; // b = 3
+
+        if (b == 3) {
+            b : int = 7; // REDECLARATION of b in nested scope – should crash
+        }
+
+    }
+}

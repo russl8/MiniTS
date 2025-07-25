@@ -81,7 +81,6 @@ public class ExpressionTypeChecker implements OperationVisitor {
 	@Override
 	public <T> T visitPrimitaveDeclaration(PrimitaveDeclaration d) {
 		Type varType = d.type;
-
 		// If declaration is initialized, typecheck its expressoin
 		if (d.isInitialized) {
 			Type exprType = d.expr.getReturnType();
@@ -138,6 +137,7 @@ public class ExpressionTypeChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitPrimitiveAssignment(PrimitiveAssignment a) {
+		System.out.println(a + " " + this.vars);
 		// TODO: Recursively visit the assignment left and right.
 		// do the same for visitBinaryExpression (ex: recursively visit left and right)
 		String var = a.var;
@@ -152,7 +152,7 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		}
 
 		// Type check the assignment expression
-//		a.expr.accept(this);
+		a.expr.accept(this);
 
 		return null;
 	}
@@ -208,10 +208,10 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		// Type check the condition
 		cond.accept(this);
 
-		// Type check all inner expressions
-		for (Expression e : ifs.expressions) {
-			e.accept(this);
-		}
+		// DO NOT type check all inner expressions. already handled in ExpressionApp.
+		// for (Expression e : ifs.expressions) {
+		// e.accept(this);
+		// }
 		return null;
 	}
 
