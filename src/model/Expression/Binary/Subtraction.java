@@ -23,6 +23,6 @@ public class Subtraction extends BinaryExpression {
 	@Override
 	public <T> T accept(OperationVisitor T) {
 		// TODO Auto-generated method stub
-		return T.visitSubtraction(this);
+		return T.visitBinaryExpression(this);
 	}
 }

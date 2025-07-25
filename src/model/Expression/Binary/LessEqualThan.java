@@ -21,6 +21,6 @@ public class LessEqualThan extends BinaryExpression {
 
 	@Override
 	public <T> T accept(OperationVisitor T) {
-		return T.visitLessEqualThan(this);
+		return T.visitBinaryExpression(this);
 	}
 }

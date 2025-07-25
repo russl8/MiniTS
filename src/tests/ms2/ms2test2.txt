@@ -1,0 +1,5 @@
+class test2 {
+	l1 : list[int] = [1,2,3];
+	l1 = [1]; // OK
+	l1 = [1, 4, 5, False]; // Error on line 5
+}

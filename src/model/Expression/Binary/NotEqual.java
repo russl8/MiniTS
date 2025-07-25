@@ -25,7 +25,7 @@ public class NotEqual extends BinaryExpression {
 	@Override
 	public <T> T accept(OperationVisitor T) {
 		// TODO Auto-generated method stub
-		return T.visitNotEqual(this);
+		return T.visitBinaryExpression(this);
 	}
 	
 

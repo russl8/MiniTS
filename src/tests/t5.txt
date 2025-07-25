@@ -1,0 +1,9 @@
+class t5 {
+	x : int = 1;
+	
+	
+	if (True) {
+		y : int = 2;
+	}
+	x = x + y;
+}

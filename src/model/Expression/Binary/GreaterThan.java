@@ -21,6 +21,6 @@ public class GreaterThan extends BinaryExpression {
 
 	@Override
 	public <T> T accept(OperationVisitor T) {
-		return T.visitGreaterThan(this);
+		return T.visitBinaryExpression(this);
 	}
 }

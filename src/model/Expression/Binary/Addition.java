@@ -24,6 +24,6 @@ public class Addition extends BinaryExpression {
 
 	@Override
 	public <T> T accept(OperationVisitor T) {
-		return T.visitAddition(this);
+		return T.visitBinaryExpression(this);
 	}
 }

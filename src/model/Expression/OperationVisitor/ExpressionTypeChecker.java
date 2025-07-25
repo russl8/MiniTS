@@ -80,13 +80,14 @@ public class ExpressionTypeChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitPrimitaveDeclaration(PrimitaveDeclaration d) {
-		Type varType = vars.get(d.var);
+		Type varType = d.type;
+
 		// If declaration is initialized, typecheck its expressoin
 		if (d.isInitialized) {
 			Type exprType = d.expr.getReturnType();
 			if (varType != exprType) {
 				semanticErrors.add("Type mismatch at [" + d.getLine() + ", " + d.getCol() + "]: expected " + varType
-						+ " = " + varType + " assignment but got " + varType + " = " + exprType);
+						+ " = " + varType + " declaration but got " + varType + " = " + exprType);
 			}
 			// recursively typecheck the inner expression
 			d.expr.accept(this);
@@ -140,7 +141,7 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		// TODO: Recursively visit the assignment left and right.
 		// do the same for visitBinaryExpression (ex: recursively visit left and right)
 		String var = a.var;
-		Type exprReturnType = a.expr.getReturnType();
+		Type exprReturnType = this.vars.get(var);
 
 		// make sure that the variable is being assigned properly
 		// ex: (int -> int, bool -> bool)
@@ -151,7 +152,7 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		}
 
 		// Type check the assignment expression
-		a.expr.accept(this);
+//		a.expr.accept(this);
 
 		return null;
 	}
@@ -238,80 +239,8 @@ public class ExpressionTypeChecker implements OperationVisitor {
 	}
 
 	@Override
-	public <T> T visitMultiplication(Multiplication mul) {
-		checkIfExprArgsValidBinary(mul);
-		return null;
-	}
-
-	@Override
-	public <T> T visitAddition(Addition add) {
-		checkIfExprArgsValidBinary(add);
-		return null;
-	}
-
-	@Override
-	public <T> T visitDivision(Division div) {
-		checkIfExprArgsValidBinary(div);
-		return null;
-	}
-
-	@Override
-	public <T> T visitModulo(Modulo mod) {
-		checkIfExprArgsValidBinary(mod);
-		return null;
-	}
-
-	@Override
-	public <T> T visitSubtraction(Subtraction sub) {
-		checkIfExprArgsValidBinary(sub);
-		return null;
-	}
-
-	@Override
-	public <T> T visitGreaterThan(GreaterThan gt) {
-		checkIfExprArgsValidBinary(gt);
-		return null;
-	}
-
-	@Override
-	public <T> T visitGreaterEqualThan(GreaterEqualThan ge) {
-		checkIfExprArgsValidBinary(ge);
-		return null;
-	}
-
-	@Override
-	public <T> T visitLessThan(LessThan lt) {
-		checkIfExprArgsValidBinary(lt);
-		return null;
-	}
-
-	@Override
-	public <T> T visitLessEqualThan(LessEqualThan le) {
-		checkIfExprArgsValidBinary(le);
-		return null;
-	}
-
-	@Override
-	public <T> T visitEqual(Equal eq) {
-		checkIfExprArgsValidBinary(eq);
-		return null;
-	}
-
-	@Override
-	public <T> T visitNotEqual(NotEqual ne) {
-		checkIfExprArgsValidBinary(ne);
-		return null;
-	}
-
-	@Override
-	public <T> T visitAnd(And and) {
-		checkIfExprArgsValidBinary(and);
-		return null;
-	}
-
-	@Override
-	public <T> T visitOr(Or or) {
-		checkIfExprArgsValidBinary(or);
+	public <T> T visitBinaryExpression(BinaryExpression be) {
+		checkIfExprArgsValidBinary(be);
 		return null;
 	}
 
@@ -324,7 +253,6 @@ public class ExpressionTypeChecker implements OperationVisitor {
 
 		// Type checkt the inner expression
 		not.expr.accept(this);
-
 		return null;
 	}
 
@@ -353,6 +281,11 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		return null;
 	}
 
+	@Override
+	public void updateVarState(Map<String, Type> newVars) {
+		this.vars = newVars;
+	}
+
 	/**
 	 * Given an binary expression's type, type-check the expression's left and right
 	 * hand arguments. On failure, append to semantic errors.
@@ -365,6 +298,8 @@ public class ExpressionTypeChecker implements OperationVisitor {
 	private void checkIfExprArgsValidBinary(Expression expr) {
 		boolean isValid = true;
 
+		System.out.println(expr + " | " + this.vars);
+
 		Expression left = ((BinaryExpression) expr).left;
 		Expression right = ((BinaryExpression) expr).right;
 		ExprType exprType = expr.getExprType();
@@ -376,8 +311,8 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		int line = left.getLine();
 		int col = left.getCol();
 
-		Type leftReturnType = left.getReturnType();
-		Type rightReturnType = right.getReturnType();
+		Type leftReturnType = left.getReturnType() != null ? left.getReturnType() : this.vars.get(left.toString());
+		Type rightReturnType = right.getReturnType() != null ? right.getReturnType() : this.vars.get(right.toString());
 
 		String typeOfExpression = "";
 		String expectedTypes = "";
@@ -406,6 +341,7 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		}
 
 		if (!isValid) {
+			System.out.println("error with " + expr + vars);
 			semanticErrors.add("Type mismatch in " + typeOfExpression + " expression at [" + line + ", " + col
 					+ "]: expected " + expectedTypes + " but got " + actualTypes + "");
 

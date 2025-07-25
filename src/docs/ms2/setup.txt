@@ -1,0 +1,12 @@
+## Running the application
+
+1. Set present working dir to src:
+	$ cd src
+	
+2. Execute all tests via:
+	$ java -jar ms2.jar tests/
+	
+	Ex: java -jar ms2.jar tests/input/
+	
+3. Refresh the tests folder, and the output html file will be in tests.output
+	Ex: src/tests/output/t4output.html

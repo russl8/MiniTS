@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ms2test1 Report</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
+        h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
+        .container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .left, .right { padding: 20px; background-color: #ffffff; border: 1px solid #82c0cc; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        pre { background-color: #e9ecef; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 14px; }
+        .error { background-color: #f8d7da; border-left: 4px solid #d9534f; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #721c24; }
+        .variable { background-color: #489fb5; border-left: 4px solid #16697a; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #ffffff; }
+        h2 { color: #489fb5; margin-top: 0; }
+        footer { text-align: center; margin-top: 40px; font-size: 12px; color: #888; }
+    </style>
+
+</head><body>
+<h1>Compilation Report</h1>
+<div class="container">
+    <div class="left">
+        <h2>File Path</h2>
+        <pre><code>/mnt/c/Users/russe/Github/EECS4302Compiler/src/tests/ms2/ms2test1.txt</code></pre>
+        <h2>File Contents</h2>
+        <pre><code>class test1 {
+	l1 : list[int] = [1,2,3];
+	c1 : char = '2';
+}
+</code></pre>
+    </div>
+
+<div class="right"><h2>Variables</h2><div class="variable">l1 : {type=LIST_INT, value=[ 1, 2, 3, ] }</div><div class="variable">c1 : {type=CHAR, value=2}</div><h2>Type Errors</h2><p>No type errors found.</p></div>
+</div>
+<footer>team: russl8, jeffj4</footer>
+</body></html>

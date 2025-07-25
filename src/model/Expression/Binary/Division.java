@@ -25,6 +25,6 @@ public class Division extends BinaryExpression {
 	@Override
 	public <T> T accept(OperationVisitor T) {
 		// TODO Auto-generated method stub
-		return T.visitDivision(this);
+		return T.visitBinaryExpression(this);
 	}
 }

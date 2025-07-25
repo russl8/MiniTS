@@ -1,0 +1,8 @@
+class test4 {
+	i : int = 5;
+	if (True) {
+		j : int = 4;
+		i = j + i;
+	}
+	i = j + j; // Line 7 error ONLY
+}

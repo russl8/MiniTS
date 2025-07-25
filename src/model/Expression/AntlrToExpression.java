@@ -100,12 +100,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		 */
 		if (primitaveTypes.containsKey(declType.getText())) {
 			Type varType = primitaveTypes.get(declType.getText());
-
-			if (vars.keySet().contains(var)) {
-				semanticErrors.add("Variable " + var + " already declared,  line=" + line + " col=" + col);
-			} else {
-				vars.put(var, varType);
-			}
 			// expr is initialized
 			if (isInitialized) {
 				Expression expr = visit(ctx.expr());
@@ -119,13 +113,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		 */
 		else {
 			String objectType = declType.getChild(0).getText();
-			// Var already declared error
-			if (vars.keySet().contains(var)) {
-				semanticErrors.add("Variable " + var + " already declared,  line=" + line + " col=" + col);
-			} else {
-				vars.put(var, Type.NONE);
-			}
-
 			if (objectType.equals("list")) {
 				String itemType = declType.getChild(2).getText();
 				Expression ld;
@@ -153,7 +140,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 				} else {
 					ld = new ListDeclaration(var, listType, line, col);
 				}
-				this.vars.put(var, listType);
 
 				return ld;
 			} else {
@@ -175,9 +161,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		int lineNum = id.getLine();
 		int colNum = id.getCharPositionInLine() + 1;
 
-		if (!this.vars.containsKey(var)) {
-			semanticErrors.add("Assignment to an undeclared variable in [" + lineNum + ", " + colNum + "]: " + var);
-		}
 		if (expr.getReturnType() != Type.NONE) {
 			return new PrimitiveAssignment(var, expr, lineNum, colNum);
 		} else if (expr instanceof ListLiteral) {
@@ -365,10 +348,10 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		int line = id.getLine();
 		int col = id.getCharPositionInLine() + 1;
 
-		// check if variable is declared
-		if (!this.vars.containsKey(var)) {
-			semanticErrors.add("Variable '" + var + "' not declared, line=" + line + " col=" + col);
-		}
+//		// check if variable is declared
+//		if (!this.vars.containsKey(var)) {
+//			semanticErrors.add("Variable '" + var + "' not declared, line=" + line + " col=" + col);
+//		}
 
 		Type type = vars.get(var);
 		return new Variable(var, type, line, col);

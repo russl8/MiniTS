@@ -24,6 +24,6 @@ public class Modulo extends BinaryExpression {
 	@Override
 	public <T> T accept(OperationVisitor T) {
 		// TODO Auto-generated method stub
-		return T.visitModulo(this);
+		return T.visitBinaryExpression(this);
 	}
 }

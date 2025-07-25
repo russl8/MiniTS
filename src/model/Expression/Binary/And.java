@@ -23,6 +23,6 @@ public class And extends BinaryExpression  {
 	@Override
 	public <T> T accept(OperationVisitor T) {
 		// TODO Auto-generated method stub
-		return T.visitAnd(this);
+		return T.visitBinaryExpression(this);
 	}
 }

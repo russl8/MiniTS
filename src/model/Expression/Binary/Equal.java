@@ -22,7 +22,7 @@ public class Equal extends BinaryExpression {
 	@Override
 	public <T> T accept(OperationVisitor T) {
 		// TODO Auto-generated method stub
-		return T.visitEqual(this);
+		return T.visitBinaryExpression(this);
 	}
 
 }
