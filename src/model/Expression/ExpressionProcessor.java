@@ -174,6 +174,7 @@ public class ExpressionProcessor {
 			return evaluateBoolean(((Parenthesis) e).expr);
 		} else if (e instanceof Equal) {
 			Equal eq = (Equal) e;
+			System.out.println("Seeing equal " + eq);
 			if (eq.left.getReturnType() == Type.INT) {
 				return evaluateInteger(eq.left) == evaluateInteger(eq.right);
 			} else if (eq.left.getReturnType() == Type.BOOL) {
@@ -203,7 +204,7 @@ public class ExpressionProcessor {
 		} else if (e instanceof BooleanLiteral) {
 			return ((BooleanLiteral) e).val;
 		}
-		System.err.println("Could not properly evaluate boolean expression " + e);
+		System.err.println("Could not properly evaluate boolean expression " + e + " " + e.getClass());
 		return false;
 	}
 
