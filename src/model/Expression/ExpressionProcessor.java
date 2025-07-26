@@ -87,8 +87,10 @@ public class ExpressionProcessor {
 			Expression condition = wl.cond;
 			boolean conditionEvaluation = evaluateBoolean(condition);
 			while (conditionEvaluation == true) {
+				// have to reset state (scope)
 				for (Expression loopExpression : wl.expressions) {
 					evaluateExpression(loopExpression);
+
 				}
 				// important: evaluate loop condition after every iteration
 				conditionEvaluation = evaluateBoolean(condition);
