@@ -1,0 +1,31 @@
+Type mismatch in logical expression at [11, 13]: expected (BOOL, BOOL) but got (INT, BOOL)
+
+Type mismatch at line 11: expected INT = INT assignment but got INT = BOOL
+
+Type mismatch in logical expression at [14, 13]: expected (BOOL, BOOL) but got (INT, BOOL)
+
+Type mismatch at line 14: expected INT = INT assignment but got INT = BOOL
+
+Type mismatch in logical expression at [17, 13]: expected (BOOL, BOOL) but got (INT, INT)
+
+Type mismatch at line 17: expected INT = INT assignment but got INT = BOOL
+
+Type mismatch in arithmetic expression at [20, 13]: expected (INT, INT) but got (BOOL, INT)
+
+Type mismatch in relational expression at [23, 13]: expected (INT, INT) but got (BOOL, INT)
+
+Type mismatch in equality expression at [26, 13]: expected (INT, INT) or (BOOL, BOOL) but got (INT, BOOL)
+
+Type mismatch in logical expression at line 29: expected ( BOOL ) but got ( INT )
+
+Type mismatch in logical expression at [32, 13]: expected (BOOL, BOOL) but got (INT, INT)
+
+Type mismatch at line 32: expected INT = INT assignment but got INT = BOOL
+
+Type mismatch in equality expression at [35, 13]: expected (INT, INT) or (BOOL, BOOL) but got (INT, BOOL)
+
+Type mismatch in equality expression at [38, 13]: expected (INT, INT) or (BOOL, BOOL) but got (INT, BOOL)
+
+Type mismatch in relational expression at [41, 30]: expected (INT, INT) but got (INT, BOOL)
+
+Type mismatch in equality expression at [41, 13]: expected (INT, INT) or (BOOL, BOOL) but got (INT, BOOL)

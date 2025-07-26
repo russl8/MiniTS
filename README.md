@@ -1,10 +1,10 @@
 # Running the Application
-* Navigate to the src folder
+* From the project folder:
 * java -jar EECS4302Compiler.jar {input}
 
 Input Parameter
 * When runniing the input command, we can provide either a directory full of .txt files, or the path of 1 individual file
-* e.g. java -jar EECS4302Compiler.jar tests/input/
+* e.g. java -jar EECS4302Compiler.jar src/tests/input/
 
 # Expected Output
 * ## Single Report
