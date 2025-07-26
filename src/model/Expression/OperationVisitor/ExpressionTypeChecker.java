@@ -137,7 +137,6 @@ public class ExpressionTypeChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitPrimitiveAssignment(PrimitiveAssignment a) {
-		System.out.println(a + " " + this.vars);
 		// TODO: Recursively visit the assignment left and right.
 		// do the same for visitBinaryExpression (ex: recursively visit left and right)
 		String var = a.var;
@@ -297,8 +296,6 @@ public class ExpressionTypeChecker implements OperationVisitor {
 	 */
 	private void checkIfExprArgsValidBinary(Expression expr) {
 		boolean isValid = true;
-
-		System.out.println(expr + " | " + this.vars);
 
 		Expression left = ((BinaryExpression) expr).left;
 		Expression right = ((BinaryExpression) expr).right;
