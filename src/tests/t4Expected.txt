@@ -1,7 +1,0 @@
-class MyClass
-
-x : {type=INT, value=10}
-
-y : {type=BOOL, value=true}
-
-z : {type=BOOL, value=null}

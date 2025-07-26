@@ -62,7 +62,9 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 			this.vars.put(var, d.type);
 		}
 
-		d.expr.accept(this);
+		if (d.expr != null) {
+			d.expr.accept(this);
+		}
 		return null;
 	}
 
