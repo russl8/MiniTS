@@ -8,7 +8,7 @@ import java.util.Set;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.Type;
-import model.Expression.OperationVisitor.OperationVisitor;
+import model.Expression.Visitor.OperationVisitor;
 
 public class IfStatement extends Expression {
 	public Expression cond;

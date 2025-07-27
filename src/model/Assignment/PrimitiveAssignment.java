@@ -1,15 +1,14 @@
-package model.Expression.Statement;
+package model.Assignment;
 
 import java.util.Set;
 
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.Type;
-import model.Expression.OperationVisitor.OperationVisitor;
+import model.Expression.Visitor.OperationVisitor;
 
-public class PrimitiveAssignment extends Expression {
-	public Expression expr;
-	public String var;
+public class PrimitiveAssignment extends Assignment {
+
 
 	public Type getReturnType() {
 		return Type.NONE;

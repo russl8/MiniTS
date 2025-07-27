@@ -1,15 +1,12 @@
-package model.Expression.List;
+package model.Expression;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import model.Expression.Expression;
-import model.Expression.OperationVisitor.OperationVisitor;
+import model.Expression.Visitor.OperationVisitor;
 
 public class ListLiteral extends Expression {
-
-	public ExprType exprType;
 
 	/**
 	 * List<Expression> Elements;

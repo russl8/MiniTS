@@ -1,7 +1,9 @@
-package model.Expression.OperationVisitor;
+package model.Expression.Visitor;
 
 import java.util.Map;
 
+import model.Assignment.ListAssignment;
+import model.Assignment.PrimitiveAssignment;
 import model.Expression.*;
 import model.Expression.Expression.Type;
 import model.Expression.Binary.Addition;
@@ -18,7 +20,6 @@ import model.Expression.Binary.Multiplication;
 import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
-import model.Expression.Declaration.ClassDeclaration;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.Statement.*;
@@ -29,27 +30,27 @@ public interface OperationVisitor {
 
 	public void updateVarState(Map<String, Type> newVars);
 
-	public <T> T visitClassDeclaration(ClassDeclaration cd);
-
-	public <T> T visitPrimitaveDeclaration(PrimitaveDeclaration d);
-
-	public <T> T visitWhileLoop(WhileLoop wl);
-
-	public <T> T visitBinaryExpression(BinaryExpression be);
-
-	public <T> T visitListDeclaration(ListDeclaration ld);
-
-	public <T> T visitPrimitiveAssignment(PrimitiveAssignment a);
-
-	public <T> T visitListAssignment(ListAssignment la);
-
-	public <T> T visitIfStatement(IfStatement ifs);
-
-	public <T> T visitNot(Not not);
-
-	public <T> T visitParenthesis(Parenthesis p);
-
-	public <T> T visitVariable(Variable v);
+		public <T> T visitClassDeclaration(ClassDeclaration cd);
+	
+		public <T> T visitPrimitaveDeclaration(PrimitaveDeclaration d);
+	
+		public <T> T visitWhileLoop(WhileLoop wl);
+	
+		public <T> T visitBinaryExpression(BinaryExpression be);
+	
+		public <T> T visitListDeclaration(ListDeclaration ld);
+	
+		public <T> T visitPrimitiveAssignment(PrimitiveAssignment a);
+	
+		public <T> T visitListAssignment(ListAssignment la);
+	
+		public <T> T visitIfStatement(IfStatement ifs);
+	
+		public <T> T visitNot(Not not);
+	
+		public <T> T visitParenthesis(Parenthesis p);
+	
+		public <T> T visitVariable(Variable v);
 
 	public <T> T visitBooleanLiteral(BooleanLiteral bl);
 

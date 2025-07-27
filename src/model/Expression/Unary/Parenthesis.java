@@ -3,7 +3,7 @@ package model.Expression.Unary;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.Type;
-import model.Expression.OperationVisitor.OperationVisitor;
+import model.Expression.Visitor.OperationVisitor;
 
 public class Parenthesis extends UnaryExpression {
 	public Type getReturnType() {

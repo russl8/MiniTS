@@ -2,8 +2,8 @@ package model.Expression;
 
 import java.util.Set;
 
-import model.Expression.OperationVisitor.OperationVisitor;
 import model.Expression.Statement.Statement;
+import model.Expression.Visitor.OperationVisitor;
 
 public abstract class Expression {
 

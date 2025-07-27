@@ -6,28 +6,26 @@ import java.util.Set;
 import model.Expression.Expression;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.Type;
-import model.Expression.OperationVisitor.OperationVisitor;
+import model.Expression.Visitor.OperationVisitor;
 
-public class PrimitaveDeclaration extends Expression implements Declaration {
+public class PrimitaveDeclaration extends Declaration {
 
 	public String var;
 	public Type type;
-	public Expression expr;
-	public boolean isInitialized;
 
 	public Type getReturnType() {
 		return type;
 	}
 
 	public ExprType getExprType() {
-		return expr.getExprType();
+		return initialization.getExprType();
 	}
 
 	@Override
 	public Set<String> getVariables() {
 		Set<String> vars = new HashSet<>();
 		vars.add(var);
-		vars.addAll(expr.getVariables());
+		vars.addAll(initialization.getVariables());
 		return vars;
 	}
 
@@ -51,9 +49,9 @@ public class PrimitaveDeclaration extends Expression implements Declaration {
 		return col;
 	}
 
-	public PrimitaveDeclaration(String var, Type type, Expression expr, int line, int col) {
+	public PrimitaveDeclaration(String var, Type type, Expression initialization, int line, int col) {
 		this(var, type, line, col);
-		this.expr = expr;
+		this.initialization = initialization;
 		this.isInitialized = true;
 	}
 
@@ -61,7 +59,7 @@ public class PrimitaveDeclaration extends Expression implements Declaration {
 	public String toString() {
 		// TODO Auto-generated method stub
 		if (isInitialized) {
-			return var + " : " + type + " = " + expr;
+			return var + " : " + type + " = " + initialization;
 		} else {
 			return var + " : " + type;
 		}

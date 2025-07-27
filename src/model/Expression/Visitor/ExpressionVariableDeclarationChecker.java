@@ -1,10 +1,13 @@
-package model.Expression.OperationVisitor;
+package model.Expression.Visitor;
 
 import java.util.List;
 import java.util.Map;
 
+import model.Assignment.ListAssignment;
+import model.Assignment.PrimitiveAssignment;
 import model.Expression.BooleanLiteral;
 import model.Expression.CharacterLiteral;
+import model.Expression.ClassDeclaration;
 import model.Expression.NumberLiteral;
 import model.Expression.Variable;
 import model.Expression.Binary.Addition;
@@ -21,13 +24,10 @@ import model.Expression.Binary.Multiplication;
 import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
-import model.Expression.Declaration.ClassDeclaration;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.Expression.Type;
 import model.Expression.Statement.IfStatement;
-import model.Expression.Statement.ListAssignment;
-import model.Expression.Statement.PrimitiveAssignment;
 import model.Expression.Statement.WhileLoop;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
@@ -62,8 +62,8 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 			this.vars.put(var, d.type);
 		}
 
-		if (d.expr != null) {
-			d.expr.accept(this);
+		if (d.initialization != null) {
+			d.initialization.accept(this);
 		}
 		return null;
 	}
@@ -83,7 +83,7 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 		} else {
 			this.vars.put(var, ld.type);
 		}
-		ld.list.accept(this);
+		ld.initialization.accept(this);
 		return null;
 	}
 
@@ -112,7 +112,7 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 			semanticErrors
 					.add("Assignment to an undeclared variable in [" + a.getLine() + ", " + a.getCol() + "]: " + var);
 		}
-		a.list.accept(this);
+		a.expr.accept(this);
 		return null;
 	}
 

@@ -3,7 +3,7 @@ package model.Expression;
 import java.util.HashSet;
 import java.util.Set;
 
-import model.Expression.OperationVisitor.OperationVisitor;
+import model.Expression.Visitor.OperationVisitor;
 
 public class Variable extends Expression {
 	public String var;

@@ -7,17 +7,15 @@ import java.util.Set;
 import model.Value;
 import model.Expression.AntlrToExpression;
 import model.Expression.Expression;
-import model.Expression.OperationVisitor.OperationVisitor;
+import model.Expression.Visitor.OperationVisitor;
 
-public class ListDeclaration extends Expression implements Declaration {
+public class ListDeclaration extends Declaration {
 
-	public Expression list;
 	public Type type;
 	public String var;
 	private int line;
 	private int col;
-	public boolean isInitialized;
-	
+
 	public ListDeclaration(String var, Type type, int line, int col) {
 		this.type = type;
 		this.var = var;
@@ -26,9 +24,9 @@ public class ListDeclaration extends Expression implements Declaration {
 		this.isInitialized = false;
 	}
 
-	public ListDeclaration(String var, Expression list, Type type, int line, int col) {
+	public ListDeclaration(String var, Expression initialization, Type type, int line, int col) {
 		this(var, type, line, col);
-		this.list = list;
+		this.initialization = initialization;
 		this.isInitialized = true;
 	}
 
@@ -66,7 +64,7 @@ public class ListDeclaration extends Expression implements Declaration {
 
 	@Override
 	public String toString() {
-		String res = this.var + " : list [" + type + "] = " + this.list;
+		String res = this.var + " : list [" + type + "] = " + this.initialization;
 		return res;
 	}
 }

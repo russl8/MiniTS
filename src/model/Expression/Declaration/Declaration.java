@@ -1,5 +1,9 @@
 package model.Expression.Declaration;
 
-public interface Declaration {
+import model.Expression.Expression;
+
+public abstract class Declaration extends Expression {
+	public boolean isInitialized;
+	public Expression initialization;
 
 }

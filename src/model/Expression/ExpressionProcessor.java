@@ -4,6 +4,8 @@ import java.util.*;
 
 import model.Expression.Expression.Type;
 import model.Value;
+import model.Assignment.ListAssignment;
+import model.Assignment.PrimitiveAssignment;
 import model.Expression.Binary.Addition;
 import model.Expression.Binary.And;
 import model.Expression.Binary.Division;
@@ -19,11 +21,8 @@ import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
-import model.Expression.Statement.PrimitiveAssignment;
 import model.Expression.Statement.WhileLoop;
 import model.Expression.Statement.IfStatement;
-import model.Expression.Statement.ListAssignment;
-import model.Expression.Statement.PrimitiveAssignment;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
 
@@ -47,7 +46,7 @@ public class ExpressionProcessor {
 	public void evaluateExpression(Expression e) {
 		if (e instanceof PrimitaveDeclaration) {
 			PrimitaveDeclaration d = (PrimitaveDeclaration) e;
-			Expression expr = d.expr;
+			Expression expr = d.initialization;
 			Value val;
 
 			if (!d.isInitialized) {
@@ -69,7 +68,7 @@ public class ExpressionProcessor {
 		} else if (e instanceof ListAssignment) {
 			ListAssignment ld = (ListAssignment) e;
 			Value existingValue = this.vars.get(ld.var);
-			existingValue.setValue(ld.list);
+			existingValue.setValue(ld.expr);
 
 		} else if (e instanceof IfStatement) {
 			// evaluate expression. if true then evaluate all of its expressions
@@ -99,7 +98,7 @@ public class ExpressionProcessor {
 
 		else if (e instanceof ListDeclaration) {
 			ListDeclaration ld = (ListDeclaration) e;
-			this.vars.put(ld.var, new Value(ld.type, ld.list));
+			this.vars.put(ld.var, new Value(ld.type, ld.initialization));
 		} else {
 			// not a declaration/assignment/if. ignore for now
 			System.err.println("Warning, unhandled statement, ignoring for now: " + e);

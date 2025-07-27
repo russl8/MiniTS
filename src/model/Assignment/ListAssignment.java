@@ -1,18 +1,15 @@
-package model.Expression.Statement;
+package model.Assignment;
 
 import java.util.Set;
 
 import model.Expression.Expression;
-import model.Expression.OperationVisitor.OperationVisitor;
+import model.Expression.Visitor.OperationVisitor;
 
-public class ListAssignment extends Expression {
+public class ListAssignment extends Assignment {
 
-	public Expression list; // should be a listLiteral
-	public String var;
-
-	public ListAssignment(String var, Expression list, int line, int col) {
+	public ListAssignment(String var, Expression expr, int line, int col) {
 		this.var = var;
-		this.list = list;
+		this.expr = expr; // Typecheck: should be a list
 		this.line = line;
 		this.col = col;
 	}
@@ -52,7 +49,7 @@ public class ListAssignment extends Expression {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return var + " = " + list;
+		return var + " = " + expr;
 	}
 
 }

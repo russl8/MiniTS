@@ -2,7 +2,7 @@ package model.Expression;
 
 import java.util.Set;
 
-import model.Expression.OperationVisitor.OperationVisitor;
+import model.Expression.Visitor.OperationVisitor;
 
 public class CharacterLiteral extends Expression {
 	public char val;

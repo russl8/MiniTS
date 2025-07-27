@@ -3,15 +3,15 @@ package app;
 import antlr.ExprLexer;
 import antlr.ExprParser;
 import model.*;
+import model.Expression.ClassDeclaration;
 import model.Expression.Expression;
 import model.Expression.ExpressionProcessor;
-import model.Expression.Declaration.ClassDeclaration;
 import model.Expression.Expression.Type;
-import model.Expression.OperationVisitor.ExpressionTypeChecker;
-import model.Expression.OperationVisitor.ExpressionVariableDeclarationChecker;
-import model.Expression.OperationVisitor.OperationVisitor;
 import model.Expression.Statement.IfStatement;
 import model.Expression.Statement.WhileLoop;
+import model.Expression.Visitor.ExpressionTypeChecker;
+import model.Expression.Visitor.ExpressionVariableDeclarationChecker;
+import model.Expression.Visitor.OperationVisitor;
 import model.Program.AntlrToProgram;
 import model.Program.Program;
 import model.MyErrorListener;
@@ -79,7 +79,7 @@ public class ExpressionApp {
 
 			try {
 				long startTime = System.currentTimeMillis();
-				
+
 				semanticErrors = new ArrayList<>();
 				vars = new HashMap<>();
 				operationVisitors = new ArrayList<>();
@@ -132,27 +132,19 @@ public class ExpressionApp {
 		}
 
 		if (e instanceof IfStatement) {
-			Map<String, Type> savedVars = new HashMap<>(currentVars);
-			Map<String, Type> blockVars = new HashMap<>(currentVars);
-
+			Map<String, Type> savedVars = Utils.copyVarScope(currentVars);
 			IfStatement ifs = (IfStatement) e;
 			for (Expression ex : ifs.expressions) {
-				visitExpression(ex, blockVars);
+				visitExpression(ex, currentVars);
 			}
-
-			currentVars.clear();
-			currentVars.putAll(savedVars);
+			Utils.restoreVarScope(currentVars, savedVars);
 		} else if (e instanceof WhileLoop) {
-			Map<String, Type> savedVars = new HashMap<>(currentVars);
-			Map<String, Type> blockVars = new HashMap<>(currentVars);
-
+			Map<String, Type> savedVars = Utils.copyVarScope(currentVars);
 			WhileLoop wl = (WhileLoop) e;
 			for (Expression ex : wl.expressions) {
-				visitExpression(ex, blockVars);
+				visitExpression(ex, currentVars);
 			}
-
-			currentVars.clear();
-			currentVars.putAll(savedVars);
+			Utils.restoreVarScope(currentVars, savedVars);
 		}
 
 	}
@@ -234,8 +226,10 @@ public class ExpressionApp {
 				try {
 					int start = error.indexOf("line=") + 5;
 					int end = error.indexOf(" ", start);
-					if (end == -1) end = error.indexOf(",", start);
-					if (end == -1) end = error.length();
+					if (end == -1)
+						end = error.indexOf(",", start);
+					if (end == -1)
+						end = error.length();
 					String lineStr = error.substring(start, end);
 					errorLines.add(Integer.parseInt(lineStr));
 				} catch (NumberFormatException e) {
@@ -255,7 +249,8 @@ public class ExpressionApp {
 					// Ignore if we can't parse the line number
 				}
 			}
-			// Look for patterns like "in [11, 13]" in error messages (assignment to undeclared variables)
+			// Look for patterns like "in [11, 13]" in error messages (assignment to
+			// undeclared variables)
 			if (error.contains(" in [")) {
 				try {
 					int start = error.indexOf(" in [") + 5;
@@ -269,19 +264,20 @@ public class ExpressionApp {
 				}
 			}
 		}
-		
+
 		// Add line numbers to the content with error highlighting
 		String[] lines = contents.split("\n");
 		StringBuilder numberedContent = new StringBuilder();
 		for (int i = 0; i < lines.length; i++) {
 			int lineNumber = i + 1;
 			if (errorLines.contains(lineNumber)) {
-				numberedContent.append(String.format("<span class=\"error-line\">%3d | %s</span>\n", lineNumber, escapeHTML(lines[i])));
+				numberedContent.append(String.format("<span class=\"error-line\">%3d | %s</span>\n", lineNumber,
+						escapeHTML(lines[i])));
 			} else {
 				numberedContent.append(String.format("%3d | %s\n", lineNumber, escapeHTML(lines[i])));
 			}
 		}
-		
+
 		return String.format("""
 				    <div class="left">
 				        <h2>Input File Path</h2>
@@ -292,10 +288,11 @@ public class ExpressionApp {
 				""", escapeHTML(filePath), numberedContent.toString());
 	}
 
-	private static String generateRightColumn(Map<String, Value> values, List<String> errors, String filePath, String contents, long processingTime) {
+	private static String generateRightColumn(Map<String, Value> values, List<String> errors, String filePath,
+			String contents, long processingTime) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<div class=\"right\">");
-		
+
 		// Always show compilation status first
 		sb.append("<h2>Compilation Status</h2>");
 		if (errors.isEmpty()) {
@@ -303,7 +300,7 @@ public class ExpressionApp {
 		} else {
 			sb.append("<div class=\"error-status\">FAIL - Compilation Failed</div>");
 		}
-		
+
 		// Show code metrics
 		sb.append("<h2>Code Metrics</h2>");
 		sb.append("<div class=\"stats\">");
@@ -312,7 +309,7 @@ public class ExpressionApp {
 		int commentLines = 0;
 		int ifStatements = 0;
 		int whileLoops = 0;
-		
+
 		for (String line : lines) {
 			String trimmed = line.trim();
 			if (!trimmed.isEmpty()) {
@@ -335,10 +332,11 @@ public class ExpressionApp {
 		sb.append("<div class=\"stat-item\">Comment Lines: <strong>").append(commentLines).append("</strong></div>");
 		sb.append("<div class=\"stat-item\">If Statements: <strong>").append(ifStatements).append("</strong></div>");
 		sb.append("<div class=\"stat-item\">While Loops: <strong>").append(whileLoops).append("</strong></div>");
-		sb.append("<div class=\"stat-item\">Variables Declared: <strong>").append(values.size()).append("</strong></div>");
+		sb.append("<div class=\"stat-item\">Variables Declared: <strong>").append(values.size())
+				.append("</strong></div>");
 		sb.append("<div class=\"stat-item\">Errors Found: <strong>").append(errors.size()).append("</strong></div>");
 		sb.append("</div>");
-		
+
 		// Only show variables if there are no errors and we have variables
 		if (errors.isEmpty() && !values.isEmpty()) {
 			sb.append("<h2>Variables</h2>");
@@ -376,8 +374,8 @@ public class ExpressionApp {
 					String line;
 					while ((line = reader.readLine()) != null) {
 						// Skip the individual "Compilation Report" h1 header and footer
-						if ((line.contains("<h1>") && line.contains("Compilation Report")) || 
-						    line.contains("<footer>")) {
+						if ((line.contains("<h1>") && line.contains("Compilation Report"))
+								|| line.contains("<footer>")) {
 							continue;
 						}
 						writer.println(line);

@@ -22,12 +22,12 @@
 </head><body>
 <h1>Combined Compilation Report</h1>
 <div class="report">
-<h2><a href="t1-report.html">t1-report.html</a></h2>
+<h2><a href="sc4-report.html">sc4-report.html</a></h2>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>t1 Report</title>
+    <title>sc4 Report</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
         h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
@@ -50,264 +50,22 @@
 <div class="container">
     <div class="left">
         <h2>Input File Path</h2>
-        <pre><code>C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\t1.txt</code></pre>
+        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\scoping\sc4.txt</code></pre>
         <h2>Input File Contents</h2>
-        <pre><code>  1 | class MyClass extends BaseClass {
-<span class="error-line">  2 |     x : int = False; // Error: assigning bool to int variable</span>
-  3 |     y : bool;
-  4 |     y = False;
-<span class="error-line">  5 |     x : int = 2; //redec</span>
-  6 |     if (x &gt; 0 &amp;&amp; y) {
-  7 |         x = x + 1;
-  8 |         y = x; // Error: assigning int to bool variable
-  9 |     }
+        <pre><code>  1 | class sc4 {
+  2 | 	if (True) {
+  3 | 		i: bool = False;
+  4 | 		
+  5 | 		if (False || True) {
+<span class="error-line">  6 | 				i: int = 0; //should have error	</span>
+  7 | 		}
+  8 | 	}
+  9 | 	i: char = 'a'; // should not have any errors
  10 | }
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>10</strong></div><div class="stat-item">Non-Empty Lines: <strong>10</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>1</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>2</strong></div></div><h2>Error Details</h2><div class="error">Type mismatch at [2, 5]: expected INT = INT declaration but got INT = BOOL</div><div class="error">Variable x already declared,  line=5 col=5</div></div>
-</div>
-</body></html>
-</div>
-<div class="report">
-<h2><a href="t2-report.html">t2-report.html</a></h2>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>t2 Report</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
-        h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
-        .container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .left, .right { padding: 20px; background-color: #ffffff; border: 1px solid #82c0cc; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
-        pre { background-color: #e9ecef; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 14px; font-family: 'Courier New', monospace; line-height: 1.4; }
-        .error { background-color: #f8d7da; border-left: 4px solid #d9534f; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #721c24; }
-        .variable { background-color: #489fb5; border-left: 4px solid #16697a; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #ffffff; }
-        .error-line { background-color: #f8d7da; color: #721c24; font-weight: bold; display: block; padding: 2px 5px; margin: 1px 0; border-radius: 3px; }
-        .success-status { background-color: #d4edda; border-left: 4px solid #28a745; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #155724; font-weight: bold; }
-        .error-status { background-color: #f8d7da; border-left: 4px solid #dc3545; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #721c24; font-weight: bold; }
-        .stats { background-color: #f8f9fa; padding: 15px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #dee2e6; }
-        .stat-item { margin-bottom: 8px; font-size: 14px; }
-        h2 { color: #489fb5; margin-top: 0; margin-bottom: 10px; }
-        footer { text-align: center; margin-top: 40px; font-size: 12px; color: #888; }
-        .report { margin-bottom: 30px; border-bottom: 2px solid #82c0cc; padding-bottom: 20px; }
-    </style>
-
-</head><body>
-<div class="container">
-    <div class="left">
-        <h2>Input File Path</h2>
-        <pre><code>C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\t2.txt</code></pre>
-        <h2>Input File Contents</h2>
-        <pre><code>  1 | class MyClass {
-  2 |     x : int = 5;
-  3 |     y : bool;
-  4 |     y = False;
-  5 |     
-  6 |     // this if statement should be true
-  7 |     if (x &gt; 0 &amp;&amp; !y ) { 
-  8 |         x = x + 1; // x=6
-  9 | 		x = x + 1; // x=7
- 10 |     }
- 11 | }
-</code></pre>
-    </div>
-
-<div class="right"><h2>Compilation Status</h2><div class="success-status">PASS - Compilation Successful</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>11</strong></div><div class="stat-item">Non-Empty Lines: <strong>10</strong></div><div class="stat-item">Comment Lines: <strong>1</strong></div><div class="stat-item">If Statements: <strong>1</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>2</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div><h2>Variables</h2><div class="variable">x : {type=INT, value=7}</div><div class="variable">y : {type=BOOL, value=false}</div></div>
-</div>
-</body></html>
-</div>
-<div class="report">
-<h2><a href="t3-report.html">t3-report.html</a></h2>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>t3 Report</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
-        h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
-        .container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .left, .right { padding: 20px; background-color: #ffffff; border: 1px solid #82c0cc; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
-        pre { background-color: #e9ecef; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 14px; font-family: 'Courier New', monospace; line-height: 1.4; }
-        .error { background-color: #f8d7da; border-left: 4px solid #d9534f; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #721c24; }
-        .variable { background-color: #489fb5; border-left: 4px solid #16697a; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #ffffff; }
-        .error-line { background-color: #f8d7da; color: #721c24; font-weight: bold; display: block; padding: 2px 5px; margin: 1px 0; border-radius: 3px; }
-        .success-status { background-color: #d4edda; border-left: 4px solid #28a745; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #155724; font-weight: bold; }
-        .error-status { background-color: #f8d7da; border-left: 4px solid #dc3545; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #721c24; font-weight: bold; }
-        .stats { background-color: #f8f9fa; padding: 15px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #dee2e6; }
-        .stat-item { margin-bottom: 8px; font-size: 14px; }
-        h2 { color: #489fb5; margin-top: 0; margin-bottom: 10px; }
-        footer { text-align: center; margin-top: 40px; font-size: 12px; color: #888; }
-        .report { margin-bottom: 30px; border-bottom: 2px solid #82c0cc; padding-bottom: 20px; }
-    </style>
-
-</head><body>
-<div class="container">
-    <div class="left">
-        <h2>Input File Path</h2>
-        <pre><code>C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\t3.txt</code></pre>
-        <h2>Input File Contents</h2>
-        <pre><code>  1 | class MyClass extends BaseClass {
-  2 |     x : int = 5;
-  3 |     y : bool;
-  4 |     z : int = 10;
-  5 |     b : bool = True;
-  6 | 
-  7 |     y = False;
-  8 | 
-  9 |     if (x &gt; 0 &amp;&amp; y) {
- 10 |         //  Error: Arithmetic expression used in logical OR
-<span class="error-line"> 11 |         x = (5 + 3) || False;</span>
- 12 |         
- 13 |         //  Error: INT used in logical AND
-<span class="error-line"> 14 |         x = 5 &amp;&amp; y;</span>
- 15 |         
- 16 |         //  Error: Logical OR between INT values
-<span class="error-line"> 17 |         x = 2 || 5;</span>
- 18 |         
- 19 |         //  Error: BOOL used in arithmetic ADD
-<span class="error-line"> 20 |         x = y + 4;</span>
- 21 |         
- 22 |         //  Error: BOOL in relational comparison with INT
-<span class="error-line"> 23 |         y = y &gt; 5;</span>
- 24 |         
- 25 |         //  Error: Type mismatch in equality expression (INT vs BOOL)
-<span class="error-line"> 26 |         y = x == y;</span>
- 27 |         
- 28 |         //  Error: NOT applied to INT
- 29 |         y = !5;
- 30 |         
- 31 |         //  Error: Logical OR between INTs
-<span class="error-line"> 32 |         x = x || x;</span>
- 33 |         
- 34 |         //  Error: Equality of different type
-<span class="error-line"> 35 |         y = x == (True &amp;&amp; False);</span>
- 36 |         
- 37 |         // Error : spot type mismatch in many parentheses
-<span class="error-line"> 38 |         y = (((x))) == (True &amp;&amp; False);</span>
- 39 |         
- 40 |          //  Error: Equality of different type (nested)
-<span class="error-line"> 41 |         y = x ==  (True &amp;&amp; ( 2 &lt;= (False) ) ) ;</span>
- 42 |         
- 43 |         //  Valid: Relational
- 44 |         y = x &lt; z;
- 45 |         
- 46 |         //  Valid: Equality of same type
- 47 |         y = y == (True &amp;&amp; False);
- 48 |         
- 49 |         //  Valid: Arithmetic
- 50 |         x = x + z;
- 51 |         
- 52 |         //  Valid: Logical AND between bools
- 53 |         y = y &amp;&amp; b;
- 54 |         
- 55 |         //  Valid: NOT on bool
- 56 |         y = !y;
- 57 |     }
- 58 | }
-</code></pre>
-    </div>
-
-<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>58</strong></div><div class="stat-item">Non-Empty Lines: <strong>41</strong></div><div class="stat-item">Comment Lines: <strong>16</strong></div><div class="stat-item">If Statements: <strong>1</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>11</strong></div></div><h2>Error Details</h2><div class="error">Type mismatch in logical expression at [11, 13]: expected (BOOL, BOOL) but got (INT, BOOL)</div><div class="error">Type mismatch in logical expression at [14, 13]: expected (BOOL, BOOL) but got (INT, BOOL)</div><div class="error">Type mismatch in logical expression at [17, 13]: expected (BOOL, BOOL) but got (INT, INT)</div><div class="error">Type mismatch in arithmetic expression at [20, 13]: expected (INT, INT) but got (BOOL, INT)</div><div class="error">Type mismatch in relational expression at [23, 13]: expected (INT, INT) but got (BOOL, INT)</div><div class="error">Type mismatch in equality expression at [26, 13]: expected (INT, INT) or (BOOL, BOOL) but got (INT, BOOL)</div><div class="error">Type mismatch in logical expression at [32, 13]: expected (BOOL, BOOL) but got (INT, INT)</div><div class="error">Type mismatch in equality expression at [35, 13]: expected (INT, INT) or (BOOL, BOOL) but got (INT, BOOL)</div><div class="error">Type mismatch in equality expression at [38, 13]: expected (INT, INT) or (BOOL, BOOL) but got (INT, BOOL)</div><div class="error">Type mismatch in relational expression at [41, 30]: expected (INT, INT) but got (INT, BOOL)</div><div class="error">Type mismatch in equality expression at [41, 13]: expected (INT, INT) or (BOOL, BOOL) but got (INT, BOOL)</div></div>
-</div>
-</body></html>
-</div>
-<div class="report">
-<h2><a href="t4-report.html">t4-report.html</a></h2>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>t4 Report</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
-        h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
-        .container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .left, .right { padding: 20px; background-color: #ffffff; border: 1px solid #82c0cc; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
-        pre { background-color: #e9ecef; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 14px; font-family: 'Courier New', monospace; line-height: 1.4; }
-        .error { background-color: #f8d7da; border-left: 4px solid #d9534f; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #721c24; }
-        .variable { background-color: #489fb5; border-left: 4px solid #16697a; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #ffffff; }
-        .error-line { background-color: #f8d7da; color: #721c24; font-weight: bold; display: block; padding: 2px 5px; margin: 1px 0; border-radius: 3px; }
-        .success-status { background-color: #d4edda; border-left: 4px solid #28a745; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #155724; font-weight: bold; }
-        .error-status { background-color: #f8d7da; border-left: 4px solid #dc3545; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #721c24; font-weight: bold; }
-        .stats { background-color: #f8f9fa; padding: 15px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #dee2e6; }
-        .stat-item { margin-bottom: 8px; font-size: 14px; }
-        h2 { color: #489fb5; margin-top: 0; margin-bottom: 10px; }
-        footer { text-align: center; margin-top: 40px; font-size: 12px; color: #888; }
-        .report { margin-bottom: 30px; border-bottom: 2px solid #82c0cc; padding-bottom: 20px; }
-    </style>
-
-</head><body>
-<div class="container">
-    <div class="left">
-        <h2>Input File Path</h2>
-        <pre><code>C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\t4.txt</code></pre>
-        <h2>Input File Contents</h2>
-        <pre><code>  1 | class MyClass {
-  2 |     x : int = 5;
-  3 |     y : bool;
-  4 |     y = False;
-  5 | 	z : bool;
-  6 |     
-  7 |     if (!y) {
-  8 |         y = y; 
-  9 |       	y = False || (((( !y ) &amp;&amp; True)));  // y should now be true
- 10 |       	x = x * 2;							// x should now be 10
- 11 |     }
- 12 | }
-</code></pre>
-    </div>
-
-<div class="right"><h2>Compilation Status</h2><div class="success-status">PASS - Compilation Successful</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>12</strong></div><div class="stat-item">Non-Empty Lines: <strong>11</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>1</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>3</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div><h2>Variables</h2><div class="variable">x : {type=INT, value=10}</div><div class="variable">y : {type=BOOL, value=true}</div><div class="variable">z : {type=BOOL, value=null}</div></div>
-</div>
-</body></html>
-</div>
-<div class="report">
-<h2><a href="t5-report.html">t5-report.html</a></h2>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>t5 Report</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
-        h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
-        .container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .left, .right { padding: 20px; background-color: #ffffff; border: 1px solid #82c0cc; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
-        pre { background-color: #e9ecef; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 14px; font-family: 'Courier New', monospace; line-height: 1.4; }
-        .error { background-color: #f8d7da; border-left: 4px solid #d9534f; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #721c24; }
-        .variable { background-color: #489fb5; border-left: 4px solid #16697a; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #ffffff; }
-        .error-line { background-color: #f8d7da; color: #721c24; font-weight: bold; display: block; padding: 2px 5px; margin: 1px 0; border-radius: 3px; }
-        .success-status { background-color: #d4edda; border-left: 4px solid #28a745; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #155724; font-weight: bold; }
-        .error-status { background-color: #f8d7da; border-left: 4px solid #dc3545; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #721c24; font-weight: bold; }
-        .stats { background-color: #f8f9fa; padding: 15px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #dee2e6; }
-        .stat-item { margin-bottom: 8px; font-size: 14px; }
-        h2 { color: #489fb5; margin-top: 0; margin-bottom: 10px; }
-        footer { text-align: center; margin-top: 40px; font-size: 12px; color: #888; }
-        .report { margin-bottom: 30px; border-bottom: 2px solid #82c0cc; padding-bottom: 20px; }
-    </style>
-
-</head><body>
-<div class="container">
-    <div class="left">
-        <h2>Input File Path</h2>
-        <pre><code>C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\t5.txt</code></pre>
-        <h2>Input File Contents</h2>
-        <pre><code>  1 | class t5 {
-  2 | 	x : int = 1;
-  3 | 	
-  4 | 	
-  5 | 	if (True) {
-  6 | 		y : int = 2;
-  7 | 	}
-<span class="error-line">  8 | 	x = x + y;</span>
-  9 | }
-</code></pre>
-    </div>
-
-<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>9</strong></div><div class="stat-item">Non-Empty Lines: <strong>7</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>1</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>2</strong></div></div><h2>Error Details</h2><div class="error">Variable 'y' not declared, line=8 col=10</div><div class="error">Type mismatch in arithmetic expression at [8, 6]: expected (INT, INT) but got (INT, null)</div></div>
+<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>10</strong></div><div class="stat-item">Non-Empty Lines: <strong>9</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>2</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>1</strong></div></div><h2>Error Details</h2><div class="error">Variable i already declared,  line=6 col=5</div></div>
 </div>
 </body></html>
 </div>

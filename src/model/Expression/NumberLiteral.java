@@ -5,7 +5,7 @@ import java.util.Set;
 
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.Type;
-import model.Expression.OperationVisitor.OperationVisitor;
+import model.Expression.Visitor.OperationVisitor;
 
 public class NumberLiteral extends Expression {
 	public int val;

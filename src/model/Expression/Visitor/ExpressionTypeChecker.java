@@ -1,4 +1,4 @@
-package model.Expression.OperationVisitor;
+package model.Expression.Visitor;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,9 +29,13 @@ import antlr.ExprParser.SubtractionContext;
 import antlr.ExprParser.TypeContext;
 import antlr.ExprParser.VariableAssignmentContext;
 import antlr.ExprParser.VariableContext;
+import model.Assignment.ListAssignment;
+import model.Assignment.PrimitiveAssignment;
 import model.Expression.BooleanLiteral;
 import model.Expression.CharacterLiteral;
+import model.Expression.ClassDeclaration;
 import model.Expression.Expression;
+import model.Expression.ListLiteral;
 import model.Expression.NumberLiteral;
 import model.Expression.Utils;
 import model.Expression.Variable;
@@ -49,14 +53,10 @@ import model.Expression.Binary.Multiplication;
 import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
-import model.Expression.Declaration.ClassDeclaration;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
-import model.Expression.List.ListLiteral;
-import model.Expression.Statement.PrimitiveAssignment;
 import model.Expression.Statement.WhileLoop;
 import model.Expression.Statement.IfStatement;
-import model.Expression.Statement.ListAssignment;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
 import model.Expression.Expression.ExprType;
@@ -83,13 +83,13 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		Type varType = d.type;
 		// If declaration is initialized, typecheck its expressoin
 		if (d.isInitialized) {
-			Type exprType = d.expr.getReturnType();
+			Type exprType = d.initialization.getReturnType();
 			if (varType != exprType) {
 				semanticErrors.add("Type mismatch at [" + d.getLine() + ", " + d.getCol() + "]: expected " + varType
 						+ " = " + varType + " declaration but got " + varType + " = " + exprType);
 			}
 			// recursively typecheck the inner expression
-			d.expr.accept(this);
+			d.initialization.accept(this);
 		}
 
 		return null;
@@ -116,13 +116,14 @@ public class ExpressionTypeChecker implements OperationVisitor {
 
 		if (ld.isInitialized) {
 			// make sure the RHS of declaration is a list
-			if (!(ld.list instanceof ListLiteral)) {
-				semanticErrors.add("Error with declaration at [" + ld.list.getLine() + ", " + ld.list.getCol() + "], "
-						+ ld.list.getReturnType() + " cannot be assigned to a list");
+			if (!(ld.initialization instanceof ListLiteral)) {
+				semanticErrors.add(
+						"Error with declaration at [" + ld.initialization.getLine() + ", " + ld.initialization.getCol()
+								+ "], " + ld.initialization.getReturnType() + " cannot be assigned to a list");
 				return null;
 			}
 			// if RHS is a list, typecheck its items
-			ListLiteral ll = (ListLiteral) ld.list;
+			ListLiteral ll = (ListLiteral) ld.initialization;
 			for (Expression e : ll.items) {
 				if (e.getReturnType() != itemType) {
 					semanticErrors.add("Type mismatch in list declaration at [" + e.getLine() + ", " + e.getCol() + "] "
@@ -175,11 +176,11 @@ public class ExpressionTypeChecker implements OperationVisitor {
 			System.out.println("Unexpected type: " + listType);
 		}
 
-		if (!(la.list instanceof ListLiteral)) {
+		if (!(la.expr instanceof ListLiteral)) {
 			semanticErrors.add("Error at [" + la.getLine() + ", " + la.getCol() + "]: Assigning "
-					+ la.list.getExprType() + " to list. ");
+					+ la.expr.getExprType() + " to list. ");
 		} else {
-			ListLiteral ll = (ListLiteral) la.list;
+			ListLiteral ll = (ListLiteral) la.expr;
 			for (Expression e : ll.items) {
 				if (e.getReturnType() != itemType) {
 					if (e.getReturnType() != itemType) {

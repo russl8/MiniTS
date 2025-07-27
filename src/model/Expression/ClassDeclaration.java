@@ -1,16 +1,16 @@
-package model.Expression.Declaration;
+package model.Expression;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import model.Expression.Expression;
+import model.Expression.Declaration.Declaration;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.Type;
-import model.Expression.OperationVisitor.OperationVisitor;
+import model.Expression.Visitor.OperationVisitor;
 
-public class ClassDeclaration extends Expression implements Declaration {
+public class ClassDeclaration extends Expression {
 	public List<Expression> expressions;
 	public String className;
 	public String superClass;

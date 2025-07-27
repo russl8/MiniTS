@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import model.Expression.Expression;
-import model.Expression.OperationVisitor.OperationVisitor;
+import model.Expression.Visitor.OperationVisitor;
 
 public class WhileLoop extends Expression {
 
