@@ -59,6 +59,7 @@ expr
     | BOOL                                 # BooleanLiteral
     | CHAR								   # CharacterLiteral
     | '[' expr? (',' expr)* ']'            # ListLiteral
+    | '"' ( ~('\\'|'"') | '\\.' )* '"'     # StringLiteral
     ;
 
 // TYPES
