@@ -236,6 +236,18 @@ public interface ExprListener extends ParseTreeListener {
 	 */
 	void exitSubtraction(ExprParser.SubtractionContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code StringLiteral}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterStringLiteral(ExprParser.StringLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StringLiteral}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitStringLiteral(ExprParser.StringLiteralContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code GreaterThan}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree

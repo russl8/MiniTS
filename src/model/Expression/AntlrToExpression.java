@@ -381,4 +381,17 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		return new CharacterLiteral(value.charAt(1), line, col);
 	}
 
+	@Override
+	// Returns a list literal of chars
+	public Expression visitStringLiteral(StringLiteralContext ctx) {
+		String str = ctx.getChild(1).getText();
+		int line = ctx.getStart().getLine();
+		int col = ctx.getStart().getCharPositionInLine() + 1;
+		ListLiteral ll = new ListLiteral(line, col);
+		for (int i = 0; i < str.length(); i++) {
+			ll.add(new CharacterLiteral(str.charAt(i), line, col + i));
+		}
+		return ll;
+	}
+
 }

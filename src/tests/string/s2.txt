@@ -1,0 +1,3 @@
+class s2 {
+    s1 : list[int] = "ab241a"; //throw error
+}
