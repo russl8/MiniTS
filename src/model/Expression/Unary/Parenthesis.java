@@ -7,7 +7,6 @@ import model.Expression.Visitor.OperationVisitor;
 
 public class Parenthesis extends UnaryExpression {
 	public Type getReturnType() {
-		// TODO Auto-generated method stub
 		return expr.getReturnType();
 	}
 
@@ -34,4 +33,5 @@ public class Parenthesis extends UnaryExpression {
 	public <T> T accept(OperationVisitor T) {
 		return T.visitParenthesis(this);
 	}
+
 }

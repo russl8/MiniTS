@@ -22,6 +22,7 @@ import model.Expression.Binary.Subtraction;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.Statement.WhileLoop;
+import model.Expression.Statement.ForLoop;
 import model.Expression.Statement.IfStatement;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
@@ -85,7 +86,7 @@ public class ExpressionProcessor {
 			WhileLoop wl = (WhileLoop) e;
 			Expression condition = wl.cond;
 			boolean conditionEvaluation = evaluateBoolean(condition);
-			while (conditionEvaluation == true) {
+			while (conditionEvaluation == true) {	
 				// have to reset state (scope)
 				for (Expression loopExpression : wl.expressions) {
 					evaluateExpression(loopExpression);
@@ -94,11 +95,28 @@ public class ExpressionProcessor {
 				// important: evaluate loop condition after every iteration
 				conditionEvaluation = evaluateBoolean(condition);
 			}
-		}
+		} else if (e instanceof ForLoop) {
+			ForLoop fl = (ForLoop) e;
+			Expression initialization = fl.initialization;
+			Expression condition = fl.condition;
+			Expression update = fl.update;
 
-		else if (e instanceof ListDeclaration) {
+			this.evaluateExpression(initialization);
+
+			boolean conditionEvaluation = evaluateBoolean(condition);
+			while (conditionEvaluation == true) {
+				for (Expression loopExpression : fl.expressions) {
+					evaluateExpression(loopExpression);
+				}
+				// important: evaluate loop condition after every iteration
+				this.evaluateExpression(update);
+				conditionEvaluation = evaluateBoolean(condition);
+			}
+		} else if (e instanceof ListDeclaration) {
 			ListDeclaration ld = (ListDeclaration) e;
 			this.vars.put(ld.var, new Value(ld.type, ld.initialization));
+		} else if (e instanceof Parenthesis) {
+			evaluateExpression(((Parenthesis) e));
 		} else {
 			// not a declaration/assignment/if. ignore for now
 			System.err.println("Warning, unhandled statement, ignoring for now: " + e);
@@ -147,6 +165,8 @@ public class ExpressionProcessor {
 			return this.vars.get(((Variable) e).var).getValueAsInt();
 		} else if (e instanceof NumberLiteral) {
 			return ((NumberLiteral) e).val;
+		} else if (e instanceof Parenthesis) {
+			return evaluateInteger(((Parenthesis) e).expr);
 		}
 		System.err.println("Could not properly evaluate integer expression " + e);
 		return -1;
@@ -175,7 +195,6 @@ public class ExpressionProcessor {
 			return evaluateBoolean(((Parenthesis) e).expr);
 		} else if (e instanceof Equal) {
 			Equal eq = (Equal) e;
-			System.out.println("Seeing equal " + eq);
 			if (eq.left.getReturnType() == Type.INT) {
 				return evaluateInteger(eq.left) == evaluateInteger(eq.right);
 			} else if (eq.left.getReturnType() == Type.BOOL) {
@@ -204,6 +223,8 @@ public class ExpressionProcessor {
 			return this.vars.get(((Variable) e).var).getValueAsBool();
 		} else if (e instanceof BooleanLiteral) {
 			return ((BooleanLiteral) e).val;
+		} else if (e instanceof Parenthesis) {
+			return evaluateBoolean(((Parenthesis) e).expr);
 		}
 		System.err.println("Could not properly evaluate boolean expression " + e + " " + e.getClass());
 		return false;

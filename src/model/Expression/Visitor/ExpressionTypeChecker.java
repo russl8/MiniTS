@@ -29,6 +29,7 @@ import antlr.ExprParser.SubtractionContext;
 import antlr.ExprParser.TypeContext;
 import antlr.ExprParser.VariableAssignmentContext;
 import antlr.ExprParser.VariableContext;
+import model.Assignment.Assignment;
 import model.Assignment.ListAssignment;
 import model.Assignment.PrimitiveAssignment;
 import model.Expression.BooleanLiteral;
@@ -53,9 +54,11 @@ import model.Expression.Binary.Multiplication;
 import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
+import model.Expression.Declaration.Declaration;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.Statement.WhileLoop;
+import model.Expression.Statement.ForLoop;
 import model.Expression.Statement.IfStatement;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
@@ -234,6 +237,38 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		// for (Expression e : ifs.expressions) {
 		// e.accept(this);
 		// }
+		return null;
+	}
+
+	@Override
+	public <T> T visitForLoop(ForLoop fl) {
+		Expression initialization, condition, update;
+		initialization = fl.initialization;
+		condition = fl.condition;
+		update = fl.update;
+
+		if (!(initialization instanceof Declaration)) {
+			// initialization must be a declaration
+			semanticErrors.add("Error in forloop expression at [" + initialization.getLine() + ", "
+					+ initialization.getCol() + "], for-loop first expression must be a declaration, instead got "
+					+ initialization.getClass());
+		}
+		if (condition.getReturnType() != Type.BOOL) {
+			// condition must be a boolean expression
+			semanticErrors.add("Error in forloop expression at [" + condition.getLine() + ", " + condition.getCol()
+					+ "], for-loop condition must be a boolean expression, instead got " + condition.getReturnType());
+		}
+
+		// update must be an assignmnet
+		if (!(update instanceof Assignment)) {
+			semanticErrors.add("Error in forloop expression at [" + update.getLine() + ", " + update.getCol()
+					+ "], for-loop last expression must be an assignment, instead got " + update.getClass());
+		}
+
+		initialization.accept(this);
+		condition.accept(this);
+		update.accept(this);
+
 		return null;
 	}
 

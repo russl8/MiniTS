@@ -24,6 +24,7 @@ import model.Assignment.PrimitiveAssignment;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.Type;
 import model.Expression.Statement.WhileLoop;
+import model.Expression.Statement.ForLoop;
 import model.Expression.Statement.IfStatement;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
@@ -127,7 +128,7 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 					break;
 				default:
 					listType = Type.NONE;
-					System.out.println("Unexpected type: " + itemType);
+					System.err.println("Unexpected type: " + itemType);
 				}
 
 				if (isInitialized) {
@@ -145,6 +146,11 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		}
 		System.err.println("Could not process declaration " + ctx.getText());
 		return null;
+	}
+
+	@Override
+	public Expression visitStatement(StatementContext ctx) {
+		return visit(ctx.getChild(0));
 	}
 
 	@Override
@@ -202,6 +208,25 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 			wl.addExpression(visit(ctx.getChild(i)));
 		}
 		return wl;
+	}
+
+	@Override
+	public Expression visitForLoop(ForLoopContext ctx) {
+		int line = ctx.getStart().getLine();
+		int col = ctx.getStart().getCharPositionInLine() + 1;
+
+		Expression initialization, condition, update;
+		initialization = visit(ctx.getChild(2));
+		condition = visit(ctx.getChild(4));
+		update = visit(ctx.getChild(6));
+
+		ForLoop fl = new ForLoop(initialization, condition, update, line, col);
+
+		for (StatementContext stmt : ctx.statement()) {
+			fl.addExpression(visit(stmt.getChild(0)));
+		}
+		return fl;
+
 	}
 
 	@Override

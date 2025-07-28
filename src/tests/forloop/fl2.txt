@@ -1,0 +1,10 @@
+class fl2 {
+
+	for (i: int = 'w' ; i < 2; i = i + 1) {
+		// error with i:int='w'
+	}
+	
+	for (i: int = 0 ; i != 2; i = i + 1) {
+		// no errors
+	}
+}
