@@ -27,6 +27,7 @@ import model.Expression.Binary.Subtraction;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.Expression.Type;
+import model.Expression.Statement.ForLoop;
 import model.Expression.Statement.IfStatement;
 import model.Expression.Statement.WhileLoop;
 import model.Expression.Unary.Not;
@@ -70,7 +71,16 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitWhileLoop(WhileLoop wl) {
-		// TODO Auto-generated method stub
+		wl.cond.accept(this);
+		return null;
+	}
+
+	@Override
+	public <T> T visitForLoop(ForLoop fl) {
+		fl.initialization.accept(this);
+		fl.condition.accept(this);
+		fl.update.accept(this);
+
 		return null;
 	}
 

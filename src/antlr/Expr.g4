@@ -12,19 +12,19 @@ class_decl:
 
 // STATEMENTS
 statement:
-      declaration
-    | assignment
+      declaration ';'
+    | assignment ';'
     | conditional
     | loop
     ;
 
 // DECLARATIONS
 declaration:
-      ID ':' type ('=' expr)? ';' #DeclarationWithOptionalAssignment;
+      ID ':' type ('=' expr)?  #DeclarationWithOptionalAssignment;
 
 // ASSIGNMENTS
 assignment:
-      ID '=' expr ';' #VariableAssignment;
+      ID '=' expr #VariableAssignment;
 
 // CONDITIONALS
 conditional:
@@ -32,8 +32,8 @@ conditional:
     ;
 
 // LOOPS
-loop
-	: 'while' '(' expr ')' '{' (statement)* '}' # WhileLoop
+loop: 'while' '(' expr ')' '{' (statement)* '}' # WhileLoop
+	| 'for' '(' declaration ';' expr ';' assignment ')' '{' (statement)* '}' # ForLoop
 	; 
 	
 

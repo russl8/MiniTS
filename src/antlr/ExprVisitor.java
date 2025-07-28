@@ -61,6 +61,13 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitWhileLoop(ExprParser.WhileLoopContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ForLoop}
+	 * labeled alternative in {@link ExprParser#loop}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForLoop(ExprParser.ForLoopContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Multiplication}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
