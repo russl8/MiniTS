@@ -255,7 +255,6 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		}
 		if (condition.getReturnType() != Type.BOOL) {
 			// condition must be a boolean expression
-			System.out.println("c" + condition);
 			semanticErrors.add("Error in forloop expression at [" + condition.getLine() + ", " + condition.getCol()
 					+ "], for-loop condition must be a boolean expression, instead got " + condition.getReturnType());
 		}
