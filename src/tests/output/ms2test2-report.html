@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>t2 Report</title>
+    <title>ms2test2 Report</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
         h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
@@ -26,23 +26,17 @@
 <div class="container">
     <div class="left">
         <h2>Input File Path</h2>
-        <pre><code>C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\t2.txt</code></pre>
+        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\ms2\ms2test2.txt</code></pre>
         <h2>Input File Contents</h2>
-        <pre><code>  1 | class MyClass {
-  2 |     x : int = 5;
-  3 |     y : bool;
-  4 |     y = False;
-  5 |     
-  6 |     // this if statement should be true
-  7 |     if (x &gt; 0 &amp;&amp; !y ) { 
-  8 |         x = x + 1; // x=6
-  9 | 		x = x + 1; // x=7
- 10 |     }
- 11 | }
+        <pre><code>  1 | class test2 {
+  2 | 	l1 : list[int] = [1,2,3];
+  3 | 	l1 = [1]; // OK
+<span class="error-line">  4 | 	l1 = [1, 4, 5, False]; // Error on line 5</span>
+  5 | }
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="success-status">PASS - Compilation Successful</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>11</strong></div><div class="stat-item">Non-Empty Lines: <strong>10</strong></div><div class="stat-item">Comment Lines: <strong>1</strong></div><div class="stat-item">If Statements: <strong>1</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>2</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div><h2>Variables</h2><div class="variable">x : {type=INT, value=7}</div><div class="variable">y : {type=BOOL, value=false}</div></div>
+<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>5</strong></div><div class="stat-item">Non-Empty Lines: <strong>5</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>1</strong></div></div><h2>Error Details</h2><div class="error">Error in [4, 17] Cannot assign list[BOOL] to list[INT]</div></div>
 </div>
 <footer>team: russl8, jeffj4</footer>
 </body></html>

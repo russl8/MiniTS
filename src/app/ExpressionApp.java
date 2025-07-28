@@ -7,6 +7,7 @@ import model.Expression.ClassDeclaration;
 import model.Expression.Expression;
 import model.Expression.ExpressionProcessor;
 import model.Expression.Expression.Type;
+import model.Expression.Statement.BlockContainer;
 import model.Expression.Statement.IfStatement;
 import model.Expression.Statement.WhileLoop;
 import model.Expression.Visitor.ExpressionTypeChecker;
@@ -130,23 +131,13 @@ public class ExpressionApp {
 			v.updateVarState(currentVars);
 			e.accept(v);
 		}
-
-		if (e instanceof IfStatement) {
+		if (e instanceof BlockContainer) {
 			Map<String, Type> savedVars = Utils.copyVarScope(currentVars);
-			IfStatement ifs = (IfStatement) e;
-			for (Expression ex : ifs.expressions) {
-				visitExpression(ex, currentVars);
-			}
-			Utils.restoreVarScope(currentVars, savedVars);
-		} else if (e instanceof WhileLoop) {
-			Map<String, Type> savedVars = Utils.copyVarScope(currentVars);
-			WhileLoop wl = (WhileLoop) e;
-			for (Expression ex : wl.expressions) {
+			for (Expression ex : ((BlockContainer) e).getExpressions()) {
 				visitExpression(ex, currentVars);
 			}
 			Utils.restoreVarScope(currentVars, savedVars);
 		}
-
 	}
 
 	private static String generateHtmlReport(File file, String filePath, ExpressionProcessor ep,

@@ -10,7 +10,7 @@ import model.Expression.Expression.ExprType;
 import model.Expression.Expression.Type;
 import model.Expression.Visitor.OperationVisitor;
 
-public class IfStatement extends Expression {
+public class IfStatement extends Expression implements BlockContainer{
 	public Expression cond;
 	public List<Expression> expressions;
 
@@ -69,5 +69,11 @@ public class IfStatement extends Expression {
 	@Override
 	public <T> T accept(OperationVisitor T) {
 		return T.visitIfStatement(this);
+	}
+
+	@Override
+	public List<Expression> getExpressions() {
+		// TODO Auto-generated method stub
+		return expressions;
 	}
 }

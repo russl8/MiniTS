@@ -7,7 +7,7 @@ import java.util.Set;
 import model.Expression.Expression;
 import model.Expression.Visitor.OperationVisitor;
 
-public class WhileLoop extends Expression {
+public class WhileLoop extends Expression implements BlockContainer {
 
 	public Expression cond;
 	public List<Expression> expressions; // loop body
@@ -21,7 +21,6 @@ public class WhileLoop extends Expression {
 
 	public void addExpression(Expression e) {
 		expressions.add(e);
-
 	}
 
 	@Override
@@ -64,6 +63,12 @@ public class WhileLoop extends Expression {
 		}
 		res += "}";
 		return res;
+	}
+
+	@Override
+	public List<Expression> getExpressions() {
+		// TODO Auto-generated method stub
+		return expressions;
 	}
 
 }

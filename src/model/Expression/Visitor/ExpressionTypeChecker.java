@@ -128,8 +128,9 @@ public class ExpressionTypeChecker implements OperationVisitor {
 				if (e.getReturnType() != itemType) {
 					semanticErrors.add("Type mismatch in list declaration at [" + e.getLine() + ", " + e.getCol() + "] "
 							+ e.getReturnType() + " found in list[" + itemType + "]");
+					break;
 				}
-				break;
+
 			}
 		}
 
@@ -183,10 +184,8 @@ public class ExpressionTypeChecker implements OperationVisitor {
 			ListLiteral ll = (ListLiteral) la.expr;
 			for (Expression e : ll.items) {
 				if (e.getReturnType() != itemType) {
-					if (e.getReturnType() != itemType) {
-						semanticErrors.add("Error in [" + e.getLine() + ", " + e.getCol() + "] Cannot assign list["
-								+ e.getReturnType() + "] to list[" + itemType + "]");
-					}
+					semanticErrors.add("Error in [" + e.getLine() + ", " + e.getCol() + "] Cannot assign list["
+							+ e.getReturnType() + "] to list[" + itemType + "]");
 					break;
 				}
 			}
@@ -231,10 +230,10 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		// Type check the condition
 		cond.accept(this);
 
-		// Type check all inner expressions
-		for (Expression e : wl.expressions) {
-			e.accept(this);
-		}
+		// DO NOT type check all inner expressions. already handled in ExpressionApp.
+		// for (Expression e : ifs.expressions) {
+		// e.accept(this);
+		// }
 		return null;
 	}
 
