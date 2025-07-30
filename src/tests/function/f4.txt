@@ -1,0 +1,10 @@
+class f4 {
+
+	i : int = 5;
+	function f4 () : int {
+		j : int = 1;
+		j = j + i; // j should equal 6;
+		
+		// return j;
+	}
+}

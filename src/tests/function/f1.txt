@@ -1,0 +1,5 @@
+class f1 {
+	function f (i : int , j : bool) : int {
+		k : int = 0;
+	}
+}

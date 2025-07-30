@@ -16,6 +16,10 @@ import model.Expression.Binary.Multiplication;
 import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
+import model.Expression.BlockContainer.ForLoop;
+import model.Expression.BlockContainer.FunctionDeclaration;
+import model.Expression.BlockContainer.IfStatement;
+import model.Expression.BlockContainer.WhileLoop;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Value;
@@ -23,11 +27,9 @@ import model.Assignment.ListAssignment;
 import model.Assignment.PrimitiveAssignment;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.Type;
-import model.Expression.Statement.WhileLoop;
-import model.Expression.Statement.ForLoop;
-import model.Expression.Statement.IfStatement;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
+import model.Expression.Util.Parameter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,6 +83,34 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 
 //		System.out.println(cd);
 		return cd;
+	}
+
+	@Override
+	public Expression visitFunctionDeclaration(FunctionDeclarationContext ctx) {
+		String functionName = ctx.getChild(1).getText();
+		int line = ctx.getStart().getLine();
+		int col = ctx.getStart().getCharPositionInLine() + 1;
+
+		Type returnType = Type.fromString(ctx.type().getText());
+
+		FunctionDeclaration fd = new FunctionDeclaration(functionName, returnType, line, col);
+
+		// Add parameters
+		for (ParameterContext pcx : ctx.parameter()) {
+			String var = pcx.getChild(0).getText();
+			int paramLine = pcx.getStart().getLine();
+			int paramCol = pcx.getStart().getCharPositionInLine() + 1;
+
+			Type paramType = Type.fromString(pcx.getChild(2).getText());
+			fd.addParameter(new Parameter(var, paramType, paramLine, paramCol));
+		}
+
+		// add expressions
+		for (StatementContext scx : ctx.statement()) {
+			fd.addExpression(visit(scx.getChild(0)));
+		}
+		System.out.println(fd);
+		return fd;
 	}
 
 	@Override

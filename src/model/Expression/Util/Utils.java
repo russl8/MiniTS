@@ -1,4 +1,4 @@
-package model.Expression;
+package model.Expression.Util;
 
 import model.Expression.Unary.Parenthesis;
 

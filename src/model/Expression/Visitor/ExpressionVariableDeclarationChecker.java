@@ -1,7 +1,9 @@
 package model.Expression.Visitor;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import model.Assignment.ListAssignment;
 import model.Assignment.PrimitiveAssignment;
@@ -24,14 +26,16 @@ import model.Expression.Binary.Multiplication;
 import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
+import model.Expression.BlockContainer.ForLoop;
+import model.Expression.BlockContainer.FunctionDeclaration;
+import model.Expression.BlockContainer.IfStatement;
+import model.Expression.BlockContainer.WhileLoop;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.Expression.Type;
-import model.Expression.Statement.ForLoop;
-import model.Expression.Statement.IfStatement;
-import model.Expression.Statement.WhileLoop;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
+import model.Expression.Util.Parameter;
 
 public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 	public List<String> semanticErrors;
@@ -171,6 +175,24 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 	@Override
 	public <T> T visitCharacterLiteral(CharacterLiteral cl) {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> T visitFunctionDeclaration(FunctionDeclaration fd) {
+		// no duplicate parameters
+		List<Parameter> params = fd.parameters;
+		Set<String> vars = new HashSet<>();
+		for (Parameter param : params) {
+			String paramName = param.name;
+			if (vars.contains(paramName)) {
+				semanticErrors
+						.add("Variable "+paramName + " is being used multiple times in function: [" + fd.getLine() + ", " + fd.getCol() + "]");
+				break;
+			}
+			vars.add(paramName);
+		}
+
 		return null;
 	}
 

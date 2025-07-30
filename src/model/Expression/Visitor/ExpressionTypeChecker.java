@@ -38,7 +38,6 @@ import model.Expression.ClassDeclaration;
 import model.Expression.Expression;
 import model.Expression.ListLiteral;
 import model.Expression.NumberLiteral;
-import model.Expression.Utils;
 import model.Expression.Variable;
 import model.Expression.Binary.Addition;
 import model.Expression.Binary.And;
@@ -54,14 +53,16 @@ import model.Expression.Binary.Multiplication;
 import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
+import model.Expression.BlockContainer.ForLoop;
+import model.Expression.BlockContainer.FunctionDeclaration;
+import model.Expression.BlockContainer.IfStatement;
+import model.Expression.BlockContainer.WhileLoop;
 import model.Expression.Declaration.Declaration;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
-import model.Expression.Statement.WhileLoop;
-import model.Expression.Statement.ForLoop;
-import model.Expression.Statement.IfStatement;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
+import model.Expression.Util.Utils;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.Type;
 import model.Program.Program;
@@ -78,6 +79,12 @@ public class ExpressionTypeChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitClassDeclaration(ClassDeclaration cd) {
+		return null;
+	}
+	
+	@Override
+	public <T> T visitFunctionDeclaration(FunctionDeclaration fd) {
+		// dont have to do anything here, invalid param decl types will be caught by parser
 		return null;
 	}
 
