@@ -20,15 +20,17 @@ import model.Expression.Binary.Multiplication;
 import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
+import model.Expression.BlockContainer.*;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
-import model.Expression.Statement.*;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
 
 public interface OperationVisitor {
 
 	public void updateVarState(Map<String, Type> newVars);
+
+	public <T> T visitFunctionDeclaration(FunctionDeclaration fd);
 
 	public <T> T visitClassDeclaration(ClassDeclaration cd);
 

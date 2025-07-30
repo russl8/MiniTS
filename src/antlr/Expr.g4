@@ -8,7 +8,7 @@ grammar Expr;
 prog: (class_decl)+ EOF #Program;
 
 class_decl: 
-    'class' ID ( 'extends' ID )? '{' (statement)* '}' #ClassDeclaration;
+    'class' ID ( 'extends' ID )? '{' (statement | function)* '}' #ClassDeclaration;
 
 // STATEMENTS
 statement:
@@ -35,8 +35,13 @@ conditional:
 loop: 'while' '(' expr ')' '{' (statement)* '}' # WhileLoop
 	| 'for' '(' declaration ';' expr ';' assignment ')' '{' (statement)* '}' # ForLoop
 	; 
-	
 
+// FUNCTIONS
+function: 'function' ID '(' (parameter? (',' parameter)* ) ')' ':' type '{' statement* '}' # FunctionDeclaration
+	;
+parameter: ID ':' type
+	;
+	
 // EXPRESSIONS
 expr 
     : '!' expr             			       # Not
@@ -71,6 +76,8 @@ NUM: '0' | '-'?[1-9][0-9]*;
 CHAR: '\'' [a-zA-Z0-9_] '\'';
 ID: [a-zA-Z][a-zA-Z0-9_]*;
 
+
 // WHITESPACE AND COMMENTS
 COMMENT: '//' ~[\r\n]* -> skip;
 WS: [ \t\r\n]+ -> skip;
+

@@ -104,6 +104,28 @@ public interface ExprListener extends ParseTreeListener {
 	 */
 	void exitForLoop(ExprParser.ForLoopContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code FunctionDeclaration}
+	 * labeled alternative in {@link ExprParser#function}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionDeclaration(ExprParser.FunctionDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code FunctionDeclaration}
+	 * labeled alternative in {@link ExprParser#function}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionDeclaration(ExprParser.FunctionDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExprParser#parameter}.
+	 * @param ctx the parse tree
+	 */
+	void enterParameter(ExprParser.ParameterContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExprParser#parameter}.
+	 * @param ctx the parse tree
+	 */
+	void exitParameter(ExprParser.ParameterContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code Multiplication}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree

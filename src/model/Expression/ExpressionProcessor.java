@@ -19,11 +19,12 @@ import model.Expression.Binary.Multiplication;
 import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
+import model.Expression.BlockContainer.ForLoop;
+import model.Expression.BlockContainer.FunctionDeclaration;
+import model.Expression.BlockContainer.IfStatement;
+import model.Expression.BlockContainer.WhileLoop;
 import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
-import model.Expression.Statement.WhileLoop;
-import model.Expression.Statement.ForLoop;
-import model.Expression.Statement.IfStatement;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
 
@@ -117,7 +118,10 @@ public class ExpressionProcessor {
 			this.vars.put(ld.var, new Value(ld.type, ld.initialization));
 		} else if (e instanceof Parenthesis) {
 			evaluateExpression(((Parenthesis) e));
-		} else {
+		} else if ( e instanceof FunctionDeclaration) {
+			System.out.println(e);
+			// do nothing
+		}else {
 			// not a declaration/assignment/if. ignore for now
 			System.err.println("Warning, unhandled statement, ignoring for now: " + e);
 		}
