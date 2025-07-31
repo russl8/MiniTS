@@ -7,6 +7,7 @@ import model.Expression.ClassDeclaration;
 import model.Expression.Expression;
 import model.Expression.ExpressionProcessor;
 import model.Expression.BlockContainer.BlockContainer;
+import model.Expression.BlockContainer.FunctionDeclaration;
 import model.Expression.BlockContainer.IfStatement;
 import model.Expression.BlockContainer.WhileLoop;
 import model.Expression.Expression.Type;
@@ -137,6 +138,11 @@ public class ExpressionApp {
 				visitExpression(ex, currentVars);
 			}
 			Utils.restoreVarScope(currentVars, savedVars);
+		} else if (e instanceof FunctionDeclaration) {
+			/*
+			 * treat this as a regular expression. only difference is that u dont visit the
+			 * inner statements here. instead, do it in the visitors.
+			 */
 		}
 	}
 

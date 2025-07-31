@@ -1,14 +1,16 @@
 package model.Expression.BlockContainer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import model.Expression.Expression;
 import model.Expression.Util.Parameter;
 import model.Expression.Visitor.OperationVisitor;
 
-public class FunctionDeclaration extends Expression implements BlockContainer {
+public class FunctionDeclaration extends Expression {
 	public List<Parameter> parameters;
 	public List<Expression> expressions;
 
@@ -55,12 +57,10 @@ public class FunctionDeclaration extends Expression implements BlockContainer {
 		return ExprType.NONE;
 	}
 
-	@Override
 	public void addExpression(Expression e) {
 		this.expressions.add(e);
 	}
 
-	@Override
 	public List<Expression> getExpressions() {
 		return expressions;
 	}

@@ -1,5 +1,6 @@
 package model.Expression.Visitor;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import model.Assignment.PrimitiveAssignment;
 import model.Expression.BooleanLiteral;
 import model.Expression.CharacterLiteral;
 import model.Expression.ClassDeclaration;
+import model.Expression.Expression;
 import model.Expression.NumberLiteral;
 import model.Expression.Variable;
 import model.Expression.Binary.Addition;
@@ -41,6 +43,9 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 	public List<String> semanticErrors;
 	public Map<String, Type> vars; // stores all the variables declared in the program so far
 
+	private boolean isVisitingFunctionDeclaration = false;
+	private Map<String, Type> functionScope;
+
 	public ExpressionVariableDeclarationChecker(List<String> semanticErrors, Map<String, Type> vars) {
 		this.vars = vars;
 		this.semanticErrors = semanticErrors;
@@ -61,10 +66,25 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 	public <T> T visitPrimitaveDeclaration(PrimitaveDeclaration d) {
 		// TODO Auto-generated method stub
 		String var = d.var;
-		if (this.vars.keySet().contains(var)) {
-			semanticErrors.add("Variable " + var + " already declared,  line=" + d.getLine() + " col=" + d.getCol());
+
+		if (isVisitingFunctionDeclaration) {
+
+			if (this.functionScope.keySet().contains(var)) {
+				semanticErrors
+						.add("Variable " + var + " already declared,  line=" + d.getLine() + " col=" + d.getCol());
+			} else {
+				this.functionScope.put(var, d.type);
+			}
+
 		} else {
-			this.vars.put(var, d.type);
+
+			if (this.vars.keySet().contains(var)) {
+				semanticErrors
+						.add("Variable " + var + " already declared,  line=" + d.getLine() + " col=" + d.getCol());
+			} else {
+				this.vars.put(var, d.type);
+			}
+
 		}
 
 		if (d.initialization != null) {
@@ -90,13 +110,23 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitListDeclaration(ListDeclaration ld) {
-		// TODO Auto-generated method stub
 		String var = ld.var;
-		if (this.vars.keySet().contains(var)) {
-			semanticErrors.add("Variable " + var + " already declared,  line=" + ld.getLine() + " col=" + ld.getCol());
+		if (isVisitingFunctionDeclaration) {
+			if (this.functionScope.keySet().contains(var)) {
+				semanticErrors
+						.add("Variable " + var + " already declared,  line=" + ld.getLine() + " col=" + ld.getCol());
+			} else {
+				this.functionScope.put(var, ld.type);
+			}
 		} else {
-			this.vars.put(var, ld.type);
+			if (this.vars.keySet().contains(var)) {
+				semanticErrors
+						.add("Variable " + var + " already declared,  line=" + ld.getLine() + " col=" + ld.getCol());
+			} else {
+				this.vars.put(var, ld.type);
+			}
 		}
+
 		ld.initialization.accept(this);
 		return null;
 	}
@@ -104,10 +134,19 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 	@Override
 	public <T> T visitPrimitiveAssignment(PrimitiveAssignment a) {
 		String var = a.var;
-		if (!this.vars.containsKey(var)) {
-			semanticErrors
-					.add("Assignment to an undeclared variable in [" + a.getLine() + ", " + a.getCol() + "]: " + var);
+		if (isVisitingFunctionDeclaration) {
+			if (!this.vars.containsKey(var) && !this.functionScope.containsKey(var)) {
+				semanticErrors.add(
+						"Assignment to an undeclared variable in [" + a.getLine() + ", " + a.getCol() + "]: " + var);
+			}
+		} else {
+
+			if (!this.vars.containsKey(var)) {
+				semanticErrors.add(
+						"Assignment to an undeclared variable in [" + a.getLine() + ", " + a.getCol() + "]: " + var);
+			}
 		}
+
 		a.expr.accept(this);
 		return null;
 	}
@@ -122,9 +161,17 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 	@Override
 	public <T> T visitListAssignment(ListAssignment a) {
 		String var = a.var;
-		if (!this.vars.containsKey(var)) {
-			semanticErrors
-					.add("Assignment to an undeclared variable in [" + a.getLine() + ", " + a.getCol() + "]: " + var);
+		if (isVisitingFunctionDeclaration) {
+			if (!this.vars.containsKey(var) && !this.functionScope.containsKey(var)) {
+				semanticErrors.add(
+						"Assignment to an undeclared variable in [" + a.getLine() + ", " + a.getCol() + "]: " + var);
+			}
+		} else {
+			if (!this.vars.containsKey(var)) {
+				semanticErrors.add(
+						"Assignment to an undeclared variable in [" + a.getLine() + ", " + a.getCol() + "]: " + var);
+			}
+
 		}
 		a.expr.accept(this);
 		return null;
@@ -153,10 +200,17 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 	@Override
 	public <T> T visitVariable(Variable v) {
 		// check if variable is declared
-		if (!this.vars.containsKey(v.var)) {
-			semanticErrors.add("Variable '" + v.var + "' not declared, line=" + v.getLine() + " col=" + v.getCol());
+		if (isVisitingFunctionDeclaration) {
+			if (!this.vars.containsKey(v.var) && !this.functionScope.containsKey(v.var)) {
+				semanticErrors.add("Variable '" + v.var + "' not declared, line=" + v.getLine() + " col=" + v.getCol());
+			}
+		} else {
+			if (!this.vars.containsKey(v.var)) {
+				semanticErrors.add("Variable '" + v.var + "' not declared, line=" + v.getLine() + " col=" + v.getCol());
+			}
 		}
 		v.setReturnType(this.vars.get(v.var));
+
 		return null;
 	}
 
@@ -182,16 +236,44 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 	public <T> T visitFunctionDeclaration(FunctionDeclaration fd) {
 		// no duplicate parameters
 		List<Parameter> params = fd.parameters;
-		Set<String> vars = new HashSet<>();
+		Set<String> varSet = new HashSet<>();
 		for (Parameter param : params) {
 			String paramName = param.name;
-			if (vars.contains(paramName)) {
-				semanticErrors
-						.add("Variable "+paramName + " is being used multiple times in function: [" + fd.getLine() + ", " + fd.getCol() + "]");
+			if (varSet.contains(paramName)) {
+				semanticErrors.add("Variable " + paramName + " is being used multiple times in function: ["
+						+ fd.getLine() + ", " + fd.getCol() + "]");
 				break;
 			}
-			vars.add(paramName);
+			varSet.add(paramName);
 		}
+
+		// for each param, add it to vars (remember in expressionApp, created a new
+		// scope)
+		for (Parameter param : params) {
+			this.vars.put(param.name, param.type);
+		}
+
+		this.isVisitingFunctionDeclaration = true;
+		this.functionScope = new HashMap<String, Type>();
+
+		for (Expression e : fd.expressions) {
+			e.accept(this);
+		}
+
+		// cleanup
+		this.functionScope = null;
+		this.isVisitingFunctionDeclaration = false;
+
+		/*
+		 * create new map<String,type> functionScope set
+		 * isVisitingFunctionDeclaration=true
+		 * 
+		 * for each expression in the function: visit them if declaration: declare in
+		 * functionScope if assignment, check for var. existance in BOTH this.vars &
+		 * functionScope
+		 * 
+		 * 
+		 */
 
 		return null;
 	}
