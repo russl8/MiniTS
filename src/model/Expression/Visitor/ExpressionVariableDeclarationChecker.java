@@ -12,6 +12,7 @@ import model.Expression.BooleanLiteral;
 import model.Expression.CharacterLiteral;
 import model.Expression.ClassDeclaration;
 import model.Expression.Expression;
+import model.Expression.FunctionDeclaration;
 import model.Expression.NumberLiteral;
 import model.Expression.Variable;
 import model.Expression.Binary.Addition;
@@ -29,7 +30,6 @@ import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
 import model.Expression.BlockContainer.ForLoop;
-import model.Expression.BlockContainer.FunctionDeclaration;
 import model.Expression.BlockContainer.IfStatement;
 import model.Expression.BlockContainer.WhileLoop;
 import model.Expression.Declaration.ListDeclaration;
@@ -204,12 +204,14 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 			if (!this.vars.containsKey(v.var) && !this.functionScope.containsKey(v.var)) {
 				semanticErrors.add("Variable '" + v.var + "' not declared, line=" + v.getLine() + " col=" + v.getCol());
 			}
+			v.setReturnType(
+					this.functionScope.get(v.var) == null ? this.vars.get(v.var) : this.functionScope.get(v.var));
 		} else {
 			if (!this.vars.containsKey(v.var)) {
 				semanticErrors.add("Variable '" + v.var + "' not declared, line=" + v.getLine() + " col=" + v.getCol());
 			}
+			v.setReturnType(this.vars.get(v.var));
 		}
-		v.setReturnType(this.vars.get(v.var));
 
 		return null;
 	}
@@ -256,9 +258,13 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 		this.isVisitingFunctionDeclaration = true;
 		this.functionScope = new HashMap<String, Type>();
 
+		// check all function body statements
 		for (Expression e : fd.expressions) {
 			e.accept(this);
 		}
+
+		// check function return statement
+		fd.returnStatement.accept(this);
 
 		// cleanup
 		this.functionScope = null;

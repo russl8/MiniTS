@@ -31,17 +31,17 @@
         <pre><code>  1 | class f4 {
   2 | 
   3 | 	i : int = 5;
-  4 | 	function f4 () : int {
+  4 | 	function f4 (k:int) : int {
   5 | 		j : int = 1;
   6 | 		j = j + i; // j should equal 6;
   7 | 		
-  8 | 		// return j;
+  8 | 		return j + j + j + k * 2; //valid return
   9 | 	}
  10 | }
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="success-status">PASS - Compilation Successful</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>10</strong></div><div class="stat-item">Non-Empty Lines: <strong>8</strong></div><div class="stat-item">Comment Lines: <strong>1</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>1</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div><h2>Variables</h2><div class="variable">i : {type=INT, value=5}</div></div>
+<div class="right"><h2>Compilation Status</h2><div class="success-status">PASS - Compilation Successful</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>10</strong></div><div class="stat-item">Non-Empty Lines: <strong>8</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>1</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div><h2>Variables</h2><div class="variable">i : {type=INT, value=5}</div></div>
 </div>
 <footer>team: russl8, jeffj4</footer>
 </body></html>

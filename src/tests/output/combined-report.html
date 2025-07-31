@@ -22,12 +22,12 @@
 </head><body>
 <h1>Combined Compilation Report</h1>
 <div class="report">
-<h2><a href="f4-report.html">f4-report.html</a></h2>
+<h2><a href="f6-report.html">f6-report.html</a></h2>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>f4 Report</title>
+    <title>f6 Report</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
         h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
@@ -50,22 +50,18 @@
 <div class="container">
     <div class="left">
         <h2>Input File Path</h2>
-        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\function\f4.txt</code></pre>
+        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\function\f6.txt</code></pre>
         <h2>Input File Contents</h2>
-        <pre><code>  1 | class f4 {
-  2 | 
-  3 | 	i : int = 5;
-  4 | 	function f4 () : int {
-  5 | 		j : int = 1;
-  6 | 		j = j + i; // j should equal 6;
-  7 | 		
-  8 | 		// return j;
-  9 | 	}
- 10 | }
+        <pre><code>  1 | class f6 {
+  2 | 	function func (i : int) : list[char]{
+  3 | 		res : list[char] = &quot;hi&quot;;
+  4 | 		return res; //OK
+  5 | 	}
+  6 | }
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="success-status">PASS - Compilation Successful</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>10</strong></div><div class="stat-item">Non-Empty Lines: <strong>8</strong></div><div class="stat-item">Comment Lines: <strong>1</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>1</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div><h2>Variables</h2><div class="variable">i : {type=INT, value=5}</div></div>
+<div class="right"><h2>Compilation Status</h2><div class="success-status">PASS - Compilation Successful</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>6</strong></div><div class="stat-item">Non-Empty Lines: <strong>6</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div></div>
 </div>
 </body></html>
 </div>
