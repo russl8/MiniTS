@@ -119,7 +119,6 @@ public class ExpressionProcessor {
 		} else if (e instanceof Parenthesis) {
 			evaluateExpression(((Parenthesis) e));
 		} else if ( e instanceof FunctionDeclaration) {
-			System.out.println(e);
 			// do nothing
 		}else {
 			// not a declaration/assignment/if. ignore for now
