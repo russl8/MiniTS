@@ -27,6 +27,10 @@ public abstract class Expression {
 	        for (Type type : values()) {
 	            MAP.put(type.name(), type);
 	        }
+	        MAP.put("LIST[INT]", LIST_INT);
+	        MAP.put("LIST[BOOL]", LIST_BOOL);
+	        MAP.put("LIST[CHAR]", LIST_CHAR);
+
 	    }
 
 	    public static Type fromString(String s) {

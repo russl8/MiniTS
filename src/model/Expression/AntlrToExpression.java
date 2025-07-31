@@ -17,7 +17,6 @@ import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
 import model.Expression.BlockContainer.ForLoop;
-import model.Expression.BlockContainer.FunctionDeclaration;
 import model.Expression.BlockContainer.IfStatement;
 import model.Expression.BlockContainer.WhileLoop;
 import model.Expression.Declaration.ListDeclaration;
@@ -92,8 +91,9 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		int col = ctx.getStart().getCharPositionInLine() + 1;
 
 		Type returnType = Type.fromString(ctx.type().getText());
+		Expression returnStatement = visit(ctx.return_().getChild(1));
 
-		FunctionDeclaration fd = new FunctionDeclaration(functionName, returnType, line, col);
+		FunctionDeclaration fd = new FunctionDeclaration(functionName, returnType, returnStatement, line, col);
 
 		// Add parameters
 		for (ParameterContext pcx : ctx.parameter()) {
@@ -142,24 +142,24 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		else {
 			String objectType = declType.getChild(0).getText();
 			if (objectType.equals("list")) {
-				String itemType = declType.getChild(2).getText();
+				String itemType = declType.getText();
 				Expression ld;
-				Type listType;
+				Type listType = Type.fromString(itemType);
 
-				switch (itemType) {
-				case "int":
-					listType = Type.LIST_INT;
-					break;
-				case "bool":
-					listType = Type.LIST_BOOL;
-					break;
-				case "char":
-					listType = Type.LIST_CHAR;
-					break;
-				default:
-					listType = Type.NONE;
-					System.err.println("Unexpected type: " + itemType);
-				}
+//				switch (itemType) {
+//				case "int":
+//					listType = Type.LIST_INT;
+//					break;
+//				case "bool":
+//					listType = Type.LIST_BOOL;
+//					break;
+//				case "char":
+//					listType = Type.LIST_CHAR;
+//					break;
+//				default:
+//					listType = Type.NONE;
+//					System.err.println("Unexpected type: " + itemType);
+//				}
 
 				if (isInitialized) {
 					// Populate list

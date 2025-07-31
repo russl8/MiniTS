@@ -1,4 +1,4 @@
-package model.Expression.BlockContainer;
+package model.Expression;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import model.Expression.Expression;
 import model.Expression.Util.Parameter;
 import model.Expression.Visitor.OperationVisitor;
 
@@ -16,9 +15,11 @@ public class FunctionDeclaration extends Expression {
 
 	public String functionName;
 	public Type returnType;
+	public Expression returnStatement;
 
-	public FunctionDeclaration(String functionName, Type returnType, int line, int col) {
+	public FunctionDeclaration(String functionName, Type returnType, Expression returnStatement, int line, int col) {
 		this.functionName = functionName;
+		this.returnStatement = returnStatement;
 		this.returnType = returnType;
 		this.parameters = new ArrayList<>();
 		this.expressions = new ArrayList<>();
@@ -84,6 +85,7 @@ public class FunctionDeclaration extends Expression {
 		for (Expression e : expressions) {
 			res += e + "\n";
 		}
+		res += "return " + returnStatement + "\n";
 		res += "}\n";
 		return res;
 	}

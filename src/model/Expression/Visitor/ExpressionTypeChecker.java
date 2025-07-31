@@ -1,34 +1,8 @@
 package model.Expression.Visitor;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import antlr.ExprBaseVisitor;
-import antlr.ExprParser.AdditionContext;
-import antlr.ExprParser.AndContext;
-import antlr.ExprParser.BooleanLiteralContext;
-import antlr.ExprParser.ClassDeclarationContext;
-import antlr.ExprParser.DeclarationWithOptionalAssignmentContext;
-import antlr.ExprParser.DivisionContext;
-import antlr.ExprParser.EqualContext;
-import antlr.ExprParser.GreaterEqualThanContext;
-import antlr.ExprParser.GreaterThanContext;
-import antlr.ExprParser.IfStatementContext;
-import antlr.ExprParser.LessEqualThanContext;
-import antlr.ExprParser.LessThanContext;
-import antlr.ExprParser.ModuloContext;
-import antlr.ExprParser.MultiplicationContext;
-import antlr.ExprParser.NotContext;
-import antlr.ExprParser.NotEqualContext;
-import antlr.ExprParser.NumberLiteralContext;
-import antlr.ExprParser.OrContext;
-import antlr.ExprParser.ParenthesisContext;
-import antlr.ExprParser.StatementContext;
-import antlr.ExprParser.SubtractionContext;
-import antlr.ExprParser.TypeContext;
-import antlr.ExprParser.VariableAssignmentContext;
-import antlr.ExprParser.VariableContext;
 import model.Assignment.Assignment;
 import model.Assignment.ListAssignment;
 import model.Assignment.PrimitiveAssignment;
@@ -36,25 +10,12 @@ import model.Expression.BooleanLiteral;
 import model.Expression.CharacterLiteral;
 import model.Expression.ClassDeclaration;
 import model.Expression.Expression;
+import model.Expression.FunctionDeclaration;
 import model.Expression.ListLiteral;
 import model.Expression.NumberLiteral;
 import model.Expression.Variable;
-import model.Expression.Binary.Addition;
-import model.Expression.Binary.And;
 import model.Expression.Binary.BinaryExpression;
-import model.Expression.Binary.Division;
-import model.Expression.Binary.Equal;
-import model.Expression.Binary.GreaterEqualThan;
-import model.Expression.Binary.GreaterThan;
-import model.Expression.Binary.LessEqualThan;
-import model.Expression.Binary.LessThan;
-import model.Expression.Binary.Modulo;
-import model.Expression.Binary.Multiplication;
-import model.Expression.Binary.NotEqual;
-import model.Expression.Binary.Or;
-import model.Expression.Binary.Subtraction;
 import model.Expression.BlockContainer.ForLoop;
-import model.Expression.BlockContainer.FunctionDeclaration;
 import model.Expression.BlockContainer.IfStatement;
 import model.Expression.BlockContainer.WhileLoop;
 import model.Expression.Declaration.Declaration;
@@ -62,10 +23,8 @@ import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
-import model.Expression.Util.Utils;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.Type;
-import model.Program.Program;
 
 public class ExpressionTypeChecker implements OperationVisitor {
 
@@ -81,10 +40,24 @@ public class ExpressionTypeChecker implements OperationVisitor {
 	public <T> T visitClassDeclaration(ClassDeclaration cd) {
 		return null;
 	}
-	
+
 	@Override
 	public <T> T visitFunctionDeclaration(FunctionDeclaration fd) {
-		// dont have to do anything here, invalid param decl types will be caught by parser
+		// typecheck all statements in function body
+		for (Expression e : fd.expressions) {
+			e.accept(this);
+		}
+
+		// typecheck function return statement
+		fd.returnStatement.accept(this);
+
+		// make sure function return statement matches the function return declaration
+		if (fd.returnType != fd.returnStatement.getReturnType()) {
+			semanticErrors.add("Type mismatch at [" + fd.returnStatement.getLine() + ", " + fd.returnStatement.getCol()
+					+ "]: expected function return type of " + fd.returnType + " but got "
+					+ fd.returnStatement.getReturnType());
+		}
+
 		return null;
 	}
 
@@ -143,7 +116,6 @@ public class ExpressionTypeChecker implements OperationVisitor {
 
 			}
 		}
-
 		return null;
 	}
 

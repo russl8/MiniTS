@@ -37,9 +37,15 @@ loop: 'while' '(' expr ')' '{' (statement)* '}' # WhileLoop
 	; 
 
 // FUNCTIONS
-function: 'function' ID '(' (parameter? (',' parameter)* ) ')' ':' type '{' statement* '}' # FunctionDeclaration
+function: 
+	'function' ID '(' (parameter? (',' parameter)* ) ')' ':' type '{' 
+		statement* 
+		return
+	'}' # FunctionDeclaration
 	;
 parameter: ID ':' type
+	;
+return: 'return' expr ';'
 	;
 	
 // EXPRESSIONS

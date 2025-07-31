@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>f1 Report</title>
+    <title>f5 Report</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
         h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
@@ -26,19 +26,20 @@
 <div class="container">
     <div class="left">
         <h2>Input File Path</h2>
-        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\function\f1.txt</code></pre>
+        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\function\f5.txt</code></pre>
         <h2>Input File Contents</h2>
-        <pre><code>  1 | class f1 {
-  2 | 	function f (i : int , j : bool) : int {
-  3 | 		k : int = 0;
-  4 | 		
-<span class="error-line">  5 | 		return (False &amp;&amp; True); // invalid return</span>
-  6 | 	}
-  7 | }
+        <pre><code>  1 | class f5 {
+  2 | 
+  3 | 	function func (i : int) : list[char]{
+  4 | 		res : list[char] = &quot;w12351&quot;;
+  5 | 		false_res : list[int] = [1,2];
+<span class="error-line">  6 | 		return false_res;</span>
+  7 | 	}
+  8 | }
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>7</strong></div><div class="stat-item">Non-Empty Lines: <strong>6</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>1</strong></div></div><h2>Error Details</h2><div class="error">Type mismatch at [5, 10]: expected function return type of INT but got BOOL</div></div>
+<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>8</strong></div><div class="stat-item">Non-Empty Lines: <strong>7</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>1</strong></div></div><h2>Error Details</h2><div class="error">Type mismatch at [6, 10]: expected function return type of LIST_CHAR but got LIST_INT</div></div>
 </div>
 <footer>team: russl8, jeffj4</footer>
 </body></html>

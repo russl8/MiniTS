@@ -32,12 +32,14 @@
   2 | 	k : int = 0;
   3 | 	function f (i : int , j : bool) : int {
   4 | 		k : int = 0; // this should be allowed
-  5 | 	}
-  6 | }
+  5 | 		
+<span class="error-line">  6 | 		return l; // invalid return</span>
+  7 | 	}
+  8 | }
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="success-status">PASS - Compilation Successful</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>6</strong></div><div class="stat-item">Non-Empty Lines: <strong>6</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>1</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div><h2>Variables</h2><div class="variable">k : {type=INT, value=0}</div></div>
+<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>8</strong></div><div class="stat-item">Non-Empty Lines: <strong>7</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>1</strong></div></div><h2>Error Details</h2><div class="error">Variable 'l' not declared, line=6 col=10</div></div>
 </div>
 <footer>team: russl8, jeffj4</footer>
 </body></html>

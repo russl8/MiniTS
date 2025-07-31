@@ -20,7 +20,6 @@ import model.Expression.Binary.NotEqual;
 import model.Expression.Binary.Or;
 import model.Expression.Binary.Subtraction;
 import model.Expression.BlockContainer.ForLoop;
-import model.Expression.BlockContainer.FunctionDeclaration;
 import model.Expression.BlockContainer.IfStatement;
 import model.Expression.BlockContainer.WhileLoop;
 import model.Expression.Declaration.ListDeclaration;
