@@ -13,6 +13,7 @@ public class ClassDeclaration extends Expression {
 	public String className;
 	public String superClass;
 	public Map<String, FunctionDeclaration> functions;
+	public Map<String, Type> vars;
 
 	public Type getReturnType() {
 		return Type.NONE;

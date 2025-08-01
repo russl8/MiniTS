@@ -84,7 +84,6 @@ public class ExpressionApp {
 				long startTime = System.currentTimeMillis();
 
 				semanticErrors = new ArrayList<>();
-				vars = new HashMap<>();
 				operationVisitors = new ArrayList<>();
 
 				ExpressionProcessor ep = new ExpressionProcessor();
@@ -102,10 +101,12 @@ public class ExpressionApp {
 					// future: class scoping
 					ClassDeclaration cd = (ClassDeclaration) classExpr;
 					functions = new HashMap<>();
+					vars = new HashMap<>();
 					for (Expression e : cd.expressions) {
 						visitExpression(e, vars); // vars is the top-level global map
 					}
 					cd.functions = functions;
+					cd.vars = vars;
 				}
 
 				if (semanticErrors.isEmpty()) {
