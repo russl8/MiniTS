@@ -28,6 +28,7 @@ import java.util.*;
  */
 public class ExpressionApp {
 	private static Map<String, Type> vars;
+	private static Map<String, FunctionDeclaration> functions;
 	private static List<String> semanticErrors;
 	private static List<OperationVisitor> operationVisitors;
 
@@ -100,9 +101,11 @@ public class ExpressionApp {
 				for (Expression classExpr : prog.expressions) {
 					// future: class scoping
 					ClassDeclaration cd = (ClassDeclaration) classExpr;
+					functions = new HashMap<>();
 					for (Expression e : cd.expressions) {
 						visitExpression(e, vars); // vars is the top-level global map
 					}
+					cd.functions = functions;
 				}
 
 				if (semanticErrors.isEmpty()) {
@@ -140,9 +143,17 @@ public class ExpressionApp {
 			Utils.restoreVarScope(currentVars, savedVars);
 		} else if (e instanceof FunctionDeclaration) {
 			/*
-			 * treat this as a regular expression. only difference is that u dont visit the
-			 * inner statements here. instead, do it in the visitors.
+			 * treat this as a regular expression, not a block container. only difference is
+			 * that u dont visit the inner statements here. instead, do it in the visitors.
 			 */
+			FunctionDeclaration fd = ((FunctionDeclaration) e);
+			if (functions.containsKey(fd.functionName)) {
+				semanticErrors.add("Function " + fd.functionName + " already declared: [" + fd.getLine() + ", "
+						+ fd.getCol() + "]");
+			} else {
+				functions.put(fd.functionName, fd);
+			}
+
 		}
 	}
 

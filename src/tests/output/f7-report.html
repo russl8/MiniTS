@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>f7 Report</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
+        h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
+        .container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .left, .right { padding: 20px; background-color: #ffffff; border: 1px solid #82c0cc; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        pre { background-color: #e9ecef; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 14px; font-family: 'Courier New', monospace; line-height: 1.4; }
+        .error { background-color: #f8d7da; border-left: 4px solid #d9534f; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #721c24; }
+        .variable { background-color: #489fb5; border-left: 4px solid #16697a; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #ffffff; }
+        .error-line { background-color: #f8d7da; color: #721c24; font-weight: bold; display: block; padding: 2px 5px; margin: 1px 0; border-radius: 3px; }
+        .success-status { background-color: #d4edda; border-left: 4px solid #28a745; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #155724; font-weight: bold; }
+        .error-status { background-color: #f8d7da; border-left: 4px solid #dc3545; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #721c24; font-weight: bold; }
+        .stats { background-color: #f8f9fa; padding: 15px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #dee2e6; }
+        .stat-item { margin-bottom: 8px; font-size: 14px; }
+        h2 { color: #489fb5; margin-top: 0; margin-bottom: 10px; }
+        footer { text-align: center; margin-top: 40px; font-size: 12px; color: #888; }
+        .report { margin-bottom: 30px; border-bottom: 2px solid #82c0cc; padding-bottom: 20px; }
+    </style>
+
+</head><body>
+<h1>Compilation Report</h1>
+<div class="container">
+    <div class="left">
+        <h2>Input File Path</h2>
+        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\function\f7.txt</code></pre>
+        <h2>Input File Contents</h2>
+        <pre><code>  1 | class f7 {
+  2 | 
+  3 | 	function f1 (i:int) : int  {
+  4 | 		return i;
+  5 | 	}
+  6 | 	
+  7 | 	
+  8 | 	function f2 () : int  {
+  9 | 		return 2;
+ 10 | 	}
+ 11 | }
+</code></pre>
+    </div>
+
+<div class="right"><h2>Compilation Status</h2><div class="success-status">PASS - Compilation Successful</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>11</strong></div><div class="stat-item">Non-Empty Lines: <strong>8</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div></div>
+</div>
+<footer>team: russl8, jeffj4</footer>
+</body></html>
