@@ -1,19 +1,19 @@
 package model.Expression;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-
-import model.Expression.Declaration.Declaration;
-import model.Expression.Expression.ExprType;
-import model.Expression.Expression.Type;
 import model.Expression.Visitor.OperationVisitor;
 
 public class ClassDeclaration extends Expression {
 	public List<Expression> expressions;
 	public String className;
 	public String superClass;
+	public Map<String, FunctionDeclaration> functions;
+	public Map<String, Type> vars;
 
 	public Type getReturnType() {
 		return Type.NONE;
@@ -27,6 +27,7 @@ public class ClassDeclaration extends Expression {
 		this.className = className;
 		this.expressions = new ArrayList<>();
 		this.line = line;
+		this.functions = new HashMap<>();
 		this.col = col;
 	}
 

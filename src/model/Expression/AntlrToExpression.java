@@ -109,7 +109,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		for (StatementContext scx : ctx.statement()) {
 			fd.addExpression(visit(scx.getChild(0)));
 		}
-		System.out.println(fd);
 		return fd;
 	}
 
