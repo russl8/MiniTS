@@ -113,6 +113,24 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	}
 
 	@Override
+	public Expression visitFunctionInvocation(FunctionInvocationContext ctx) {
+		Func_invoContext fictx = ctx.func_invo();
+
+		String functionName = fictx.getChild(0).getText();
+		int line = fictx.getStart().getLine();
+		int col = fictx.getStart().getCharPositionInLine();
+
+		FunctionInvocation fi = new FunctionInvocation(functionName, line, col);
+
+		for (int i = 2; i < fictx.getChildCount() - 1; i += 2) {
+			fi.arguments.add(visit(fictx.getChild(i)));
+		}
+		System.out.println(fi);
+
+		return fi;
+	}
+
+	@Override
 	public Expression visitDeclarationWithOptionalAssignment(DeclarationWithOptionalAssignmentContext ctx) {
 		Map<String, Type> primitaveTypes = Map.of("bool", Type.BOOL, "int", Type.INT, "char", Type.CHAR);
 		String var = ctx.getChild(0).getText();
@@ -404,8 +422,8 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 //			semanticErrors.add("Variable '" + var + "' not declared, line=" + line + " col=" + col);
 //		}
 
-		Type type = vars.get(var);
-		return new Variable(var, type, line, col);
+//		Type type = vars.get(var);
+		return new Variable(var, null, line, col);
 	}
 
 	@Override

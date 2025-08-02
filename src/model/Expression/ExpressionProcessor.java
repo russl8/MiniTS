@@ -38,10 +38,12 @@ public class ExpressionProcessor {
 	 */
 	public List<String> printStatements;
 	public Map<String, Value> vars; // Stores values for primitive variables only
+	public Map<String, FunctionDeclaration> functions;
 
-	public ExpressionProcessor() {
+	public ExpressionProcessor(Map<String, FunctionDeclaration> functions) {
 		this.printStatements = new ArrayList<>();
 		this.vars = new HashMap<>();
+		this.functions = functions;
 	}
 
 	public void evaluateExpression(Expression e) {
@@ -53,7 +55,11 @@ public class ExpressionProcessor {
 			if (!d.isInitialized) {
 				val = new Value(d.getReturnType());
 			} else if (d.isInitialized) {
-				val = evaluateExpression(d.getReturnType(), expr);
+				if (expr instanceof FunctionInvocation) {
+					val = evaluateFunctionInvocation((FunctionInvocation) expr);
+				} else {
+					val = evaluateExpression(d.getReturnType(), expr);
+				}
 			} else {
 				throw new IllegalArgumentException("Unsupported expression type: " + d.getReturnType());
 			}
@@ -64,7 +70,13 @@ public class ExpressionProcessor {
 		} else if (e instanceof PrimitiveAssignment) {
 			PrimitiveAssignment a = (PrimitiveAssignment) e;
 			Expression expr = a.expr;
-			Value val = evaluateExpression(expr.getReturnType(), expr);
+			Value val = null;
+			System.out.println("PPP " + expr);
+			if (expr instanceof FunctionInvocation) {
+				val = evaluateFunctionInvocation((FunctionInvocation) expr);
+			} else {
+				val = evaluateExpression(expr.getReturnType(), expr);
+			}
 			this.vars.put(a.var, val);
 		} else if (e instanceof ListAssignment) {
 			ListAssignment ld = (ListAssignment) e;
@@ -86,7 +98,7 @@ public class ExpressionProcessor {
 			WhileLoop wl = (WhileLoop) e;
 			Expression condition = wl.cond;
 			boolean conditionEvaluation = evaluateBoolean(condition);
-			while (conditionEvaluation == true) {	
+			while (conditionEvaluation == true) {
 				// have to reset state (scope)
 				for (Expression loopExpression : wl.expressions) {
 					evaluateExpression(loopExpression);
@@ -117,9 +129,9 @@ public class ExpressionProcessor {
 			this.vars.put(ld.var, new Value(ld.type, ld.initialization));
 		} else if (e instanceof Parenthesis) {
 			evaluateExpression(((Parenthesis) e));
-		} else if ( e instanceof FunctionDeclaration) {
+		} else if (e instanceof FunctionDeclaration) {
 			// do nothing
-		}else {
+		} else {
 			// not a declaration/assignment/if. ignore for now
 			System.err.println("Warning, unhandled statement, ignoring for now: " + e);
 		}
@@ -142,6 +154,31 @@ public class ExpressionProcessor {
 			throw new IllegalArgumentException("Unsupported expression type: " + type);
 		}
 		return val;
+	}
+
+	private Value evaluateFunctionInvocation(FunctionInvocation fi) {
+		HashMap<String, Value> copyOfVars = new HashMap<>(vars);
+
+		FunctionDeclaration fd = this.functions.get(fi.functionName);
+
+		// For each argument in function, update global state (for overriding).
+
+		for (int i = 0; i < fi.arguments.size(); i++) {
+			this.vars.put(fd.parameters.get(i).name,
+					evaluateExpression(fi.arguments.get(i).getReturnType(), fi.arguments.get(i)));
+		}
+
+		// Processs each line in function body
+		for (Expression e : fd.expressions) {
+			evaluateExpression(e);
+		}
+
+		// Get return value by evaluating it
+		Value returnValue = this.evaluateExpression(fd.returnStatement.getReturnType(), fd.returnStatement);
+
+		// Reset state
+		this.vars = copyOfVars;
+		return returnValue;
 	}
 
 	private int evaluateInteger(Expression e) {
@@ -169,6 +206,8 @@ public class ExpressionProcessor {
 			return ((NumberLiteral) e).val;
 		} else if (e instanceof Parenthesis) {
 			return evaluateInteger(((Parenthesis) e).expr);
+		} else if (e instanceof FunctionInvocation) {
+			return evaluateFunctionInvocation((FunctionInvocation) e).getValueAsInt();
 		}
 		System.err.println("Could not properly evaluate integer expression " + e);
 		return -1;
@@ -227,6 +266,8 @@ public class ExpressionProcessor {
 			return ((BooleanLiteral) e).val;
 		} else if (e instanceof Parenthesis) {
 			return evaluateBoolean(((Parenthesis) e).expr);
+		} else if (e instanceof FunctionInvocation) {
+			return evaluateFunctionInvocation((FunctionInvocation) e).getValueAsBool();
 		}
 		System.err.println("Could not properly evaluate boolean expression " + e + " " + e.getClass());
 		return false;

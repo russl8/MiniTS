@@ -13,6 +13,7 @@ import model.Expression.CharacterLiteral;
 import model.Expression.ClassDeclaration;
 import model.Expression.Expression;
 import model.Expression.FunctionDeclaration;
+import model.Expression.FunctionInvocation;
 import model.Expression.NumberLiteral;
 import model.Expression.Variable;
 import model.Expression.Binary.Addition;
@@ -42,13 +43,16 @@ import model.Expression.Util.Parameter;
 public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 	public List<String> semanticErrors;
 	public Map<String, Type> vars; // stores all the variables declared in the program so far
+	public Map<String, FunctionDeclaration> functions;
 
 	private boolean isVisitingFunctionDeclaration = false;
 	private Map<String, Type> functionScope;
 
-	public ExpressionVariableDeclarationChecker(List<String> semanticErrors, Map<String, Type> vars) {
+	public ExpressionVariableDeclarationChecker(List<String> semanticErrors, Map<String, Type> vars,
+			Map<String, FunctionDeclaration> functions) {
 		this.vars = vars;
 		this.semanticErrors = semanticErrors;
+		this.functions = functions;
 	}
 
 	@Override
@@ -58,8 +62,28 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitClassDeclaration(ClassDeclaration cd) {
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public <T> T visitFunctionInvocation(FunctionInvocation fi) {
+		String functionName = fi.functionName;
+		String errorLocation = "[" + fi.getLine() + ", " + fi.getCol() + "]";
+		if (!this.functions.containsKey(functionName)) {
+			semanticErrors.add("Error at " + errorLocation + ": function " + functionName + " does not exist");
+		} else if (fi.arguments.size() != functions.get(functionName).parameters.size()) {
+			semanticErrors.add("Error at " + errorLocation + ": function " + functionName + " requires "
+					+ fi.arguments.size() + " parameters. Needs " + functions.get(functionName).parameters.size());
+		}
+
+		fi.setReturnType(functions.get(fi.functionName).returnType);
+
+		return null;
+	}
+
+	@Override
+	public void updateFunctionState(Map<String, FunctionDeclaration> functions) {
+		this.functions = functions;
 	}
 
 	@Override
@@ -249,14 +273,22 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 			varSet.add(paramName);
 		}
 
+		if (this.vars.containsKey(fd.functionName)) {
+			semanticErrors.add(
+					"Variable " + fd.functionName + " is already in use: [" + fd.getLine() + ", " + fd.getCol() + "]");
+		}
+		this.vars.put("Vars: " + fd.functionName, fd.returnType);
+		System.out.println(vars);
 		// for each param, add it to vars (remember in expressionApp, created a new
 		// scope)
-		for (Parameter param : params) {
-			this.vars.put(param.name, param.type);
-		}
 
 		this.isVisitingFunctionDeclaration = true;
+
 		this.functionScope = new HashMap<String, Type>();
+
+		for (Parameter param : params) {
+			this.functionScope.put(param.name, param.type);
+		}
 
 		// check all function body statements
 		for (Expression e : fd.expressions) {
@@ -277,8 +309,6 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 		 * for each expression in the function: visit them if declaration: declare in
 		 * functionScope if assignment, check for var. existance in BOTH this.vars &
 		 * functionScope
-		 * 
-		 * 
 		 */
 
 		return null;

@@ -11,6 +11,7 @@ import model.Expression.CharacterLiteral;
 import model.Expression.ClassDeclaration;
 import model.Expression.Expression;
 import model.Expression.FunctionDeclaration;
+import model.Expression.FunctionInvocation;
 import model.Expression.ListLiteral;
 import model.Expression.NumberLiteral;
 import model.Expression.Variable;
@@ -23,6 +24,7 @@ import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
+import model.Expression.Util.Parameter;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.Type;
 
@@ -30,15 +32,23 @@ public class ExpressionTypeChecker implements OperationVisitor {
 
 	public List<String> semanticErrors;
 	public Map<String, Type> vars; // stores all the variables declared in the program so far
+	public Map<String, FunctionDeclaration> functions;
 
-	public ExpressionTypeChecker(List<String> semanticErrors, Map<String, Type> vars) {
+	public ExpressionTypeChecker(List<String> semanticErrors, Map<String, Type> vars,
+			Map<String, FunctionDeclaration> functions) {
 		this.vars = vars;
 		this.semanticErrors = semanticErrors;
+		this.functions = functions;
 	}
 
 	@Override
 	public <T> T visitClassDeclaration(ClassDeclaration cd) {
 		return null;
+	}
+
+	@Override
+	public void updateFunctionState(Map<String, FunctionDeclaration> functions) {
+		this.functions = functions;
 	}
 
 	@Override
@@ -66,7 +76,8 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		Type varType = d.type;
 		// If declaration is initialized, typecheck its expressoin
 		if (d.isInitialized) {
-			Type exprType = d.initialization.getReturnType();
+			Type exprType = d.initialization.getReturnType() == null ? this.vars.get(d.var)
+					: d.initialization.getReturnType();
 			if (varType != exprType) {
 				semanticErrors.add("Type mismatch at [" + d.getLine() + ", " + d.getCol() + "]: expected " + varType
 						+ " = " + varType + " declaration but got " + varType + " = " + exprType);
@@ -357,6 +368,23 @@ public class ExpressionTypeChecker implements OperationVisitor {
 					+ "]: expected " + expectedTypes + " but got " + actualTypes + "");
 
 		}
+	}
+
+	@Override
+	public <T> T visitFunctionInvocation(FunctionInvocation fi) {
+		FunctionDeclaration fd = functions.get(fi.functionName);
+
+		for (int i = 0; i < fd.parameters.size(); i++) {
+			Parameter param = fd.parameters.get(i);
+			Expression arg = fi.arguments.get(i);
+
+			if (param.type != arg.getReturnType()) {
+				semanticErrors.add("Type error: parameter " + param.name + " must be type " + param.type
+						+ " but recieved " + arg.getReturnType() + "[" + arg.getLine() + ", " + arg.getCol() + "]");
+			}
+		}
+		return null;
+
 	}
 
 }
