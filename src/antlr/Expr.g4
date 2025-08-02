@@ -36,7 +36,7 @@ loop: 'while' '(' expr ')' '{' (statement)* '}' # WhileLoop
 	| 'for' '(' declaration ';' expr ';' assignment ')' '{' (statement)* '}' # ForLoop
 	; 
 
-// FUNCTIONS
+// FUNCTION DECLARATION
 function: 
 	'function' ID '(' (parameter? (',' parameter)* ) ')' ':' type '{' 
 		statement* 
@@ -47,6 +47,11 @@ parameter: ID ':' type
 	;
 return: 'return' expr ';'
 	;
+
+// FUNCTION INVOCATION
+func_invo: ID '(' (expr? (',' expr)* ) ')' 
+	;
+
 	
 // EXPRESSIONS
 expr 
@@ -65,6 +70,7 @@ expr
     | expr '&&' expr                       # And
     | expr '||' expr                       # Or
     | '(' expr ')'                         # Parenthesis
+    | func_invo				   			   # FunctionInvocation
     | ID                                   # Variable
     | NUM                                  # NumberLiteral
     | BOOL                                 # BooleanLiteral

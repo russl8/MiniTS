@@ -30,6 +30,10 @@ public interface OperationVisitor {
 
 	public void updateVarState(Map<String, Type> newVars);
 
+	public void updateFunctionState(Map<String, FunctionDeclaration> functions);
+
+	public <T> T visitFunctionInvocation(FunctionInvocation fi);
+
 	public <T> T visitFunctionDeclaration(FunctionDeclaration fd);
 
 	public <T> T visitClassDeclaration(ClassDeclaration cd);

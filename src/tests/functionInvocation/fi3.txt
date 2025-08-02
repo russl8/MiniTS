@@ -1,0 +1,16 @@
+class fi3  {
+	function f (i : int) : int {
+		return i + i;
+	}
+	
+	i : int = f ( 2 ) + f(1);
+	
+	
+	
+	
+	
+	function b (b: bool ) : bool {
+		return ! b;
+	}
+	j : bool = b(True);
+}

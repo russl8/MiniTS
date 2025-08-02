@@ -86,13 +86,12 @@ public class ExpressionApp {
 				semanticErrors = new ArrayList<>();
 				operationVisitors = new ArrayList<>();
 
-				ExpressionProcessor ep = new ExpressionProcessor();
 				AntlrToProgram progVisitor = new AntlrToProgram(semanticErrors, vars);
 				Program prog = progVisitor.visit(parser.prog());
 
-				ExpressionTypeChecker typeCheckerVisitor = new ExpressionTypeChecker(semanticErrors, vars);
+				ExpressionTypeChecker typeCheckerVisitor = new ExpressionTypeChecker(semanticErrors, vars, functions);
 				ExpressionVariableDeclarationChecker varDeclarationCheckerVisitor = new ExpressionVariableDeclarationChecker(
-						semanticErrors, vars);
+						semanticErrors, vars, functions);
 
 				operationVisitors.add(varDeclarationCheckerVisitor);
 				operationVisitors.add(typeCheckerVisitor);
@@ -103,15 +102,16 @@ public class ExpressionApp {
 					functions = new HashMap<>();
 					vars = new HashMap<>();
 					for (Expression e : cd.expressions) {
-						visitExpression(e, vars); // vars is the top-level global map
+						visitExpression(e, vars, functions); // vars is the top-level global map
 					}
 					cd.functions = functions;
 					cd.vars = vars;
 				}
-
+				ExpressionProcessor ep = new ExpressionProcessor(functions);
 				if (semanticErrors.isEmpty()) {
 					for (Expression classExpr : prog.expressions) {
 						ClassDeclaration cd = (ClassDeclaration) classExpr;
+
 						for (Expression e : cd.expressions) {
 							ep.evaluateExpression(e);
 						}
@@ -130,16 +130,19 @@ public class ExpressionApp {
 		return individualReports;
 	}
 
-	private static void visitExpression(Expression e, Map<String, Type> currentVars) {
+	private static void visitExpression(Expression e, Map<String, Type> currentVars,
+			Map<String, FunctionDeclaration> functions) {
 
 		for (OperationVisitor v : operationVisitors) {
 			v.updateVarState(currentVars);
+			v.updateFunctionState(functions);
+			System.out.println("Visiting " + e);
 			e.accept(v);
 		}
 		if (e instanceof BlockContainer) {
 			Map<String, Type> savedVars = Utils.copyVarScope(currentVars);
 			for (Expression ex : ((BlockContainer) e).getExpressions()) {
-				visitExpression(ex, currentVars);
+				visitExpression(ex, currentVars, functions);
 			}
 			Utils.restoreVarScope(currentVars, savedVars);
 		} else if (e instanceof FunctionDeclaration) {
