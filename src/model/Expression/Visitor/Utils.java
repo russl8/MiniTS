@@ -6,6 +6,7 @@ import java.util.Map;
 import model.Value;
 import model.Expression.ClassDeclaration;
 import model.Expression.Expression;
+import model.Expression.Expression.Type;
 
 public class Utils {
 	public static ClassDeclaration getClassByClassName(List<ClassDeclaration> classes, String className) {
@@ -31,6 +32,25 @@ public class Utils {
 
 			currentClassVars.put(key, copiedValue);
 		}
+	}
+
+	public static Type getItemTypeFromListType(Type listType) {
+		Type itemType;
+		switch (listType) {
+		case LIST_INT:
+			itemType = Type.INT;
+			break;
+		case LIST_BOOL:
+			itemType = Type.BOOL;
+			break;
+		case LIST_CHAR:
+			itemType = Type.CHAR;
+			break;
+		default:
+			itemType = Type.NONE;
+			System.err.println("Unexpected type: " + listType);
+		}
+		return itemType;
 	}
 
 }

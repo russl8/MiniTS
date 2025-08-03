@@ -135,7 +135,15 @@ public class ExpressionProcessor {
 			}
 		} else if (e instanceof ListDeclaration) {
 			ListDeclaration ld = (ListDeclaration) e;
-			this.vars.put(ld.var, new Value(ld.type, ld.initialization));
+			Value val;
+			if (ld.initialization instanceof FunctionInvocation) {
+				val = evaluateFunctionInvocation((FunctionInvocation) ld.initialization);
+
+			} else {
+				val = new Value(ld.type, ld.initialization);
+			}
+			this.vars.put(ld.var, val);
+
 		} else if (e instanceof Parenthesis) {
 			evaluateExpression(((Parenthesis) e));
 		} else if (e instanceof FunctionDeclaration) {
@@ -159,6 +167,11 @@ public class ExpressionProcessor {
 			val = new Value(Type.INT, evaluateInteger(expr));
 		} else if (type == Type.CHAR) {
 			val = new Value(Type.CHAR, evaluateCharacter(expr));
+		} else if (expr instanceof ListLiteral) {
+			val = new Value(type, (ListLiteral) expr);
+		} else if (expr instanceof Variable) {
+			Variable v = (Variable) expr;
+			val = this.vars.get(v.var);
 		} else {
 			throw new IllegalArgumentException("Unsupported expression type: " + type);
 		}
@@ -183,7 +196,7 @@ public class ExpressionProcessor {
 		}
 
 		// Get return value by evaluating it
-		Value returnValue = this.evaluateExpression(fd.returnStatement.getReturnType(), fd.returnStatement);
+		Value returnValue = this.evaluateExpression(fd.returnType, fd.returnStatement);
 
 		// Reset state
 		this.vars = copyOfVars;

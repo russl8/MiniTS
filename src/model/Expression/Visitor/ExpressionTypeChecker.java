@@ -64,7 +64,19 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		fd.returnStatement.accept(this);
 
 		// make sure function return statement matches the function return declaration
-		if (fd.returnType != fd.returnStatement.getReturnType()) {
+		if (fd.returnStatement instanceof ListLiteral) {
+			ListLiteral ll = (ListLiteral) fd.returnStatement;
+			Type itemType = Utils.getItemTypeFromListType(fd.returnType);
+
+			for (Expression e : ll.items) {
+				if (e.getReturnType() != itemType) {
+					semanticErrors.add("Type mismatch in list declaration at [" + e.getLine() + ", " + e.getCol() + "] "
+							+ e.getReturnType() + " found in list[" + itemType + "]");
+					break;
+				}
+
+			}
+		} else if (fd.returnType != fd.returnStatement.getReturnType()) {
 			semanticErrors.add("Type mismatch at [" + fd.returnStatement.getLine() + ", " + fd.returnStatement.getCol()
 					+ "]: expected function return type of " + fd.returnType + " but got "
 					+ fd.returnStatement.getReturnType());
@@ -94,40 +106,37 @@ public class ExpressionTypeChecker implements OperationVisitor {
 	@Override
 	public <T> T visitListDeclaration(ListDeclaration ld) {
 		Type listType = ld.type;
-		Type itemType;
-		switch (listType) {
-		case LIST_INT:
-			itemType = Type.INT;
-			break;
-		case LIST_BOOL:
-			itemType = Type.BOOL;
-			break;
-		case LIST_CHAR:
-			itemType = Type.CHAR;
-			break;
-		default:
-			itemType = Type.NONE;
-			System.out.println("Unexpected type: " + listType);
-		}
+		Type itemType = Utils.getItemTypeFromListType(listType);
 
 		if (ld.isInitialized) {
-			// make sure the RHS of declaration is a list
-			if (!(ld.initialization instanceof ListLiteral)) {
+
+			// if RHS is a list, typecheck its items
+			if (ld.initialization instanceof ListLiteral) {
+				ListLiteral ll = (ListLiteral) ld.initialization;
+				for (Expression e : ll.items) {
+					if (e.getReturnType() != itemType) {
+						semanticErrors.add("Type mismatch in list declaration at [" + e.getLine() + ", " + e.getCol()
+								+ "] " + e.getReturnType() + " found in list[" + itemType + "]");
+						break;
+					}
+
+				}
+			} else if (ld.initialization instanceof FunctionInvocation) {
+				// make sure the RHS of declaration is a list
+				if (!(ld.initialization.getReturnType() == Type.LIST_BOOL
+						|| ld.initialization.getReturnType() == Type.LIST_CHAR
+						|| ld.initialization.getReturnType() == Type.LIST_INT)) {
+					semanticErrors.add("Error with declaration at [" + ld.initialization.getLine() + ", "
+							+ ld.initialization.getCol() + "], " + ld.initialization.getReturnType()
+							+ " cannot be assigned to a list");
+					return null;
+				}
+			} else {
 				semanticErrors.add(
 						"Error with declaration at [" + ld.initialization.getLine() + ", " + ld.initialization.getCol()
 								+ "], " + ld.initialization.getReturnType() + " cannot be assigned to a list");
-				return null;
 			}
-			// if RHS is a list, typecheck its items
-			ListLiteral ll = (ListLiteral) ld.initialization;
-			for (Expression e : ll.items) {
-				if (e.getReturnType() != itemType) {
-					semanticErrors.add("Type mismatch in list declaration at [" + e.getLine() + ", " + e.getCol() + "] "
-							+ e.getReturnType() + " found in list[" + itemType + "]");
-					break;
-				}
 
-			}
 		}
 		return null;
 	}

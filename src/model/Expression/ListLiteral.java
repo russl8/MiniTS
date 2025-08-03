@@ -59,11 +59,15 @@ public class ListLiteral extends Expression {
 	}
 
 	public String toString() {
-		String res = "[ ";
-		for (Expression e : items) {
-			res += e.toString() + ", ";
+		String res = "[";
+		if (this.items.size() > 0) {
+			res += items.get(0).toString();
 		}
-		res += "] ";
+
+		for (int i = 1; i < this.items.size(); i++) {
+			res += ", " + items.get(i).toString();
+		}
+		res += "]";
 		return res;
 	}
 

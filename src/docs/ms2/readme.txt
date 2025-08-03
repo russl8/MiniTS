@@ -50,9 +50,9 @@
 // MUST DO
 - forloop
 - function 
-- list operations
+- list operations (optional?)
 - () => {} //optional
-- classes are
+- classes are 
 - adding evaluations are a bonus. focus on type-checking and add evaluations only if u want
 		=> evaluations are bonus marks
 - inheritance and poly are bonus

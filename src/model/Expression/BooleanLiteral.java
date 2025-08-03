@@ -44,7 +44,7 @@ public class BooleanLiteral extends Expression {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "" + val;
+		return "" + (val == true ? "True" : "False");
 	}
 
 	@Override
