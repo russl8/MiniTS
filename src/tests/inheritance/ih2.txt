@@ -13,3 +13,6 @@ class c2 {
 class c3 extends c1 {
 	i : int = 12; // Error: redeclaration of variable
 }
+
+class c4 extends c5 { // Error: c5 does not exist
+}

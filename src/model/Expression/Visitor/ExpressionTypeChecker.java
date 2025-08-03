@@ -33,12 +33,14 @@ public class ExpressionTypeChecker implements OperationVisitor {
 	public List<String> semanticErrors;
 	public Map<String, Type> vars; // stores all the variables declared in the program so far
 	public Map<String, FunctionDeclaration> functions;
+	public List<ClassDeclaration> classes;
 
 	public ExpressionTypeChecker(List<String> semanticErrors, Map<String, Type> vars,
-			Map<String, FunctionDeclaration> functions) {
+			Map<String, FunctionDeclaration> functions, List<ClassDeclaration> classes) {
 		this.vars = vars;
 		this.semanticErrors = semanticErrors;
 		this.functions = functions;
+		this.classes = classes;
 	}
 
 	@Override
@@ -363,7 +365,6 @@ public class ExpressionTypeChecker implements OperationVisitor {
 		}
 
 		if (!isValid) {
-			System.out.println("error with " + expr + vars);
 			semanticErrors.add("Type mismatch in " + typeOfExpression + " expression at [" + line + ", " + col
 					+ "]: expected " + expectedTypes + " but got " + actualTypes + "");
 
