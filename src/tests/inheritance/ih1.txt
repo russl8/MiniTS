@@ -1,0 +1,10 @@
+class c1 {
+ 	i : int = 9;
+	function f (i : int) : int {
+		return i * 2;
+ 	} 	
+}
+
+class c2 extends c1 {
+	j : int = f(2) + i; // j should equal 4 + 9 = 13
+}

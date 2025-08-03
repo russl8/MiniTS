@@ -62,6 +62,7 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitClassDeclaration(ClassDeclaration cd) {
+		System.out.println(cd.superClass);
 		return null;
 	}
 
@@ -74,9 +75,9 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 		} else if (fi.arguments.size() != functions.get(functionName).parameters.size()) {
 			semanticErrors.add("Error at " + errorLocation + ": function " + functionName + " requires "
 					+ fi.arguments.size() + " parameters. Needs " + functions.get(functionName).parameters.size());
+		} else {
+			fi.setReturnType(functions.get(fi.functionName).returnType);
 		}
-
-		fi.setReturnType(functions.get(fi.functionName).returnType);
 
 		return null;
 	}
