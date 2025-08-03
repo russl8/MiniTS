@@ -125,7 +125,6 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		for (int i = 2; i < fictx.getChildCount() - 1; i += 2) {
 			fi.arguments.add(visit(fictx.getChild(i)));
 		}
-		System.out.println(fi);
 
 		return fi;
 	}

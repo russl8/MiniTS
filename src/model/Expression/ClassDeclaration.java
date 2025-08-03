@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import model.Value;
 import model.Expression.Visitor.OperationVisitor;
 
 public class ClassDeclaration extends Expression {
@@ -14,6 +16,7 @@ public class ClassDeclaration extends Expression {
 	public String superClass;
 	public Map<String, FunctionDeclaration> functions;
 	public Map<String, Type> vars;
+	public Map<String, Value> evaluatedVars;
 
 	public Type getReturnType() {
 		return Type.NONE;
@@ -74,5 +77,13 @@ public class ClassDeclaration extends Expression {
 	@Override
 	public <T> T accept(OperationVisitor T) {
 		return T.visitClassDeclaration(this);
+	}
+
+	public Map<String, Value> getEvaluatedVars() {
+		return evaluatedVars;
+	}
+
+	public void setEvaluatedVars(Map<String, Value> evaluatedVars) {
+		this.evaluatedVars = evaluatedVars;
 	}
 }

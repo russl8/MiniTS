@@ -71,7 +71,6 @@ public class ExpressionProcessor {
 			PrimitiveAssignment a = (PrimitiveAssignment) e;
 			Expression expr = a.expr;
 			Value val = null;
-			System.out.println("PPP " + expr);
 			if (expr instanceof FunctionInvocation) {
 				val = evaluateFunctionInvocation((FunctionInvocation) expr);
 			} else {
@@ -272,5 +271,7 @@ public class ExpressionProcessor {
 		System.err.println("Could not properly evaluate boolean expression " + e + " " + e.getClass());
 		return false;
 	}
+
+
 
 }

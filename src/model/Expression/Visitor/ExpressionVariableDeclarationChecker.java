@@ -278,7 +278,6 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 					"Variable " + fd.functionName + " is already in use: [" + fd.getLine() + ", " + fd.getCol() + "]");
 		}
 		this.vars.put("Vars: " + fd.functionName, fd.returnType);
-		System.out.println(vars);
 		// for each param, add it to vars (remember in expressionApp, created a new
 		// scope)
 
