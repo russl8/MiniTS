@@ -26,6 +26,7 @@ import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
+import model.Expression.Visitor.Utils;
 
 public class ExpressionProcessor {
 
@@ -39,15 +40,24 @@ public class ExpressionProcessor {
 	public List<String> printStatements;
 	public Map<String, Value> vars; // Stores values for primitive variables only
 	public Map<String, FunctionDeclaration> functions;
+	public List<ClassDeclaration> classes;
 
-	public ExpressionProcessor(Map<String, FunctionDeclaration> functions) {
+	public ExpressionProcessor(Map<String, FunctionDeclaration> functions, List<ClassDeclaration> classes) {
 		this.printStatements = new ArrayList<>();
 		this.vars = new HashMap<>();
 		this.functions = functions;
+		this.classes = classes;
 	}
 
 	public void evaluateExpression(Expression e) {
-		if (e instanceof PrimitaveDeclaration) {
+		if (e instanceof ClassDeclaration) {
+			ClassDeclaration cd = (ClassDeclaration) e;
+			// if extending from superclass, deepcopy all superclass vars
+			if (cd.superClass != null) {
+				ClassDeclaration superClass = Utils.getClassByClassName(classes, cd.superClass);
+				Utils.deepCopyEvaluatedVars(superClass.evaluatedVars, vars);
+			}
+		} else if (e instanceof PrimitaveDeclaration) {
 			PrimitaveDeclaration d = (PrimitaveDeclaration) e;
 			Expression expr = d.initialization;
 			Value val;
@@ -271,7 +281,5 @@ public class ExpressionProcessor {
 		System.err.println("Could not properly evaluate boolean expression " + e + " " + e.getClass());
 		return false;
 	}
-
-
 
 }

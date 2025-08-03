@@ -44,15 +44,16 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 	public List<String> semanticErrors;
 	public Map<String, Type> vars; // stores all the variables declared in the program so far
 	public Map<String, FunctionDeclaration> functions;
-
+	public List<ClassDeclaration> classes;
 	private boolean isVisitingFunctionDeclaration = false;
 	private Map<String, Type> functionScope;
 
 	public ExpressionVariableDeclarationChecker(List<String> semanticErrors, Map<String, Type> vars,
-			Map<String, FunctionDeclaration> functions) {
+			Map<String, FunctionDeclaration> functions, List<ClassDeclaration> classes) {
 		this.vars = vars;
 		this.semanticErrors = semanticErrors;
 		this.functions = functions;
+		this.classes = classes;
 	}
 
 	@Override
@@ -62,7 +63,25 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 
 	@Override
 	public <T> T visitClassDeclaration(ClassDeclaration cd) {
-		System.out.println(cd.superClass);
+		String superClassName = cd.superClass;
+
+		// Exit if class doesnt have a superclass
+		if (superClassName == null)
+			return null;
+
+		// make sure superclass exists in the functions map
+		ClassDeclaration superClass = Utils.getClassByClassName(classes, superClassName);
+		if (superClass == null) {
+			semanticErrors.add(
+					"Error at " + Utils.getErrorLocation(cd) + ": superclass " + superClassName + " does not exist");
+
+		} else {
+			// if superclass exists, copy all vars and functions from superclass to this
+			// class
+			this.vars.putAll(superClass.vars);
+			this.functions.putAll(superClass.functions);
+		}
+
 		return null;
 	}
 

@@ -37,6 +37,10 @@ public class Value {
 		this.value = value;
 	}
 
+	public Object getValueAsObject() {
+		return value;
+	}
+
 	@Override
 	public String toString() {
 		return "{type=" + type + ", value=" + value + "}";

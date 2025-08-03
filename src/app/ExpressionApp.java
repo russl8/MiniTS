@@ -86,36 +86,45 @@ public class ExpressionApp {
 				semanticErrors = new ArrayList<>();
 				operationVisitors = new ArrayList<>();
 
+				// Create a list of class declarations
+				List<ClassDeclaration> classes = new ArrayList<>();
+
 				AntlrToProgram progVisitor = new AntlrToProgram(semanticErrors, vars);
 				Program prog = progVisitor.visit(parser.prog());
 
-				ExpressionTypeChecker typeCheckerVisitor = new ExpressionTypeChecker(semanticErrors, vars, functions);
+				ExpressionTypeChecker typeCheckerVisitor = new ExpressionTypeChecker(semanticErrors, vars, functions,
+						classes);
 				ExpressionVariableDeclarationChecker varDeclarationCheckerVisitor = new ExpressionVariableDeclarationChecker(
-						semanticErrors, vars, functions);
+						semanticErrors, vars, functions, classes);
 
 				operationVisitors.add(varDeclarationCheckerVisitor);
 				operationVisitors.add(typeCheckerVisitor);
 
-				// Create a list of class declarations
-				List<ClassDeclaration> classes = new ArrayList<>();
-
 				for (Expression classExpr : prog.expressions) {
-					// future: class scoping
 					ClassDeclaration cd = (ClassDeclaration) classExpr;
+					classes.add(cd);
+
 					functions = new HashMap<>();
 					vars = new HashMap<>();
+
+					// visit the class declaration
+					visitExpression(cd, vars, functions, classes);
+
+					// visit expressions in the class body
 					for (Expression e : cd.expressions) {
-						visitExpression(e, vars, functions); // vars is the top-level global map
+						visitExpression(e, vars, functions, classes); // vars is the top-level global map
 					}
 					cd.functions = functions;
 					cd.vars = vars;
-					classes.add(cd);
 				}
 
-				ExpressionProcessor ep = new ExpressionProcessor(functions);
+				ExpressionProcessor ep = new ExpressionProcessor(functions, classes);
 				if (semanticErrors.isEmpty()) {
 					for (ClassDeclaration cd : classes) {
 						ep.vars = new HashMap<>();
+						// evaluate the class declaration too
+						ep.evaluateExpression(cd);
+
 						for (Expression e : cd.expressions) {
 							ep.evaluateExpression(e);
 						}
@@ -134,7 +143,8 @@ public class ExpressionApp {
 
 				for (ClassDeclaration cd : classes) {
 					// cd.functions returns a list of all functions declared in the class
-					// cd.evaluatedVar returns a list of all variables in the class and their evaluated values
+					// cd.evaluatedVar returns a list of all variables in the class and their
+					// evaluated values
 					// cd.vars returns a list of all variables with their corresponding types
 					System.out.println("-------------------------" + cd.className + "-------------------------");
 					System.out.println(cd.functions);
@@ -157,7 +167,7 @@ public class ExpressionApp {
 	}
 
 	private static void visitExpression(Expression e, Map<String, Type> currentVars,
-			Map<String, FunctionDeclaration> functions) {
+			Map<String, FunctionDeclaration> functions, List<ClassDeclaration> classes) {
 
 		for (OperationVisitor v : operationVisitors) {
 			v.updateVarState(currentVars);
@@ -167,7 +177,7 @@ public class ExpressionApp {
 		if (e instanceof BlockContainer) {
 			Map<String, Type> savedVars = Utils.copyVarScope(currentVars);
 			for (Expression ex : ((BlockContainer) e).getExpressions()) {
-				visitExpression(ex, currentVars, functions);
+				visitExpression(ex, currentVars, functions, classes);
 			}
 			Utils.restoreVarScope(currentVars, savedVars);
 		} else if (e instanceof FunctionDeclaration) {
