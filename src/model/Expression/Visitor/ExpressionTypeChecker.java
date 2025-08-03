@@ -374,18 +374,19 @@ public class ExpressionTypeChecker implements OperationVisitor {
 	public <T> T visitFunctionInvocation(FunctionInvocation fi) {
 		FunctionDeclaration fd = functions.get(fi.functionName);
 
-		for (int i = 0; i < fd.parameters.size(); i++) {
-			Parameter param = fd.parameters.get(i);
-			Expression arg = fi.arguments.get(i);
+		if (fd != null) {
+			for (int i = 0; i < fd.parameters.size(); i++) {
+				Parameter param = fd.parameters.get(i);
+				Expression arg = fi.arguments.get(i);
 
-			if (param.type != arg.getReturnType()) {
-				semanticErrors.add("Type error: parameter " + param.name + " must be type " + param.type
-						+ " but recieved " + arg.getReturnType() + "[" + arg.getLine() + ", " + arg.getCol() + "]");
+				if (param.type != arg.getReturnType()) {
+					semanticErrors.add("Type error: parameter " + param.name + " must be type " + param.type
+							+ " but recieved " + arg.getReturnType() + "[" + arg.getLine() + ", " + arg.getCol() + "]");
+				}
 			}
 		}
 		return null;
 
 	}
-
 
 }

@@ -96,6 +96,9 @@ public class ExpressionApp {
 				operationVisitors.add(varDeclarationCheckerVisitor);
 				operationVisitors.add(typeCheckerVisitor);
 
+				// Create a list of class declarations
+				List<ClassDeclaration> classes = new ArrayList<>();
+
 				for (Expression classExpr : prog.expressions) {
 					// future: class scoping
 					ClassDeclaration cd = (ClassDeclaration) classExpr;
@@ -106,20 +109,17 @@ public class ExpressionApp {
 					}
 					cd.functions = functions;
 					cd.vars = vars;
+					classes.add(cd);
 				}
-				// Create a list of class declarations
-				List<ClassDeclaration> classes = new ArrayList<>();
 
 				ExpressionProcessor ep = new ExpressionProcessor(functions);
 				if (semanticErrors.isEmpty()) {
-					for (Expression classExpr : prog.expressions) {
-						ClassDeclaration cd = (ClassDeclaration) classExpr;
+					for (ClassDeclaration cd : classes) {
 						ep.vars = new HashMap<>();
 						for (Expression e : cd.expressions) {
 							ep.evaluateExpression(e);
 						}
 						cd.setEvaluatedVars(ep.vars);
-						classes.add(cd);
 					}
 				}
 
@@ -134,14 +134,16 @@ public class ExpressionApp {
 
 				for (ClassDeclaration cd : classes) {
 					// cd.functions returns a list of all functions declared in the class
-					// cd.evaluatedVar returns a list of all variables in the class alongside their
-					// values
-					System.out.println("-------------------------"+cd.className + "-------------------------");
+					// cd.evaluatedVar returns a list of all variables in the class and their evaluated values
+					// cd.vars returns a list of all variables with their corresponding types
+					System.out.println("-------------------------" + cd.className + "-------------------------");
 					System.out.println(cd.functions);
+					System.out.println(cd.vars);
 					System.out.println(cd.evaluatedVars);
 				}
-				
-				// TODO: refactor below functions to support multiple classes using the classes list
+
+				// TODO: refactor below functions to support multiple classes using the classes
+				// list
 				long processingTime = System.currentTimeMillis() - startTime;
 				String reportPath = generateHtmlReport(file, filePath, ep, semanticErrors, processingTime);
 				individualReports.add(reportPath);
