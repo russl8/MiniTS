@@ -102,7 +102,6 @@ public class ExpressionApp {
 
 				for (Expression classExpr : prog.expressions) {
 					ClassDeclaration cd = (ClassDeclaration) classExpr;
-					classes.add(cd);
 
 					functions = new HashMap<>();
 					vars = new HashMap<>();
@@ -114,8 +113,11 @@ public class ExpressionApp {
 					for (Expression e : cd.expressions) {
 						visitExpression(e, vars, functions, classes); // vars is the top-level global map
 					}
+
 					cd.functions = functions;
 					cd.vars = vars;
+
+					classes.add(cd);
 				}
 
 				ExpressionProcessor ep = new ExpressionProcessor(functions, classes);

@@ -65,6 +65,13 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 	public <T> T visitClassDeclaration(ClassDeclaration cd) {
 		String superClassName = cd.superClass;
 
+		// Class redeclaration error
+		if (Utils.getClassByClassName(classes, cd.className) != null) {
+			semanticErrors
+					.add("Error at " + Utils.getErrorLocation(cd) + ": class " + cd.className + " already exists");
+
+		}
+
 		// Exit if class doesnt have a superclass
 		if (superClassName == null)
 			return null;

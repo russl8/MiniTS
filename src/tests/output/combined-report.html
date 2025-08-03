@@ -70,10 +70,14 @@
  16 | 
 <span class="error-line"> 17 | class c4 extends c5 { // Error: c5 does not exist</span>
  18 | }
+ 19 | 
+<span class="error-line"> 20 | class c2 { //error: class c2 already exists</span>
+ 21 | 	k : int = 4;
+ 22 | }
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>18</strong></div><div class="stat-item">Non-Empty Lines: <strong>14</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>5</strong></div></div><h2>Error Details</h2><div class="error">Error at [9, 11]: function f does not exist</div><div class="error">Variable 'i' not declared, line=9 col=19</div><div class="error">Type mismatch in arithmetic expression at [9, 11]: expected (INT, INT) but got (null, null)</div><div class="error">Variable i already declared,  line=14 col=2</div><div class="error">Error at [17, 1]: superclass c5 does not exist</div></div>
+<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>22</strong></div><div class="stat-item">Non-Empty Lines: <strong>17</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>6</strong></div></div><h2>Error Details</h2><div class="error">Error at [9, 11]: function f does not exist</div><div class="error">Variable 'i' not declared, line=9 col=19</div><div class="error">Type mismatch in arithmetic expression at [9, 11]: expected (INT, INT) but got (null, null)</div><div class="error">Variable i already declared,  line=14 col=2</div><div class="error">Error at [17, 1]: superclass c5 does not exist</div><div class="error">Error at [20, 1]: class c2 already exists</div></div>
 </div>
 </body></html>
 </div>
