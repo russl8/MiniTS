@@ -1,10 +1,10 @@
-class superclass {
+class Superclass {
 	c : list[char]  = "hello";
-	i : int = 0; 
+	i : int = 0; 	
 }
 
 
-class overview extends superclass {	
+class Overview extends Superclass {	
 	function f (i : int, j : int) : int {
 		return i + j;
 	}
@@ -13,5 +13,7 @@ class overview extends superclass {
 		i = f(i,j); 
 	}	
 	
-	j : int = i; // redeclaration of j variable outside scope
+	j : int = i; 
+	
+	
 }

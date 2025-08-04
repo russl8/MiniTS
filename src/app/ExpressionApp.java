@@ -400,6 +400,8 @@ public class ExpressionApp {
 							actualValue = String.valueOf(valueObj.getValueAsBool());
 						} else if (valueObj.type == Type.CHAR) {
 							actualValue = "'" + valueObj.getValueAsCharacter() + "'";
+						} else {
+							actualValue = valueObj.getValueAsObject().toString();
 						}
 
 						sb.append("<tr>");
