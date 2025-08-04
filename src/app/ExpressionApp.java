@@ -8,6 +8,7 @@ import model.Expression.Expression;
 import model.Expression.ExpressionProcessor;
 import model.Expression.FunctionDeclaration;
 import model.Expression.BlockContainer.BlockContainer;
+import model.Expression.BlockContainer.ForLoop;
 import model.Expression.BlockContainer.IfStatement;
 import model.Expression.BlockContainer.WhileLoop;
 import model.Expression.Expression.Type;
@@ -171,16 +172,27 @@ public class ExpressionApp {
 	private static void visitExpression(Expression e, Map<String, Type> currentVars,
 			Map<String, FunctionDeclaration> functions, List<ClassDeclaration> classes) {
 
-		for (OperationVisitor v : operationVisitors) {
-			v.updateVarState(currentVars);
-			v.updateFunctionState(functions);
-			e.accept(v);
+		if (!(e instanceof ForLoop)) {
+			for (OperationVisitor v : operationVisitors) {
+				v.updateVarState(currentVars);
+				v.updateFunctionState(functions);
+				e.accept(v);
+			}
 		}
+
 		if (e instanceof BlockContainer) {
 			Map<String, Type> savedVars = Utils.copyVarScope(currentVars);
+			if (e instanceof ForLoop) {
+				for (OperationVisitor v : operationVisitors) {
+					v.updateVarState(currentVars);
+					v.updateFunctionState(functions);
+					e.accept(v);
+				}
+			}
 			for (Expression ex : ((BlockContainer) e).getExpressions()) {
 				visitExpression(ex, currentVars, functions, classes);
 			}
+
 			Utils.restoreVarScope(currentVars, savedVars);
 		} else if (e instanceof FunctionDeclaration) {
 			/*
@@ -215,7 +227,8 @@ public class ExpressionApp {
 			writer.println(generateHtmlHeader("Compilation Report"));
 			writer.println("<div class=\"container\">");
 			writer.println(generateLeftColumn(filePath, inputFileContents, semanticErrors));
-			writer.println(generateRightColumn(ep.vars, semanticErrors, filePath, inputFileContents, processingTime, classes));
+			writer.println(
+					generateRightColumn(ep.vars, semanticErrors, filePath, inputFileContents, processingTime, classes));
 			writer.println("</div>");
 			writer.println(generateFooter());
 			writer.println("</body></html>");
@@ -366,7 +379,7 @@ public class ExpressionApp {
 			sb.append("<h2>Classes, Functions, and Variables</h2>");
 			for (ClassDeclaration cd : classes) {
 				sb.append("<h3>Class: ").append(escapeHTML(cd.className)).append("</h3>");
-				
+
 				// Display variables table for this class
 				if (cd.evaluatedVars != null && !cd.evaluatedVars.isEmpty()) {
 					sb.append("<h4>Variables</h4>");
@@ -378,7 +391,7 @@ public class ExpressionApp {
 						String variableName = escapeHTML(entry.getKey());
 						Value valueObj = entry.getValue();
 						String type = valueObj.type.toString();
-						
+
 						// Get just the actual value, not the full toString representation
 						String actualValue = "null";
 						if (valueObj.type == Type.INT) {
@@ -388,7 +401,7 @@ public class ExpressionApp {
 						} else if (valueObj.type == Type.CHAR) {
 							actualValue = "'" + valueObj.getValueAsCharacter() + "'";
 						}
-						
+
 						sb.append("<tr>");
 						sb.append("<td class=\"var-name\">").append(variableName).append("</td>");
 						sb.append("<td class=\"var-type\">").append(escapeHTML(type)).append("</td>");
@@ -399,7 +412,7 @@ public class ExpressionApp {
 					sb.append("</table>");
 					sb.append("</div>");
 				}
-				
+
 				// Display functions for this class
 				if (cd.functions != null && !cd.functions.isEmpty()) {
 					sb.append("<h4>Functions</h4>");
@@ -411,19 +424,20 @@ public class ExpressionApp {
 						String functionName = escapeHTML(entry.getKey());
 						FunctionDeclaration func = entry.getValue();
 						String returnType = func.returnType != null ? escapeHTML(func.returnType.toString()) : "void";
-						
+
 						// Build parameters string
 						StringBuilder params = new StringBuilder();
 						if (func.parameters != null && !func.parameters.isEmpty()) {
 							for (int i = 0; i < func.parameters.size(); i++) {
-								if (i > 0) params.append(", ");
+								if (i > 0)
+									params.append(", ");
 								// Assuming parameters have name and type - adjust based on actual structure
 								params.append(func.parameters.get(i).toString());
 							}
 						} else {
 							params.append("()");
 						}
-						
+
 						sb.append("<tr>");
 						sb.append("<td class=\"var-name\">").append(functionName).append("</td>");
 						sb.append("<td class=\"var-type\">").append(returnType).append("</td>");
@@ -434,7 +448,7 @@ public class ExpressionApp {
 					sb.append("</table>");
 					sb.append("</div>");
 				}
-				
+
 			}
 		}
 
@@ -471,7 +485,7 @@ public class ExpressionApp {
 				totalVariables += cd.evaluatedVars.size();
 			}
 		}
-		
+
 		sb.append("<div class=\"stat-item\">Total Lines: <strong>").append(lines.length).append("</strong></div>");
 		sb.append("<div class=\"stat-item\">Non-Empty Lines: <strong>").append(nonEmptyLines).append("</strong></div>");
 		sb.append("<div class=\"stat-item\">Comment Lines: <strong>").append(commentLines).append("</strong></div>");

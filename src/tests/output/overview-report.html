@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>s1 Report</title>
+    <title>overview Report</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
         h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
@@ -37,16 +37,29 @@
 <div class="container">
     <div class="left">
         <h2>Input File Path</h2>
-        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\string\s1.txt</code></pre>
+        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\finalSubmission\overview.txt</code></pre>
         <h2>Input File Contents</h2>
-        <pre><code><span class="error-line">  1 | class MyClass extends BaseClass {</span>
-  2 | 	s1 : list[char] = ['2','4'];
-  3 |     s1 = &quot;ab241a&quot;; // should have no error
+        <pre><code>  1 | class superclass {
+  2 | 	c : list[char]  = &quot;hello&quot;;
+  3 | 	i : int = 0; 
   4 | }
+  5 | 
+  6 | 
+  7 | class overview extends superclass {	
+  8 | 	function f (i : int, j : int) : int {
+  9 | 		return i + j;
+ 10 | 	}
+ 11 | 	
+ 12 | 	for (j : int = 1; j &lt;= 5; j = j + 1) {
+ 13 | 		i = f(i,j); 
+ 14 | 	}	
+ 15 | 	
+ 16 | 	j : int = i; // redeclaration of j variable outside scope
+ 17 | }
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>4</strong></div><div class="stat-item">Non-Empty Lines: <strong>4</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>1</strong></div></div><h2>Error Details</h2><div class="error">Error at [1, 1]: superclass BaseClass does not exist</div></div>
+<div class="right"><h2>Compilation Status</h2><div class="success-status">PASS - Compilation Successful</div><h2>Classes, Functions, and Variables</h2><h3>Class: superclass</h3><h4>Variables</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead><tbody><tr><td class="var-name">c</td><td class="var-type">LIST_CHAR</td><td class="var-value">null</td></tr><tr><td class="var-name">i</td><td class="var-type">INT</td><td class="var-value">0</td></tr></tbody></table></div><h3>Class: overview</h3><h4>Variables</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead><tbody><tr><td class="var-name">i</td><td class="var-type">INT</td><td class="var-value">15</td></tr><tr><td class="var-name">j</td><td class="var-type">INT</td><td class="var-value">15</td></tr><tr><td class="var-name">c</td><td class="var-type">LIST_CHAR</td><td class="var-value">null</td></tr></tbody></table></div><h4>Functions</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Function Name</th><th>Return Type</th><th>Parameters</th></tr></thead><tbody><tr><td class="var-name">f</td><td class="var-type">INT</td><td class="var-value">i : INT, j : INT</td></tr></tbody></table></div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>17</strong></div><div class="stat-item">Non-Empty Lines: <strong>13</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>5</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div></div>
 </div>
 <footer>team: russl8, jeffj4</footer>
 </body></html>

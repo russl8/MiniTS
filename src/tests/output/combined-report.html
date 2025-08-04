@@ -33,12 +33,12 @@
 </head><body>
 <h1>Combined Compilation Report</h1>
 <div class="report">
-<h2><a href="mc1-report.html">mc1-report.html</a></h2>
+<h2><a href="s1-report.html">s1-report.html</a></h2>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>mc1 Report</title>
+    <title>s1 Report</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
         h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
@@ -72,32 +72,16 @@
 <div class="container">
     <div class="left">
         <h2>Input File Path</h2>
-        <pre><code>C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\multipleclasses\mc1.txt</code></pre>
+        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\string\s1.txt</code></pre>
         <h2>Input File Contents</h2>
-        <pre><code>  1 | class c0 {
-  2 | 	function f () : bool {
-  3 | 		return True &amp;&amp; !False;
-  4 | 	}
-  5 | 	function g () : int {
-  6 | 		return 2 + 2;
-  7 | 	}
-  8 | }
-  9 | 
- 10 | class c1 {
- 11 | 	i : int = 0;
- 12 | 	j : bool;
- 13 | 	
- 14 | 	function f () : bool {
- 15 | 		return True &amp;&amp; !False;
- 16 | 	}
- 17 | 	
- 18 | 	j = f();
- 19 | 	
- 20 | }
+        <pre><code><span class="error-line">  1 | class MyClass extends BaseClass {</span>
+  2 | 	s1 : list[char] = ['2','4'];
+  3 |     s1 = &quot;ab241a&quot;; // should have no error
+  4 | }
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="success-status">PASS - Compilation Successful</div><h2>Classes, Functions, and Variables</h2><h3>Class: c0</h3><h4>Functions</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Function Name</th><th>Return Type</th><th>Parameters</th></tr></thead><tbody><tr><td class="var-name">f</td><td class="var-type">BOOL</td><td class="var-value">()</td></tr><tr><td class="var-name">g</td><td class="var-type">INT</td><td class="var-value">()</td></tr></tbody></table></div><h3>Class: c1</h3><h4>Variables</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead><tbody><tr><td class="var-name">i</td><td class="var-type">INT</td><td class="var-value">0</td></tr><tr><td class="var-name">j</td><td class="var-type">BOOL</td><td class="var-value">true</td></tr></tbody></table></div><h4>Functions</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Function Name</th><th>Return Type</th><th>Parameters</th></tr></thead><tbody><tr><td class="var-name">f</td><td class="var-type">BOOL</td><td class="var-value">()</td></tr></tbody></table></div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>20</strong></div><div class="stat-item">Non-Empty Lines: <strong>16</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>2</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div></div>
+<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>4</strong></div><div class="stat-item">Non-Empty Lines: <strong>4</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>1</strong></div></div><h2>Error Details</h2><div class="error">Error at [1, 1]: superclass BaseClass does not exist</div></div>
 </div>
 </body></html>
 </div>
