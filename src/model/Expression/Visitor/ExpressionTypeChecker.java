@@ -389,10 +389,12 @@ public class ExpressionTypeChecker implements OperationVisitor {
 			for (int i = 0; i < fd.parameters.size(); i++) {
 				Parameter param = fd.parameters.get(i);
 				Expression arg = fi.arguments.get(i);
-				System.out.println("argh" + arg);
-				if (param.type != arg.getReturnType()) {
+
+				Type paramType = param.type == null ? this.vars.get(param.name) : param.type;
+				Type argType = arg.getReturnType() == null ? this.vars.get(arg.toString()) : arg.getReturnType();
+				if (paramType != argType) {
 					semanticErrors.add("Error at [" + arg.getLine() + ", " + arg.getCol() + "]: parameter " + param.name
-							+ " must be type " + param.type + " but recieved " + arg.getReturnType());
+							+ " must be type " + paramType + " but recieved " + argType);
 				}
 			}
 		}

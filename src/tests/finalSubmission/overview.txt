@@ -1,0 +1,17 @@
+class superclass {
+	c : list[char]  = "hello";
+	i : int = 0; 
+}
+
+
+class overview extends superclass {	
+	function f (i : int, j : int) : int {
+		return i + j;
+	}
+	
+	for (j : int = 1; j <= 5; j = j + 1) {
+		i = f(i,j); 
+	}	
+	
+	j : int = i; // redeclaration of j variable outside scope
+}
