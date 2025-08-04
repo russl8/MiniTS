@@ -157,7 +157,7 @@ public class ExpressionApp {
 				// TODO: refactor below functions to support multiple classes using the classes
 				// list
 				long processingTime = System.currentTimeMillis() - startTime;
-				String reportPath = generateHtmlReport(file, filePath, ep, semanticErrors, processingTime);
+				String reportPath = generateHtmlReport(file, filePath, ep, semanticErrors, processingTime, classes);
 				individualReports.add(reportPath);
 			} catch (Exception e) {
 				System.err.println("Error processing file " + filePath + ": " + e.getMessage());
@@ -199,7 +199,7 @@ public class ExpressionApp {
 	}
 
 	private static String generateHtmlReport(File file, String filePath, ExpressionProcessor ep,
-			List<String> semanticErrors, long processingTime) throws IOException {
+			List<String> semanticErrors, long processingTime, List<ClassDeclaration> classes) throws IOException {
 		String baseName = file.getName().replace(".txt", "");
 		String outputPath = "src/tests/output/" + baseName + "-report.html";
 		ensureParentDirectoriesExist(new File(outputPath));
@@ -215,7 +215,7 @@ public class ExpressionApp {
 			writer.println(generateHtmlHeader("Compilation Report"));
 			writer.println("<div class=\"container\">");
 			writer.println(generateLeftColumn(filePath, inputFileContents, semanticErrors));
-			writer.println(generateRightColumn(ep.vars, semanticErrors, filePath, inputFileContents, processingTime));
+			writer.println(generateRightColumn(ep.vars, semanticErrors, filePath, inputFileContents, processingTime, classes));
 			writer.println("</div>");
 			writer.println(generateFooter());
 			writer.println("</body></html>");
@@ -254,7 +254,18 @@ public class ExpressionApp {
 						        .error-status { background-color: #f8d7da; border-left: 4px solid #dc3545; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #721c24; font-weight: bold; }
 						        .stats { background-color: #f8f9fa; padding: 15px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #dee2e6; }
 						        .stat-item { margin-bottom: 8px; font-size: 14px; }
+						        .variables-table { width: 100%%; border-collapse: collapse; margin-top: 10px; margin-bottom: 20px; background-color: #ffffff; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); clear: both; table-layout: fixed; }
+						        .variables-table th { background-color: #489fb5; color: white; padding: 12px 8px; text-align: left; font-weight: bold; border-bottom: 2px solid #16697a; width: 33.33%%; }
+						        .variables-table td { padding: 10px 8px; border-bottom: 1px solid #e9ecef; width: 33.33%%; word-wrap: break-word; }
+						        .variables-table tbody tr:nth-child(even) { background-color: #f8f9fa; }
+						        .variables-table tbody tr:hover { background-color: #e3f2fd; }
+						        .table-container { margin-bottom: 25px; overflow: hidden; clear: both; display: block; width: 100%%; }
+						        .var-name { font-weight: bold; color: #16697a; }
+						        .var-type { color: #6c757d; font-style: italic; }
+						        .var-value { color: #28a745; font-family: 'Courier New', monospace; }
 						        h2 { color: #489fb5; margin-top: 0; margin-bottom: 10px; }
+						        h3 { color: #16697a; margin-top: 15px; margin-bottom: 8px; font-size: 18px; border-bottom: 2px solid #82c0cc; padding-bottom: 4px; }
+						        h4 { color: #489fb5; margin-top: 15px; margin-bottom: 8px; font-size: 16px; }
 						        footer { text-align: center; margin-top: 40px; font-size: 12px; color: #888; }
 						        .report { margin-bottom: 30px; border-bottom: 2px solid #82c0cc; padding-bottom: 20px; }
 						    </style>
@@ -338,7 +349,7 @@ public class ExpressionApp {
 	}
 
 	private static String generateRightColumn(Map<String, Value> values, List<String> errors, String filePath,
-			String contents, long processingTime) {
+			String contents, long processingTime, List<ClassDeclaration> classes) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<div class=\"right\">");
 
@@ -348,6 +359,83 @@ public class ExpressionApp {
 			sb.append("<div class=\"success-status\">PASS - Compilation Successful</div>");
 		} else {
 			sb.append("<div class=\"error-status\">FAIL - Compilation Failed</div>");
+		}
+
+		// Only show classes information if there are no errors and we have classes
+		if (errors.isEmpty() && !classes.isEmpty()) {
+			sb.append("<h2>Classes, Functions, and Variables</h2>");
+			for (ClassDeclaration cd : classes) {
+				sb.append("<h3>Class: ").append(escapeHTML(cd.className)).append("</h3>");
+				
+				// Display variables table for this class
+				if (cd.evaluatedVars != null && !cd.evaluatedVars.isEmpty()) {
+					sb.append("<h4>Variables</h4>");
+					sb.append("<div class=\"table-container\">");
+					sb.append("<table class=\"variables-table\">");
+					sb.append("<thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead>");
+					sb.append("<tbody>");
+					for (Map.Entry<String, Value> entry : cd.evaluatedVars.entrySet()) {
+						String variableName = escapeHTML(entry.getKey());
+						Value valueObj = entry.getValue();
+						String type = valueObj.type.toString();
+						
+						// Get just the actual value, not the full toString representation
+						String actualValue = "null";
+						if (valueObj.type == Type.INT) {
+							actualValue = String.valueOf(valueObj.getValueAsInt());
+						} else if (valueObj.type == Type.BOOL) {
+							actualValue = String.valueOf(valueObj.getValueAsBool());
+						} else if (valueObj.type == Type.CHAR) {
+							actualValue = "'" + valueObj.getValueAsCharacter() + "'";
+						}
+						
+						sb.append("<tr>");
+						sb.append("<td class=\"var-name\">").append(variableName).append("</td>");
+						sb.append("<td class=\"var-type\">").append(escapeHTML(type)).append("</td>");
+						sb.append("<td class=\"var-value\">").append(escapeHTML(actualValue)).append("</td>");
+						sb.append("</tr>");
+					}
+					sb.append("</tbody>");
+					sb.append("</table>");
+					sb.append("</div>");
+				}
+				
+				// Display functions for this class
+				if (cd.functions != null && !cd.functions.isEmpty()) {
+					sb.append("<h4>Functions</h4>");
+					sb.append("<div class=\"table-container\">");
+					sb.append("<table class=\"variables-table\">");
+					sb.append("<thead><tr><th>Function Name</th><th>Return Type</th><th>Parameters</th></tr></thead>");
+					sb.append("<tbody>");
+					for (Map.Entry<String, FunctionDeclaration> entry : cd.functions.entrySet()) {
+						String functionName = escapeHTML(entry.getKey());
+						FunctionDeclaration func = entry.getValue();
+						String returnType = func.returnType != null ? escapeHTML(func.returnType.toString()) : "void";
+						
+						// Build parameters string
+						StringBuilder params = new StringBuilder();
+						if (func.parameters != null && !func.parameters.isEmpty()) {
+							for (int i = 0; i < func.parameters.size(); i++) {
+								if (i > 0) params.append(", ");
+								// Assuming parameters have name and type - adjust based on actual structure
+								params.append(func.parameters.get(i).toString());
+							}
+						} else {
+							params.append("()");
+						}
+						
+						sb.append("<tr>");
+						sb.append("<td class=\"var-name\">").append(functionName).append("</td>");
+						sb.append("<td class=\"var-type\">").append(returnType).append("</td>");
+						sb.append("<td class=\"var-value\">").append(escapeHTML(params.toString())).append("</td>");
+						sb.append("</tr>");
+					}
+					sb.append("</tbody>");
+					sb.append("</table>");
+					sb.append("</div>");
+				}
+				
+			}
 		}
 
 		// Show code metrics
@@ -376,26 +464,26 @@ public class ExpressionApp {
 				}
 			}
 		}
+		// Calculate total variables across all classes
+		int totalVariables = 0;
+		for (ClassDeclaration cd : classes) {
+			if (cd.evaluatedVars != null) {
+				totalVariables += cd.evaluatedVars.size();
+			}
+		}
+		
 		sb.append("<div class=\"stat-item\">Total Lines: <strong>").append(lines.length).append("</strong></div>");
 		sb.append("<div class=\"stat-item\">Non-Empty Lines: <strong>").append(nonEmptyLines).append("</strong></div>");
 		sb.append("<div class=\"stat-item\">Comment Lines: <strong>").append(commentLines).append("</strong></div>");
 		sb.append("<div class=\"stat-item\">If Statements: <strong>").append(ifStatements).append("</strong></div>");
 		sb.append("<div class=\"stat-item\">While Loops: <strong>").append(whileLoops).append("</strong></div>");
-		sb.append("<div class=\"stat-item\">Variables Declared: <strong>").append(values.size())
+		sb.append("<div class=\"stat-item\">Variables Declared: <strong>").append(totalVariables)
 				.append("</strong></div>");
 		sb.append("<div class=\"stat-item\">Errors Found: <strong>").append(errors.size()).append("</strong></div>");
 		sb.append("</div>");
 
-		// Only show variables if there are no errors and we have variables
-		if (errors.isEmpty() && !values.isEmpty()) {
-			sb.append("<h2>Variables</h2>");
-			for (Map.Entry<String, Value> entry : values.entrySet()) {
-				sb.append("<div class=\"variable\">").append(escapeHTML(entry.getKey())).append(" : ")
-						.append(escapeHTML(entry.getValue().toString())).append("</div>");
-			}
-		}
 		// Only show errors if there are errors
-		else if (!errors.isEmpty()) {
+		if (!errors.isEmpty()) {
 			sb.append("<h2>Error Details</h2>");
 			for (String err : errors) {
 				sb.append("<div class=\"error\">").append(escapeHTML(err)).append("</div>");
