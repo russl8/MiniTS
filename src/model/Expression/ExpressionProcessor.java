@@ -236,7 +236,6 @@ public class ExpressionProcessor {
 	}
 
 	private char evaluateCharacter(Expression e) {
-		System.out.println("Evaluating character expression: " + e);
 		if (e instanceof CharacterLiteral) {
 			return ((CharacterLiteral) e).val;
 		} else if (e instanceof Variable) {
