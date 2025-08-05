@@ -1,4 +1,4 @@
-class MyClass extends BaseClass {
+class MyClass {
     x : int = False; // Error: assigning bool to int variable
     y : bool;
     y = False;

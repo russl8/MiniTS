@@ -3,7 +3,6 @@ class fi2 {
 	function f (i : int, j: int) : int {
 		return 0;
 	}
-	
 	i : int = g();        //function DNE
 	k : int = f(2, 2);    // OK
 	l : int = f(2, True); // not OK

@@ -1,0 +1,28 @@
+// FEATURE DEMONSTRATED: List Operations
+// KEY CONCEPTS: Character lists, list assignments, list manipulation
+
+class WeatherStation {
+    stationId : int = 2001;
+    weatherCode : list[char] = ['S', 'U', 'N'];
+    etaRange : list[int] = [0, 0];
+    
+    function setRain(dummy : int) : int {
+        // Update weather code and ETA for rain
+        weatherCode = ['R', 'A', 'I', 'N'];
+        etaRange = [15, 30];
+        return stationId;
+    }
+    
+    function setClear(dummy : int) : int {
+        // Update weather code and ETA for clear skies
+        weatherCode = ['C', 'L', 'E', 'A', 'R'];
+        etaRange = [5, 10];
+        return stationId;
+    }
+    
+    // List manipulation through function calls
+    rainAlert : int = setRain(1);    // Sets weather to RAIN
+    clearAlert : int = setClear(1);  // Sets weather to CLEAR
+}
+
+// FINAL STATE: stationId=2001, weatherCode=['C','L','E','A','R'], etaRange=[5,10]

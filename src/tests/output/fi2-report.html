@@ -37,23 +37,21 @@
 <div class="container">
     <div class="left">
         <h2>Input File Path</h2>
-        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\functionInvocation\fi2.txt</code></pre>
+        <pre><code>C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\functioninvocation\fi2.txt</code></pre>
         <h2>Input File Contents</h2>
         <pre><code>  1 | class fi2 {
   2 | 
   3 | 	function f (i : int, j: int) : int {
   4 | 		return 0;
   5 | 	}
-  6 | 	
-<span class="error-line">  7 | 	i : int = g();        //function DNE</span>
-  8 | 	k : int = f(2, 2);    // OK
-<span class="error-line">  9 | 	l : int = f(2, True); // not OK</span>
-<span class="error-line"> 10 | 	j : int = f(1);       // not enough parameters</span>
- 11 | }
+<span class="error-line">  6 | 	i : int = g();        //function DNE</span>
+  7 | 	k : int = f(2, 2);    // OK
+  8 | 	l : int = f(2, True); // not OK
+  9 | }
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>11</strong></div><div class="stat-item">Non-Empty Lines: <strong>9</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>3</strong></div></div><h2>Error Details</h2><div class="error">Error at [7, 11]: function g does not exist</div><div class="error">Error at [9, 17]: parameter j must be type INT but recieved BOOL</div><div class="error">Error at [10, 11]: function f requires 1 parameters. Needs 2</div></div>
+<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>9</strong></div><div class="stat-item">Non-Empty Lines: <strong>8</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>2</strong></div></div><h2>Error Details</h2><div class="error">Error at [6, 11]: function g does not exist</div><div class="error">Type error: parameter j must be type INT but recieved BOOL[8, 17]</div></div>
 </div>
 <footer>team: russl8, jeffj4</footer>
 </body></html>

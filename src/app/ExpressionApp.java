@@ -201,8 +201,7 @@ public class ExpressionApp {
 			 */
 			FunctionDeclaration fd = ((FunctionDeclaration) e);
 			if (functions.containsKey(fd.functionName)) {
-				semanticErrors.add("Function " + fd.functionName + " already declared: [" + fd.getLine() + ", "
-						+ fd.getCol() + "]");
+				semanticErrors.add("Function " + fd.functionName + " already declared: [" + fd.getLine() + "]");
 			} else {
 				functions.put(fd.functionName, fd);
 			}
@@ -250,40 +249,42 @@ public class ExpressionApp {
 	}
 
 	private static String generateHtmlHead(String title) {
-		return String.format(
-				"""
-						    <meta charset="UTF-8">
-						    <title>%s</title>
-						    <style>
-						        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
-						        h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
-						        .container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-						        .left, .right { padding: 20px; background-color: #ffffff; border: 1px solid #82c0cc; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
-						        pre { background-color: #e9ecef; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 14px; font-family: 'Courier New', monospace; line-height: 1.4; }
-						        .error { background-color: #f8d7da; border-left: 4px solid #d9534f; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #721c24; }
-						        .variable { background-color: #489fb5; border-left: 4px solid #16697a; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #ffffff; }
-						        .error-line { background-color: #f8d7da; color: #721c24; font-weight: bold; display: block; padding: 2px 5px; margin: 1px 0; border-radius: 3px; }
-						        .success-status { background-color: #d4edda; border-left: 4px solid #28a745; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #155724; font-weight: bold; }
-						        .error-status { background-color: #f8d7da; border-left: 4px solid #dc3545; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #721c24; font-weight: bold; }
-						        .stats { background-color: #f8f9fa; padding: 15px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #dee2e6; }
-						        .stat-item { margin-bottom: 8px; font-size: 14px; }
-						        .variables-table { width: 100%%; border-collapse: collapse; margin-top: 10px; margin-bottom: 20px; background-color: #ffffff; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); clear: both; table-layout: fixed; }
-						        .variables-table th { background-color: #489fb5; color: white; padding: 12px 8px; text-align: left; font-weight: bold; border-bottom: 2px solid #16697a; width: 33.33%%; }
-						        .variables-table td { padding: 10px 8px; border-bottom: 1px solid #e9ecef; width: 33.33%%; word-wrap: break-word; }
-						        .variables-table tbody tr:nth-child(even) { background-color: #f8f9fa; }
-						        .variables-table tbody tr:hover { background-color: #e3f2fd; }
-						        .table-container { margin-bottom: 25px; overflow: hidden; clear: both; display: block; width: 100%%; }
-						        .var-name { font-weight: bold; color: #16697a; }
-						        .var-type { color: #6c757d; font-style: italic; }
-						        .var-value { color: #28a745; font-family: 'Courier New', monospace; }
-						        h2 { color: #489fb5; margin-top: 0; margin-bottom: 10px; }
-						        h3 { color: #16697a; margin-top: 15px; margin-bottom: 8px; font-size: 18px; border-bottom: 2px solid #82c0cc; padding-bottom: 4px; }
-						        h4 { color: #489fb5; margin-top: 15px; margin-bottom: 8px; font-size: 16px; }
-						        footer { text-align: center; margin-top: 40px; font-size: 12px; color: #888; }
-						        .report { margin-bottom: 30px; border-bottom: 2px solid #82c0cc; padding-bottom: 20px; }
-						    </style>
-						""",
-				title);
+    return String.format(
+        """
+        <meta charset="UTF-8">
+        <title>%s</title>
+        <style>
+            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
+            h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
+            .container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 100vw; }
+            .left, .right { padding: 20px; background-color: #ffffff; border: 1px solid #82c0cc; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+            .left { max-width: 45vw; width: 45vw; overflow-x: auto; box-sizing: border-box; }
+            .right { max-width: 45vw; width: 45vw; overflow-x: auto; box-sizing: border-box; }
+            pre { background-color: #e9ecef; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 14px; font-family: 'Courier New', monospace; line-height: 1.4; width: 100%%; white-space: pre; box-sizing: border-box; }
+            .error { background-color: #f8d7da; border-left: 4px solid #d9534f; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #721c24; }
+            .variable { background-color: #489fb5; border-left: 4px solid #16697a; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #ffffff; }
+            .error-line { background-color: #f8d7da; color: #721c24; font-weight: bold; display: block; padding: 2px 5px; margin: 1px 0; border-radius: 3px; white-space: pre; }
+            .success-status { background-color: #d4edda; border-left: 4px solid #28a745; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #155724; font-weight: bold; }
+            .error-status { background-color: #f8d7da; border-left: 4px solid #dc3545; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #721c24; font-weight: bold; }
+            .stats { background-color: #f8f9fa; padding: 15px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #dee2e6; }
+            .stat-item { margin-bottom: 8px; font-size: 14px; }
+            .variables-table { width: 100%%; border-collapse: collapse; margin-top: 10px; margin-bottom: 20px; background-color: #ffffff; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); clear: both; table-layout: fixed; }
+            .variables-table th { background-color: #489fb5; color: white; padding: 12px 8px; text-align: left; font-weight: bold; border-bottom: 2px solid #16697a; width: 33.33%%; overflow: hidden; text-overflow: ellipsis; }
+            .variables-table td { padding: 10px 8px; border-bottom: 1px solid #e9ecef; width: 33.33%%; word-wrap: break-word; overflow: hidden; text-overflow: ellipsis; max-width: 0; }
+            .variables-table tbody tr:nth-child(even) { background-color: #f8f9fa; }
+            .variables-table tbody tr:hover { background-color: #e3f2fd; }
+            .table-container { margin-bottom: 25px; overflow-x: auto; clear: both; display: block; width: 100%%; }
+            .var-name { font-weight: bold; color: #16697a; }
+            .var-type { color: #6c757d; font-style: italic; }
+            .var-value { color: #28a745; font-family: 'Courier New', monospace; word-break: break-word; }
+            h2 { color: #489fb5; margin-top: 0; margin-bottom: 10px; }
+            h3 { color: #16697a; margin-top: 15px; margin-bottom: 8px; font-size: 18px; border-bottom: 2px solid #82c0cc; padding-bottom: 4px; }
+            h4 { color: #489fb5; margin-top: 15px; margin-bottom: 8px; font-size: 16px; }
+            footer { text-align: center; margin-top: 40px; font-size: 12px; color: #888; }
+            .report { margin-bottom: 30px; border-bottom: 2px solid #82c0cc; padding-bottom: 20px; }
+        </style>
+        """,
+        title);
 	}
 
 	private static String generateHtmlHeader(String title) {
@@ -388,28 +389,35 @@ public class ExpressionApp {
 					sb.append("<thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead>");
 					sb.append("<tbody>");
 					for (Map.Entry<String, Value> entry : cd.evaluatedVars.entrySet()) {
-						String variableName = escapeHTML(entry.getKey());
-						Value valueObj = entry.getValue();
-						String type = valueObj.type.toString();
-
-						// Get just the actual value, not the full toString representation
-						String actualValue = "null";
-						if (valueObj.type == Type.INT) {
-							actualValue = String.valueOf(valueObj.getValueAsInt());
-						} else if (valueObj.type == Type.BOOL) {
-							actualValue = String.valueOf(valueObj.getValueAsBool());
-						} else if (valueObj.type == Type.CHAR) {
-							actualValue = "'" + valueObj.getValueAsCharacter() + "'";
-						} else {
-							actualValue = valueObj.getValueAsObject().toString();
-						}
-
-						sb.append("<tr>");
-						sb.append("<td class=\"var-name\">").append(variableName).append("</td>");
-						sb.append("<td class=\"var-type\">").append(escapeHTML(type)).append("</td>");
-						sb.append("<td class=\"var-value\">").append(escapeHTML(actualValue)).append("</td>");
-						sb.append("</tr>");
-					}
+                        String variableName = escapeHTML(entry.getKey());
+                        Value valueObj = entry.getValue();
+                        String type = valueObj.type.toString();
+                        
+                        // Get just the actual value, not the full toString representation
+                        String actualValue = "null";
+                        if (valueObj.type == Type.INT) {
+                            actualValue = String.valueOf(valueObj.getValueAsInt());
+                        } else if (valueObj.type == Type.BOOL) {
+                            actualValue = String.valueOf(valueObj.getValueAsBool());
+                        } else if (valueObj.type == Type.CHAR) {
+                            actualValue = "'" + valueObj.getValueAsCharacter() + "'";
+                        } else if (valueObj.type == Type.LIST_CHAR || valueObj.type == Type.LIST_INT) {
+                            // Just extract the value=[...] part from toString()
+                            String valueStr = valueObj.toString();
+                            if (valueStr.contains("value=")) {
+                                int start = valueStr.indexOf("value=") + 6;
+                                int end = valueStr.indexOf("}", start);
+                                if (end == -1) end = valueStr.length();
+                                actualValue = valueStr.substring(start, end);
+                            }
+                        }
+                        
+                        sb.append("<tr>");
+                        sb.append("<td class=\"var-name\">").append(variableName).append("</td>");
+                        sb.append("<td class=\"var-type\">").append(escapeHTML(type)).append("</td>");
+                        sb.append("<td class=\"var-value\">").append(escapeHTML(actualValue)).append("</td>");
+                        sb.append("</tr>");
+                    }
 					sb.append("</tbody>");
 					sb.append("</table>");
 					sb.append("</div>");
