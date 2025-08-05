@@ -188,7 +188,8 @@ public class ExpressionApp {
 			 */
 			FunctionDeclaration fd = ((FunctionDeclaration) e);
 			if (functions.containsKey(fd.functionName)) {
-				semanticErrors.add("Function " + fd.functionName + " already declared: [" + fd.getLine() + "]");
+				semanticErrors.add("Error at [" + fd.getLine() + ", " + fd.getCol() + "]: function " + fd.functionName
+						+ " already declared");
 			} else {
 				functions.put(fd.functionName, fd);
 			}
@@ -392,17 +393,20 @@ public class ExpressionApp {
 						for (Map.Entry<String, Value> entry : cd.evaluatedVars.entrySet()) {
 							String variableName = escapeHTML(entry.getKey());
 							Value valueObj = entry.getValue();
-							String type = valueObj.type.toString();
 
+							String type = valueObj == null ? null : valueObj.type.toString();
+							Type valueObjType = valueObj == null ? null : valueObj.type;
+							if (valueObj == null)
+								continue;
 							// Get just the actual value, not the full toString representation
 							String actualValue = "null";
-							if (valueObj.type == Type.INT) {
+							if (valueObjType == Type.INT) {
 								actualValue = String.valueOf(valueObj.getValueAsInt());
-							} else if (valueObj.type == Type.BOOL) {
+							} else if (valueObjType == Type.BOOL) {
 								actualValue = String.valueOf(valueObj.getValueAsBool());
-							} else if (valueObj.type == Type.CHAR) {
+							} else if (valueObjType == Type.CHAR) {
 								actualValue = "'" + valueObj.getValueAsCharacter() + "'";
-							} else if (valueObj.type == Type.LIST_CHAR || valueObj.type == Type.LIST_INT) {
+							} else if (valueObjType == Type.LIST_CHAR || valueObjType == Type.LIST_INT) {
 								// Just extract the value=[...] part from toString()
 								String valueStr = valueObj.toString();
 								if (valueStr.contains("value=")) {

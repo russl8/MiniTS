@@ -148,7 +148,7 @@ public class ExpressionProcessor {
 		} else if (e instanceof Parenthesis) {
 			evaluateExpression(((Parenthesis) e));
 		} else if (e instanceof FunctionDeclaration) {
-			// do nothing
+			this.functions.put(((FunctionDeclaration) e).functionName, (FunctionDeclaration) e);
 		} else {
 			// not a declaration/assignment/if. ignore for now
 			System.err.println("Warning, unhandled statement, ignoring for now: " + e);
@@ -182,7 +182,6 @@ public class ExpressionProcessor {
 	private Value evaluateFunctionInvocation(FunctionInvocation fi) {
 		Map<String, Value> oldVars = new HashMap<>(this.vars);
 		Map<String, Value> currentVars = this.vars;
-
 		FunctionDeclaration fd = this.functions.get(fi.functionName);
 		List<Parameter> parameters = fd.parameters;
 		List<String> varsDeclaredInFunction = new ArrayList<>();

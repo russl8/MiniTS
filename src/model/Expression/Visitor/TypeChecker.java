@@ -35,8 +35,8 @@ public class TypeChecker implements OperationVisitor {
 	public Map<String, FunctionDeclaration> functions;
 	public List<ClassDeclaration> classes;
 
-	public TypeChecker(List<String> semanticErrors, Map<String, Type> vars,
-			Map<String, FunctionDeclaration> functions, List<ClassDeclaration> classes) {
+	public TypeChecker(List<String> semanticErrors, Map<String, Type> vars, Map<String, FunctionDeclaration> functions,
+			List<ClassDeclaration> classes) {
 		this.vars = vars;
 		this.semanticErrors = semanticErrors;
 		this.functions = functions;
@@ -146,8 +146,9 @@ public class TypeChecker implements OperationVisitor {
 		// TODO: Recursively visit the assignment left and right.
 		// do the same for visitBinaryExpression (ex: recursively visit left and right)
 		String var = a.var;
-		Type exprReturnType = this.vars.get(var);
-
+		Type exprReturnType = a.expr.getReturnType() == null ? this.vars.get(a.var) : a.expr.getReturnType();
+		if (this.vars.get(a.var) == null) // this is a quick fix for forloop assignment in function
+			return null;
 		// make sure that the variable is being assigned properly
 		// ex: (int -> int, bool -> bool)
 		if (this.vars.get(var) != exprReturnType) {
@@ -330,11 +331,11 @@ public class TypeChecker implements OperationVisitor {
 	 * @param right
 	 * @param lineNum
 	 */
-	private void checkIfExprArgsValidBinary(Expression expr) {
+	private void checkIfExprArgsValidBinary(Expression e) {
 		boolean isValid = true;
-
-		Expression left = ((BinaryExpression) expr).left;
-		Expression right = ((BinaryExpression) expr).right;
+		BinaryExpression expr = (BinaryExpression) e;
+		Expression left = expr.left;
+		Expression right = expr.right;
 		ExprType exprType = expr.getExprType();
 
 		// Type check left and right expressions
@@ -349,33 +350,33 @@ public class TypeChecker implements OperationVisitor {
 
 		String typeOfExpression = "";
 		String expectedTypes = "";
-		String actualTypes = "(" + leftReturnType + ", " + rightReturnType + ")";
+		String actualTypes = "(" + leftReturnType + " " + expr.operation + " " + rightReturnType + ")";
 
 		if (exprType == ExprType.LOGICAL) {
 			typeOfExpression = "logical";
-			expectedTypes = "(BOOL, BOOL)";
+			expectedTypes = "(BOOL " + expr.operation + " BOOL)";
 			isValid = leftReturnType == Type.BOOL && rightReturnType == Type.BOOL;
 
 		} else if (exprType == ExprType.ARITHMETIC) {
 			typeOfExpression = "arithmetic";
-			expectedTypes = "(INT, INT)";
+			expectedTypes = "(INT " + expr.operation + " INT)";
 			isValid = leftReturnType == Type.INT && rightReturnType == Type.INT;
 
 		} else if (exprType == ExprType.RELATIONAL) {
 			typeOfExpression = "relational";
-			expectedTypes = "(INT, INT)";
+			expectedTypes = "(INT " + expr.operation + " INT)";
 			isValid = leftReturnType == Type.INT && rightReturnType == Type.INT;
 
 		} else if (exprType == ExprType.EQUALITY) {
 			typeOfExpression = "equality";
-			expectedTypes = "(INT, INT) or (BOOL, BOOL)";
+			expectedTypes = "(INT " + expr.operation + " INT)" + " or " + " (BOOL " + expr.operation + " BOOL)";
 			isValid = (leftReturnType == rightReturnType)
 					&& (leftReturnType == Type.INT || leftReturnType == Type.BOOL);
 		}
 
 		if (!isValid) {
-			semanticErrors.add("Type mismatch in " + typeOfExpression + " expression at [" + line + ", " + col
-					+ "]: expected " + expectedTypes + " but got " + actualTypes + "");
+			semanticErrors.add("Type mismatch in " + typeOfExpression + " expression '" + expr.operation + "' at ["
+					+ line + ", " + col + "]: expected " + expectedTypes + " but got " + actualTypes + "");
 
 		}
 	}
@@ -385,7 +386,6 @@ public class TypeChecker implements OperationVisitor {
 		FunctionDeclaration fd = functions.get(fi.functionName);
 
 		if (fd != null && fd.parameters.size() == fi.arguments.size()) {
-			System.out.println("At " + fi);
 			for (int i = 0; i < fd.parameters.size(); i++) {
 				Parameter param = fd.parameters.get(i);
 				Expression arg = fi.arguments.get(i);

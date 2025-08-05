@@ -39,27 +39,24 @@
 <div class="container">
     <div class="left">
         <h2>Input File Path</h2>
-        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\finalSubmission\section4\441.txt</code></pre>
+        <pre><code>/mnt/c/Users/russe/Github/EECS4302Compiler/src/tests/finalSubmission/section4/441.txt</code></pre>
         <h2>Input File Contents</h2>
         <pre><code>  1 | class f441pass {
   2 |   x: int = 1;
   3 |   y: int = 2;
-  4 |   
-  5 |   // OK: arithmetic operands are int.  
-  6 |   z: int = x + y * (x - 1); 
-  7 | }
-  8 | 
-  9 | class f441fail {
- 10 |   x: int = 1;
- 11 |   y: bool = True;
- 12 |   
- 13 |   // Fail: y is bool, used in arithmetic.
-<span class="error-line"> 14 |   z: int = x + y;</span>
- 15 | }
+  4 |   z: int = x + y * (x - 1);
+  5 | }
+  6 | 
+  7 | 
+  8 | class f441fail {
+  9 |   x: int = 1;
+ 10 |   y: bool = True;
+<span class="error-line"> 11 |   z: int = x + y;</span>
+ 12 | }
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL : >= 1 Errors</div><h2>Classes, Functions, and Variables</h2><h3>Class: f441pass</h3><h4>Variables</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead><tbody><tr><td class="var-name">x</td><td class="var-type">INT</td><td class="var-value">1</td></tr><tr><td class="var-name">y</td><td class="var-type">INT</td><td class="var-value">2</td></tr><tr><td class="var-name">z</td><td class="var-type">INT</td><td class="var-value">1</td></tr></tbody></table></div><h3>Class: f441fail</h3><h2>Error Details</h2><div class="error">Type mismatch in arithmetic expression at [14, 12]: expected (INT, INT) but got (INT, BOOL)</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>15</strong></div><div class="stat-item">Non-Empty Lines: <strong>12</strong></div><div class="stat-item">Comment Lines: <strong>2</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>3</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div></div>
+<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL : >= 1 Errors</div><h2>Classes, Functions, and Variables</h2><h3>Class: f441pass</h3><h4>Variables</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead><tbody><tr><td class="var-name">x</td><td class="var-type">INT</td><td class="var-value">1</td></tr><tr><td class="var-name">y</td><td class="var-type">INT</td><td class="var-value">2</td></tr><tr><td class="var-name">z</td><td class="var-type">INT</td><td class="var-value">1</td></tr></tbody></table></div><h3>Class: f441fail</h3><h2>Error Details</h2><div class="error">Type mismatch in arithmetic expression at [11, 12]: expected (INT, INT) but got (INT, BOOL)</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>12</strong></div><div class="stat-item">Non-Empty Lines: <strong>10</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>3</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div></div>
 </div>
 <footer>team: russl8, jeffj4</footer>
 </body></html>

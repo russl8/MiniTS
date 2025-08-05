@@ -1,0 +1,17 @@
+class p45 {
+  if (True) { x: int = 1; }
+  
+  y: int = 0;
+  while (y < 10) {
+    y = y + 1;
+  }
+}
+
+class f45 {
+  if (1) { x: int = 1; }
+  
+  x: int = 0;
+  while (5) {
+    x = x + 1;
+  }
+}

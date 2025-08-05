@@ -1,0 +1,16 @@
+class p48 {
+  x: int = 1;
+  function f(): int {
+    x: int = 2; 
+    return x;
+  }
+  y : int = x; // y=1
+  z : int = f(); // z=2
+}
+
+
+class f48 {
+  x: int = 1;
+  x: bool = True;
+}
+

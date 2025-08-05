@@ -1,0 +1,9 @@
+class p41b {
+  a: list[int] = [1, 2];
+  a = [3, 4, 5];
+}
+
+class f41b {
+  a: list[char] = "this is valid";
+  a = ['h', True];
+}

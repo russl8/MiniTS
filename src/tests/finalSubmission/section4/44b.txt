@@ -1,0 +1,10 @@
+class p44b {
+  p: bool = True;
+  q: bool = False;
+  r: bool = p && !q;
+}
+
+class f44b {
+  p: int = 1;
+  q: bool = p && True;
+}

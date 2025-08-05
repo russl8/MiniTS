@@ -1,0 +1,12 @@
+class p49 {
+  function f(): int { return 0; }
+}
+
+
+class f49 {
+  function f(): int { return 0; }
+  function f(): int { return 1; }
+}
+
+class fail {}
+class fail {}

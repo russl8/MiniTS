@@ -1,0 +1,12 @@
+class p44a {
+  x: int = 1;
+  y: int = 2;
+  z: int = x + y * (x - 1);
+}
+
+
+class f44a {
+  x: int = 1;
+  y: bool = True;
+  z: int = x + y;
+}

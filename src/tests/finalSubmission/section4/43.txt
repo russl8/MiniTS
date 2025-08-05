@@ -1,13 +1,14 @@
-class f43 {
-
+class p43 {
   function isZero(n: int): bool {
     return n == 0;
   }
-  
-  // OK: isZero expects int, called with 5
   b: bool = isZero(5);
-  
-  // Fail: calling with bool instead of int.
-  b = isZero(True);
-  
+}
+
+
+class f43 {
+  function isZero(n: int): bool {
+    return n == 0;
+  }
+  b: bool = isZero(True);
 }

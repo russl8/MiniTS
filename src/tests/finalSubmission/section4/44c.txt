@@ -1,0 +1,11 @@
+class p44c {
+  a: int = 1;
+  b: int = 2;
+  c: bool = a < b;
+}
+
+class f44c {
+  a: int = 1;
+  b: char = '2';
+  c: bool = a < b;
+}

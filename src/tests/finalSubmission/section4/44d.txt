@@ -1,0 +1,13 @@
+class p44d {
+  x: int = 1;
+  y: int = 2;
+  e: bool = x == y;
+}
+
+
+
+class f44d {
+  x: int = 1;
+  y: bool = True;
+  e: bool = x == y;
+}

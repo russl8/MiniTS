@@ -327,7 +327,7 @@ public class VariableBindingChecker implements OperationVisitor {
 		// cleanup
 		this.functionScope = null;
 		this.isVisitingFunctionDeclaration = false;
-
+//		this.functions.put(fd.functionName, fd);
 		/*
 		 * create new map<String,type> functionScope set
 		 * isVisitingFunctionDeclaration=true

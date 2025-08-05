@@ -17,15 +17,15 @@ public class Value {
 		this.value = value;
 	}
 
-	public int getValueAsInt() {
+	public Integer getValueAsInt() {
 		return (Integer) value;
 	}
 
-	public boolean getValueAsBool() {
+	public Boolean getValueAsBool() {
 		return (Boolean) value;
 	}
 
-	public char getValueAsCharacter() {
+	public Character getValueAsCharacter() {
 		return (Character) value;
 	}
 

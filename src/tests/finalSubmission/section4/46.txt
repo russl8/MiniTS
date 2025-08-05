@@ -1,0 +1,19 @@
+class p46 {
+  function f(): int {
+    for (i: int = 0; i < 3; i = i + 1) {
+      // body
+    }
+    return 0;
+  }
+}
+
+
+class f46 {
+  
+   function g(): int {
+    for (i: int = 0; i; i = i + 1) {
+    }
+    return 0;
+  }
+
+}

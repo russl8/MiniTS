@@ -1,11 +1,11 @@
-class f42 {
-  // OK
+class p42 {
   function f(): int {
-    return 3;
+      return 3;
   }
-  
-  // Fail: returns int but declared bool.
+}
+
+class f42 {
   function g(): bool {
-    return 1;
+      return 1;
   }
 }

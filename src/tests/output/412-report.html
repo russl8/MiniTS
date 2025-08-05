@@ -39,19 +39,21 @@
 <div class="container">
     <div class="left">
         <h2>Input File Path</h2>
-        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\finalSubmission\section4\412.txt</code></pre>
+        <pre><code>/mnt/c/Users/russe/Github/EECS4302Compiler/src/tests/finalSubmission/section4/412.txt</code></pre>
         <h2>Input File Contents</h2>
-        <pre><code>  1 | class f412 {
+        <pre><code>  1 | class f412pass {
   2 |   a: list[int] = [1, 2];
-<span class="error-line">  3 |   a = [1, True]; // Fail: True is not int.</span>
-  4 |   
-  5 |   b : list[char] = &quot;this is valid&quot;;
-<span class="error-line">  6 |   b = ['a', 'b' , 1, 'c']; //Fail: 1 is not char.</span>
-  7 | }
+  3 |   a = [3, 4, 5];
+  4 | }
+  5 | 
+  6 | class f412fail {
+  7 |   a: list[char] = &quot;this is valid&quot;;
+<span class="error-line">  8 |   a = ['h', True];</span>
+  9 | }
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>7</strong></div><div class="stat-item">Non-Empty Lines: <strong>6</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">Errors Found: <strong>2</strong></div></div><h2>Error Details</h2><div class="error">Error in [3, 11] Cannot assign list[BOOL] to list[INT]</div><div class="error">Error in [6, 19] Cannot assign list[INT] to list[CHAR]</div></div>
+<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL : >= 1 Errors</div><h2>Classes, Functions, and Variables</h2><h3>Class: f412pass</h3><h4>Variables</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead><tbody><tr><td class="var-name">a</td><td class="var-type">LIST_INT</td><td class="var-value">[3, 4, 5]</td></tr></tbody></table></div><h3>Class: f412fail</h3><h2>Error Details</h2><div class="error">Error in [8, 13] Cannot assign list[BOOL] to list[CHAR]</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>9</strong></div><div class="stat-item">Non-Empty Lines: <strong>8</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>1</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div></div>
 </div>
 <footer>team: russl8, jeffj4</footer>
 </body></html>
