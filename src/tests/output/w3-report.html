@@ -16,7 +16,18 @@
         .error-status { background-color: #f8d7da; border-left: 4px solid #dc3545; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #721c24; font-weight: bold; }
         .stats { background-color: #f8f9fa; padding: 15px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #dee2e6; }
         .stat-item { margin-bottom: 8px; font-size: 14px; }
+        .variables-table { width: 100%; border-collapse: collapse; margin-top: 10px; margin-bottom: 20px; background-color: #ffffff; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); clear: both; table-layout: fixed; }
+        .variables-table th { background-color: #489fb5; color: white; padding: 12px 8px; text-align: left; font-weight: bold; border-bottom: 2px solid #16697a; width: 33.33%; }
+        .variables-table td { padding: 10px 8px; border-bottom: 1px solid #e9ecef; width: 33.33%; word-wrap: break-word; }
+        .variables-table tbody tr:nth-child(even) { background-color: #f8f9fa; }
+        .variables-table tbody tr:hover { background-color: #e3f2fd; }
+        .table-container { margin-bottom: 25px; overflow: hidden; clear: both; display: block; width: 100%; }
+        .var-name { font-weight: bold; color: #16697a; }
+        .var-type { color: #6c757d; font-style: italic; }
+        .var-value { color: #28a745; font-family: 'Courier New', monospace; }
         h2 { color: #489fb5; margin-top: 0; margin-bottom: 10px; }
+        h3 { color: #16697a; margin-top: 15px; margin-bottom: 8px; font-size: 18px; border-bottom: 2px solid #82c0cc; padding-bottom: 4px; }
+        h4 { color: #489fb5; margin-top: 15px; margin-bottom: 8px; font-size: 16px; }
         footer { text-align: center; margin-top: 40px; font-size: 12px; color: #888; }
         .report { margin-bottom: 30px; border-bottom: 2px solid #82c0cc; padding-bottom: 20px; }
     </style>
@@ -26,7 +37,7 @@
 <div class="container">
     <div class="left">
         <h2>Input File Path</h2>
-        <pre><code>C:\Users\russe\Github\EECS4302Compiler\src\tests\whileloop\w3.txt</code></pre>
+        <pre><code>C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\whileloop\w3.txt</code></pre>
         <h2>Input File Contents</h2>
         <pre><code>  1 | class nestedLoop {
   2 | 	x: int = 0;
@@ -55,7 +66,7 @@
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="success-status">PASS - Compilation Successful</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>24</strong></div><div class="stat-item">Non-Empty Lines: <strong>23</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>4</strong></div><div class="stat-item">Variables Declared: <strong>5</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div><h2>Variables</h2><div class="variable">x : {type=INT, value=250}</div><div class="variable">i : {type=INT, value=5}</div><div class="variable">j : {type=INT, value=5}</div><div class="variable">k : {type=INT, value=5}</div><div class="variable">l : {type=INT, value=2}</div></div>
+<div class="right"><h2>Compilation Status</h2><div class="success-status">PASS - Compilation Successful</div><h2>Classes, Functions, and Variables</h2><h3>Class: nestedLoop</h3><h4>Variables</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead><tbody><tr><td class="var-name">x</td><td class="var-type">INT</td><td class="var-value">250</td></tr><tr><td class="var-name">i</td><td class="var-type">INT</td><td class="var-value">5</td></tr><tr><td class="var-name">j</td><td class="var-type">INT</td><td class="var-value">5</td></tr><tr><td class="var-name">k</td><td class="var-type">INT</td><td class="var-value">5</td></tr><tr><td class="var-name">l</td><td class="var-type">INT</td><td class="var-value">2</td></tr></tbody></table></div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>24</strong></div><div class="stat-item">Non-Empty Lines: <strong>23</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>4</strong></div><div class="stat-item">Variables Declared: <strong>5</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div></div>
 </div>
 <footer>team: russl8, jeffj4</footer>
 </body></html>

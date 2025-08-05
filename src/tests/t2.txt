@@ -8,4 +8,10 @@ class MyClass {
         x = x + 1; // x=6
 		x = x + 1; // x=7
     }
+
+        // this if statement should be true
+    if (x > 0 && !x ) { 
+        x = x + 1; // x=6
+		x = x + 1; // x=7
+    }
 }

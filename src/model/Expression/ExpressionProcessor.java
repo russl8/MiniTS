@@ -236,8 +236,16 @@ public class ExpressionProcessor {
 	}
 
 	private char evaluateCharacter(Expression e) {
+		System.out.println("Evaluating character expression: " + e);
 		if (e instanceof CharacterLiteral) {
 			return ((CharacterLiteral) e).val;
+		} else if (e instanceof Variable) {
+			// THIS IS THE MISSING PIECE - Add variable lookup for characters
+			return this.vars.get(((Variable) e).var).getValueAsCharacter();
+		} else if (e instanceof Parenthesis) {
+			return evaluateCharacter(((Parenthesis) e).expr);
+		} else if (e instanceof FunctionInvocation) {
+			return evaluateFunctionInvocation((FunctionInvocation) e).getValueAsCharacter();
 		} else {
 			System.err.println("Could not properly evaluate character expression " + e);
 			return '\0';
