@@ -40,7 +40,7 @@ import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
 import model.Expression.Util.Parameter;
 
-public class ExpressionVariableDeclarationChecker implements OperationVisitor {
+public class VariableBindingChecker implements OperationVisitor {
 	public List<String> semanticErrors;
 	public Map<String, Type> vars; // stores all the variables declared in the program so far
 	public Map<String, FunctionDeclaration> functions;
@@ -48,7 +48,7 @@ public class ExpressionVariableDeclarationChecker implements OperationVisitor {
 	private boolean isVisitingFunctionDeclaration = false;
 	private Map<String, Type> functionScope;
 
-	public ExpressionVariableDeclarationChecker(List<String> semanticErrors, Map<String, Type> vars,
+	public VariableBindingChecker(List<String> semanticErrors, Map<String, Type> vars,
 			Map<String, FunctionDeclaration> functions, List<ClassDeclaration> classes) {
 		this.vars = vars;
 		this.semanticErrors = semanticErrors;

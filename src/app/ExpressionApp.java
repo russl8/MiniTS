@@ -12,8 +12,8 @@ import model.Expression.BlockContainer.ForLoop;
 import model.Expression.BlockContainer.IfStatement;
 import model.Expression.BlockContainer.WhileLoop;
 import model.Expression.Expression.Type;
-import model.Expression.Visitor.ExpressionTypeChecker;
-import model.Expression.Visitor.ExpressionVariableDeclarationChecker;
+import model.Expression.Visitor.TypeChecker;
+import model.Expression.Visitor.VariableBindingChecker;
 import model.Expression.Visitor.OperationVisitor;
 import model.Program.AntlrToProgram;
 import model.Program.Program;
@@ -93,9 +93,9 @@ public class ExpressionApp {
 				AntlrToProgram progVisitor = new AntlrToProgram(semanticErrors, vars);
 				Program prog = progVisitor.visit(parser.prog());
 
-				ExpressionTypeChecker typeCheckerVisitor = new ExpressionTypeChecker(semanticErrors, vars, functions,
+				TypeChecker typeCheckerVisitor = new TypeChecker(semanticErrors, vars, functions,
 						classes);
-				ExpressionVariableDeclarationChecker varDeclarationCheckerVisitor = new ExpressionVariableDeclarationChecker(
+				VariableBindingChecker varDeclarationCheckerVisitor = new VariableBindingChecker(
 						semanticErrors, vars, functions, classes);
 
 				operationVisitors.add(varDeclarationCheckerVisitor);

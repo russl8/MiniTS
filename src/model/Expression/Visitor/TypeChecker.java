@@ -28,14 +28,14 @@ import model.Expression.Util.Parameter;
 import model.Expression.Expression.ExprType;
 import model.Expression.Expression.Type;
 
-public class ExpressionTypeChecker implements OperationVisitor {
+public class TypeChecker implements OperationVisitor {
 
 	public List<String> semanticErrors;
 	public Map<String, Type> vars; // stores all the variables declared in the program so far
 	public Map<String, FunctionDeclaration> functions;
 	public List<ClassDeclaration> classes;
 
-	public ExpressionTypeChecker(List<String> semanticErrors, Map<String, Type> vars,
+	public TypeChecker(List<String> semanticErrors, Map<String, Type> vars,
 			Map<String, FunctionDeclaration> functions, List<ClassDeclaration> classes) {
 		this.vars = vars;
 		this.semanticErrors = semanticErrors;
