@@ -1,0 +1,11 @@
+class f42 {
+  // OK
+  function f(): int {
+    return 3;
+  }
+  
+  // Fail: returns int but declared bool.
+  function g(): bool {
+    return 1;
+  }
+}

@@ -3,19 +3,19 @@
 
 class WeatherStation {
     stationId : int = 2001;
-    weatherCode : list[char] = ['S', 'U', 'N'];
+    weatherCode : list[char] = "SUN";
     etaRange : list[int] = [0, 0];
     
     function setRain(dummy : int) : int {
         // Update weather code and ETA for rain
-        weatherCode = ['R', 'A', 'I', 'N'];
+        weatherCode = "RAIN";
         etaRange = [15, 30];
         return stationId;
     }
     
     function setClear(dummy : int) : int {
         // Update weather code and ETA for clear skies
-        weatherCode = ['C', 'L', 'E', 'A', 'R'];
+        weatherCode = "CLEAR";
         etaRange = [5, 10];
         return stationId;
     }

@@ -26,6 +26,7 @@ import model.Expression.Declaration.ListDeclaration;
 import model.Expression.Declaration.PrimitaveDeclaration;
 import model.Expression.Unary.Not;
 import model.Expression.Unary.Parenthesis;
+import model.Expression.Util.Parameter;
 import model.Expression.Visitor.Utils;
 
 public class ExpressionProcessor {
@@ -179,27 +180,51 @@ public class ExpressionProcessor {
 	}
 
 	private Value evaluateFunctionInvocation(FunctionInvocation fi) {
-		HashMap<String, Value> copyOfVars = new HashMap<>(vars);
+		Map<String, Value> oldVars = new HashMap<>(this.vars);
+		Map<String, Value> currentVars = this.vars;
 
 		FunctionDeclaration fd = this.functions.get(fi.functionName);
+		List<Parameter> parameters = fd.parameters;
+		List<String> varsDeclaredInFunction = new ArrayList<>();
 
 		// For each argument in function, update global state (for overriding).
-
 		for (int i = 0; i < fi.arguments.size(); i++) {
-			this.vars.put(fd.parameters.get(i).name,
+			currentVars.put(parameters.get(i).name,
 					evaluateExpression(fi.arguments.get(i).getReturnType(), fi.arguments.get(i)));
 		}
 
 		// Processs each line in function body
 		for (Expression e : fd.expressions) {
 			evaluateExpression(e);
+			if (e instanceof ListDeclaration) {
+				varsDeclaredInFunction.add(((ListDeclaration) e).var);
+
+			}
+			if (e instanceof PrimitaveDeclaration) {
+				varsDeclaredInFunction.add(((PrimitaveDeclaration) e).var);
+			}
 		}
 
 		// Get return value by evaluating it
 		Value returnValue = this.evaluateExpression(fd.returnType, fd.returnStatement);
 
 		// Reset state
-		this.vars = copyOfVars;
+		HashMap<String, Value> varsAfterFunction = new HashMap<>();
+
+		for (String var : currentVars.keySet()) {
+			boolean varIsParameterOfFunction = Utils.getParameter(var, parameters) != null;
+			if (varsDeclaredInFunction.contains(var) || varIsParameterOfFunction && oldVars.containsKey(var)) {
+				varsAfterFunction.put(var, oldVars.get(var));
+			} else if (!varIsParameterOfFunction && currentVars.containsKey(var) && oldVars.containsKey(var)) {
+				varsAfterFunction.put(var, currentVars.get(var));
+			}
+			// if is param, take value of old vars
+			// if not param, take value of new vars
+			// if it is a var declared in function, dont add
+			// if var is redeclared in function, take value of old var
+		}
+
+		this.vars = varsAfterFunction;
 		return returnValue;
 	}
 

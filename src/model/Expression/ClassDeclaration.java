@@ -17,6 +17,7 @@ public class ClassDeclaration extends Expression {
 	public Map<String, FunctionDeclaration> functions;
 	public Map<String, Type> vars;
 	public Map<String, Value> evaluatedVars;
+	public List<String> semanticErrors;
 
 	public Type getReturnType() {
 		return Type.NONE;
@@ -32,6 +33,7 @@ public class ClassDeclaration extends Expression {
 		this.line = line;
 		this.functions = new HashMap<>();
 		this.col = col;
+		this.semanticErrors = new ArrayList<>();
 	}
 
 	public Set<String> getVariables() {
