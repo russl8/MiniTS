@@ -1,3 +1,0 @@
-Type mismatch at line 2: expected INT = INT assignment but got INT = BOOL
-
-Type mismatch at line 7: expected BOOL = BOOL assignment but got BOOL = INT
