@@ -100,7 +100,8 @@ public class VariableBindingChecker implements OperationVisitor {
 			semanticErrors.add("Error at " + errorLocation + ": function " + functionName + " does not exist");
 		} else if (fi.arguments.size() != functions.get(functionName).parameters.size()) {
 			semanticErrors.add("Error at " + errorLocation + ": function " + functionName + " requires "
-					+ fi.arguments.size() + " parameters. Needs " + functions.get(functionName).parameters.size());
+					+ functions.get(functionName).parameters.size() + " parameters. Currently has "
+					+ fi.arguments.size());
 		} else {
 			fi.setReturnType(functions.get(fi.functionName).returnType);
 		}

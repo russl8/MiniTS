@@ -1,6 +1,8 @@
 class p44a {
   x: int = 1;
   y: int = 2;
+  
+  // OK
   z: int = x + y * (x - 1);
 }
 
@@ -8,5 +10,7 @@ class p44a {
 class f44a {
   x: int = 1;
   y: bool = True;
-  z: int = x + y;
+  
+  // FAIL: arithmetic expression with bool value
+  z: int = x + (1 && y);
 }

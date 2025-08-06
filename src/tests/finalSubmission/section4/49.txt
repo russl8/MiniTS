@@ -1,12 +1,16 @@
 class p49 {
-  function f(): int { return 0; }
+  function f(): int { return 0; } // OK
 }
 
 
 class f49 {
   function f(): int { return 0; }
+  
+  // FAIL: redeclaration of function
   function f(): int { return 1; }
 }
 
 class fail {}
+
+// FAIL: redeclaration of class
 class fail {}

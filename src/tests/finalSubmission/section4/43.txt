@@ -1,14 +1,19 @@
 class p43 {
-  function isZero(n: int): bool {
-    return n == 0;
+  function areZero(n: int, m: int): bool {
+    return n == 0 && m == 0;
   }
-  b: bool = isZero(5);
+  
+  // OK
+  b: bool = areZero(5, 0);
 }
 
 
+
 class f43 {
-  function isZero(n: int): bool {
-    return n == 0;
-  }
-  b: bool = isZero(True);
+   function areZero(n: int, m: int): bool {
+    return n == 0 && m == 0;
+   }
+  
+  // FAIL: wrong arg type in first parameter
+  b: bool = areZero(True, 0);
 }

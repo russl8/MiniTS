@@ -1,5 +1,7 @@
 class p46 {
   function f(): int {
+  
+    // OK
     for (i: int = 0; i < 3; i = i + 1) {
       // body
     }
@@ -11,6 +13,8 @@ class p46 {
 class f46 {
   
    function g(): int {
+   
+    // FAIL: 'i' is not a boolean expression
     for (i: int = 0; i; i = i + 1) {
     }
     return 0;

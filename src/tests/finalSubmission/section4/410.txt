@@ -5,15 +5,21 @@ class p410a {
 
 
 class f410a {
-  x: int = foo(1);
+
+  // FAIL: function does not exist 
+  x: int = foo(1); 
 }
 
 class f410b {
   function sum(a: int, b: int): int { return a + b; }
+  
+  // FAIL: not enough parameters
   s: int = sum(1);
 }
 
 class f410c {
   function sum(a: int, b: int): int { return a + b; }
+  
+  // FAIL: parameter type mismatch
   b: int = sum(True, 2);
 }

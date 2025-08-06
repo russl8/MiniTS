@@ -44,18 +44,22 @@
         <pre><code>  1 | class p44c {
   2 |   a: int = 1;
   3 |   b: int = 2;
-  4 |   c: bool = a &lt; b;
-  5 | }
-  6 | 
-  7 | class f44c {
-  8 |   a: int = 1;
-  9 |   b: char = '2';
-<span class="error-line"> 10 |   c: bool = a &lt; b;</span>
- 11 | }
+  4 |   
+  5 |   // OK
+  6 |   c: bool = a &lt; b;
+  7 | }
+  8 | 
+  9 | class f44c {
+ 10 |   a: int = 1;
+ 11 |   b: char = '2';
+ 12 |   
+ 13 |   // FAIL: b is char, expected int
+<span class="error-line"> 14 |   c: bool = (2 + 2 + a) &lt; b;</span>
+ 15 | }
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL : >= 1 Errors</div><h2>Classes, Functions, and Variables</h2><h3>Class: p44c</h3><h4>Variables</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead><tbody><tr><td class="var-name">a</td><td class="var-type">INT</td><td class="var-value">1</td></tr><tr><td class="var-name">b</td><td class="var-type">INT</td><td class="var-value">2</td></tr><tr><td class="var-name">c</td><td class="var-type">BOOL</td><td class="var-value">true</td></tr></tbody></table></div><h3>Class: f44c</h3><h2>Error Details</h2><div class="error">Type mismatch in relational expression '&lt;' at [10, 13]: expected (INT &lt; INT) but got (INT &lt; CHAR)</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>11</strong></div><div class="stat-item">Non-Empty Lines: <strong>10</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>3</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div></div>
+<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL : >= 1 Errors</div><h2>Classes, Functions, and Variables</h2><h3>Class: p44c</h3><h4>Variables</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead><tbody><tr><td class="var-name">a</td><td class="var-type">INT</td><td class="var-value">1</td></tr><tr><td class="var-name">b</td><td class="var-type">INT</td><td class="var-value">2</td></tr><tr><td class="var-name">c</td><td class="var-type">BOOL</td><td class="var-value">true</td></tr></tbody></table></div><h3>Class: f44c</h3><h2>Error Details</h2><div class="error">Type mismatch in relational expression '&lt;' at [14, 13]: expected (INT &lt; INT) but got (INT &lt; CHAR)</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>15</strong></div><div class="stat-item">Non-Empty Lines: <strong>12</strong></div><div class="stat-item">Comment Lines: <strong>2</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>3</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div></div>
 </div>
 <footer>team: russl8, jeffj4</footer>
 </body></html>

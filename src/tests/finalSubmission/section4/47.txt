@@ -5,6 +5,8 @@ class p47 {
 
 
 class f47 {
+
+  // FAIL: b does not exist before line 11
   a: int = b + 1;
   b: int = 2;
 }

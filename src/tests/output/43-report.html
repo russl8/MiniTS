@@ -42,23 +42,28 @@
         <pre><code>/mnt/c/Users/russe/Github/EECS4302Compiler/src/tests/finalSubmission/section4/43.txt</code></pre>
         <h2>Input File Contents</h2>
         <pre><code>  1 | class p43 {
-  2 |   function isZero(n: int): bool {
-  3 |     return n == 0;
+  2 |   function areZero(n: int, m: int): bool {
+  3 |     return n == 0 &amp;&amp; m == 0;
   4 |   }
-  5 |   b: bool = isZero(5);
-  6 | }
-  7 | 
-  8 | 
-  9 | class f43 {
- 10 |   function isZero(n: int): bool {
- 11 |     return n == 0;
- 12 |   }
-<span class="error-line"> 13 |   b: bool = isZero(True);</span>
- 14 | }
+  5 |   
+  6 |   // OK
+  7 |   b: bool = areZero(5, 0);
+  8 | }
+  9 | 
+ 10 | 
+ 11 | 
+ 12 | class f43 {
+ 13 |    function areZero(n: int, m: int): bool {
+ 14 |     return n == 0 &amp;&amp; m == 0;
+ 15 |    }
+ 16 |   
+ 17 |   // FAIL: wrong arg type in first parameter
+<span class="error-line"> 18 |   b: bool = areZero(True, 0);</span>
+ 19 | }
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL : >= 1 Errors</div><h2>Classes, Functions, and Variables</h2><h3>Class: p43</h3><h4>Variables</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead><tbody><tr><td class="var-name">b</td><td class="var-type">BOOL</td><td class="var-value">false</td></tr></tbody></table></div><h4>Functions</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Function Name</th><th>Return Type</th><th>Parameters</th></tr></thead><tbody><tr><td class="var-name">isZero</td><td class="var-type">BOOL</td><td class="var-value">n : INT</td></tr></tbody></table></div><h3>Class: f43</h3><h2>Error Details</h2><div class="error">Error at [13, 20]: parameter n must be type INT but recieved BOOL</div><h4>Functions</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Function Name</th><th>Return Type</th><th>Parameters</th></tr></thead><tbody><tr><td class="var-name">isZero</td><td class="var-type">BOOL</td><td class="var-value">n : INT</td></tr></tbody></table></div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>14</strong></div><div class="stat-item">Non-Empty Lines: <strong>12</strong></div><div class="stat-item">Comment Lines: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>1</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div></div>
+<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL : >= 1 Errors</div><h2>Classes, Functions, and Variables</h2><h3>Class: p43</h3><h4>Variables</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead><tbody><tr><td class="var-name">b</td><td class="var-type">BOOL</td><td class="var-value">false</td></tr></tbody></table></div><h4>Functions</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Function Name</th><th>Return Type</th><th>Parameters</th></tr></thead><tbody><tr><td class="var-name">areZero</td><td class="var-type">BOOL</td><td class="var-value">n : INT, m : INT</td></tr></tbody></table></div><h3>Class: f43</h3><h2>Error Details</h2><div class="error">Error at [18, 21]: parameter n must be type INT but recieved BOOL</div><h4>Functions</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Function Name</th><th>Return Type</th><th>Parameters</th></tr></thead><tbody><tr><td class="var-name">areZero</td><td class="var-type">BOOL</td><td class="var-value">n : INT, m : INT</td></tr></tbody></table></div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>19</strong></div><div class="stat-item">Non-Empty Lines: <strong>14</strong></div><div class="stat-item">Comment Lines: <strong>2</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>1</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div></div>
 </div>
 <footer>team: russl8, jeffj4</footer>
 </body></html>

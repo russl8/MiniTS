@@ -114,9 +114,15 @@ public class TypeChecker implements OperationVisitor {
 			if (ld.initialization instanceof ListLiteral) {
 				ListLiteral ll = (ListLiteral) ld.initialization;
 				for (Expression e : ll.items) {
-					if (e.getReturnType() != itemType) {
+					Type expressionItemType;
+					if (e instanceof Variable) {
+						expressionItemType = this.vars.get(((Variable) e).var);
+					} else {
+						expressionItemType = e.getReturnType();
+					}
+					if (expressionItemType != itemType) {
 						semanticErrors.add("Type mismatch in list declaration at [" + e.getLine() + ", " + e.getCol()
-								+ "] " + e.getReturnType() + " found in list[" + itemType + "]");
+								+ "] " + expressionItemType + " found in list[" + itemType + "]");
 						break;
 					}
 
@@ -188,9 +194,16 @@ public class TypeChecker implements OperationVisitor {
 		} else {
 			ListLiteral ll = (ListLiteral) la.expr;
 			for (Expression e : ll.items) {
-				if (e.getReturnType() != itemType) {
+				
+				Type expressionItemType;
+				if (e instanceof Variable) {
+					expressionItemType = this.vars.get(((Variable) e).var);
+				} else {
+					expressionItemType = e.getReturnType();
+				}
+				if (expressionItemType != itemType) {
 					semanticErrors.add("Error in [" + e.getLine() + ", " + e.getCol() + "] Cannot assign list["
-							+ e.getReturnType() + "] to list[" + itemType + "]");
+							+ expressionItemType + "] to list[" + itemType + "]");
 					break;
 				}
 			}

@@ -5,5 +5,7 @@ class p41b {
 
 class f41b {
   a: list[char] = "this is valid";
-  a = ['h', True];
+  
+  // FAIL: bool in a char list
+  a = ['h', True]; 
 }

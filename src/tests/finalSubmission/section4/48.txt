@@ -1,16 +1,20 @@
 class p48 {
   x: int = 1;
   function f(): int {
+    // OK: redeclaration of x inside a function
     x: int = 2; 
+    
     return x;
   }
-  y : int = x; // y=1
-  z : int = f(); // z=2
+  y : int = x; // y should equal 1
+  z : int = f(); // x should equal 2
 }
 
 
 class f48 {
   x: int = 1;
+  
+  // FAIL: redeclaration of variable in same scope
   x: bool = True;
 }
 

@@ -5,5 +5,7 @@ class p41a {
 
 class f41a {
   x: int = 5;
-  x = True;
+  
+  // FAIL: assigning bool to int
+  x = True; 
 }
