@@ -1,0 +1,6 @@
+class f6 {
+	function func (i : int) : list[char]{
+		res : list[char] = "hi";
+		return res; //OK
+	}
+}

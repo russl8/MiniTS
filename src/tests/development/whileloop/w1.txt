@@ -1,0 +1,17 @@
+class w1 {
+	x : int = 10;
+	y : int = 0;
+	z : int  = 0;
+	while (((x > 0))) {
+		x = x - 1;
+		y = y + 1;
+		
+		if (x % 2 == 0) {
+			z = z + 1;
+		}
+	}
+	
+	// x should equal 0
+	// y should equal 10
+	// z should equal 5
+}

@@ -1,0 +1,15 @@
+class p44b {
+  p: bool = True;
+  q: bool = False;
+  
+  // OK
+  r: bool = p && !q;
+}
+
+class f44b {
+  p: int = 1;
+  
+  // FAIL: p + 2 is an integer expression, 
+  // expected bool
+  q: bool = (p + 2) && ( True && (True && False ));
+}

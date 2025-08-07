@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"antlr"},{"l":"app"},{"l":"model"},{"l":"model.Expression"},{"l":"model.Expression.Binary"},{"l":"model.Expression.OperationVisitor"},{"l":"model.Expression.Statement"},{"l":"model.Expression.Unary"},{"l":"model.Program"}];updateSearchResults();

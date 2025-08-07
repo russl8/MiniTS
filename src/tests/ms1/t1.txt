@@ -1,0 +1,10 @@
+class MyClass {
+    x : int = False; // Error: assigning bool to int variable
+    y : bool;
+    y = False;
+    x : int = 2; //redec
+    if (x > 0 && y) {
+        x = x + 1;
+        y = x; // Error: assigning int to bool variable
+    }
+}

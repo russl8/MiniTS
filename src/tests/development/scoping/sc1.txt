@@ -1,0 +1,10 @@
+class sc1 {
+	
+	x : int = 2;
+	
+	if (True) {
+		y : int = 3;
+		x = x + y; // should NOT throw an error
+	}
+	x = x + x + y; // should throw an error (undeclared)
+}

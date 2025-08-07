@@ -39,26 +39,26 @@
 <div class="container">
     <div class="left">
         <h2>Input File Path</h2>
-        <pre><code>C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\examples\weather.txt</code></pre>
+        <pre><code>/mnt/c/Users/russe/Github/EECS4302Compiler/src/tests/finalSubmission/section5/weather.txt</code></pre>
         <h2>Input File Contents</h2>
         <pre><code>  1 | // FEATURE DEMONSTRATED: List Operations
   2 | // KEY CONCEPTS: Character lists, list assignments, list manipulation
   3 | 
   4 | class WeatherStation {
   5 |     stationId : int = 2001;
-  6 |     weatherCode : list[char] = ['S', 'U', 'N'];
+  6 |     weatherCode : list[char] = &quot;SUN&quot;;
   7 |     etaRange : list[int] = [0, 0];
   8 |     
   9 |     function setRain(dummy : int) : int {
  10 |         // Update weather code and ETA for rain
- 11 |         weatherCode = ['R', 'A', 'I', 'N'];
+ 11 |         weatherCode = &quot;RAIN&quot;;
  12 |         etaRange = [15, 30];
  13 |         return stationId;
  14 |     }
  15 |     
  16 |     function setClear(dummy : int) : int {
  17 |         // Update weather code and ETA for clear skies
- 18 |         weatherCode = ['C', 'L', 'E', 'A', 'R'];
+ 18 |         weatherCode = &quot;CLEAR&quot;;
  19 |         etaRange = [5, 10];
  20 |         return stationId;
  21 |     }
@@ -72,7 +72,11 @@
 </code></pre>
     </div>
 
+<<<<<<< HEAD
 <div class="right"><h2>Compilation Status</h2><div class="success-status">PASS - Compilation Successful</div><h2>Classes, Functions, and Variables</h2><h3>Class: WeatherStation</h3><h4>Variables</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead><tbody><tr><td class="var-name">clearAlert</td><td class="var-type">INT</td><td class="var-value">2001</td></tr><tr><td class="var-name">etaRange</td><td class="var-type">LIST_INT</td><td class="var-value">[5, 10]</td></tr><tr><td class="var-name">rainAlert</td><td class="var-type">INT</td><td class="var-value">2001</td></tr><tr><td class="var-name">weatherCode</td><td class="var-type">LIST_CHAR</td><td class="var-value">[C, L, E, A, R]</td></tr><tr><td class="var-name">stationId</td><td class="var-type">INT</td><td class="var-value">2001</td></tr></tbody></table></div><h4>Functions</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Function Name</th><th>Return Type</th><th>Parameters</th></tr></thead><tbody><tr><td class="var-name">setRain</td><td class="var-type">INT</td><td class="var-value">dummy : INT</td></tr><tr><td class="var-name">setClear</td><td class="var-type">INT</td><td class="var-value">dummy : INT</td></tr></tbody></table></div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>28</strong></div><div class="stat-item">Non-Empty Lines: <strong>23</strong></div><div class="stat-item">Classes Declared: <strong>1</strong></div><div class="stat-item">Functions Declared: <strong>2</strong></div><div class="stat-item">Variables Declared: <strong>5</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">For Loops: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Avg Functions per Class: <strong>2.0</strong></div><div class="stat-item">Avg Variables per Class: <strong>5.0</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div></div>
+=======
+<div class="right"><h2>Compilation Status</h2><div class="success-status">PASS : Compilation Successful</div><h2>Classes, Functions, and Variables</h2><h3>Class: WeatherStation</h3><h4>Variables</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead><tbody><tr><td class="var-name">weatherCode</td><td class="var-type">LIST_CHAR</td><td class="var-value">[C, L, E, A, R]</td></tr><tr><td class="var-name">clearAlert</td><td class="var-type">INT</td><td class="var-value">2001</td></tr><tr><td class="var-name">etaRange</td><td class="var-type">LIST_INT</td><td class="var-value">[5, 10]</td></tr><tr><td class="var-name">rainAlert</td><td class="var-type">INT</td><td class="var-value">2001</td></tr><tr><td class="var-name">stationId</td><td class="var-type">INT</td><td class="var-value">2001</td></tr></tbody></table></div><h4>Functions</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Function Name</th><th>Return Type</th><th>Parameters</th></tr></thead><tbody><tr><td class="var-name">setRain</td><td class="var-type">INT</td><td class="var-value">dummy : INT</td></tr><tr><td class="var-name">setClear</td><td class="var-type">INT</td><td class="var-value">dummy : INT</td></tr></tbody></table></div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>28</strong></div><div class="stat-item">Non-Empty Lines: <strong>23</strong></div><div class="stat-item">Comment Lines: <strong>6</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>5</strong></div><div class="stat-item">Errors Found: <strong>0</strong></div></div></div>
+>>>>>>> master
 </div>
 <footer>team: russl8, jeffj4</footer>
 </body></html>

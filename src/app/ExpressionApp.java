@@ -8,9 +8,12 @@ import model.Expression.Expression;
 import model.Expression.ExpressionProcessor;
 import model.Expression.FunctionDeclaration;
 import model.Expression.BlockContainer.BlockContainer;
+import model.Expression.BlockContainer.ForLoop;
+import model.Expression.BlockContainer.IfStatement;
+import model.Expression.BlockContainer.WhileLoop;
 import model.Expression.Expression.Type;
-import model.Expression.Visitor.ExpressionTypeChecker;
-import model.Expression.Visitor.ExpressionVariableDeclarationChecker;
+import model.Expression.Visitor.TypeChecker;
+import model.Expression.Visitor.VariableBindingChecker;
 import model.Expression.Visitor.OperationVisitor;
 import model.Program.AntlrToProgram;
 import model.Program.Program;
@@ -172,10 +175,9 @@ public class ExpressionApp {
                 AntlrToProgram progVisitor = new AntlrToProgram(semanticErrors, vars);
                 Program prog = progVisitor.visit(parser.prog());
 
-                ExpressionTypeChecker typeCheckerVisitor = new ExpressionTypeChecker(semanticErrors, vars, functions,
-                        classes);
-                ExpressionVariableDeclarationChecker varDeclarationCheckerVisitor = new ExpressionVariableDeclarationChecker(
-                        semanticErrors, vars, functions, classes);
+                TypeChecker typeCheckerVisitor = new TypeChecker(semanticErrors, vars, functions, classes);
+                VariableBindingChecker varDeclarationCheckerVisitor = new VariableBindingChecker(semanticErrors, vars,
+                        functions, classes);
 
                 operationVisitors.add(varDeclarationCheckerVisitor);
                 operationVisitors.add(typeCheckerVisitor);
@@ -196,13 +198,14 @@ public class ExpressionApp {
 
                     cd.functions = functions;
                     cd.vars = vars;
-
+                    cd.semanticErrors.addAll(semanticErrors);
+                    semanticErrors.clear();
                     classes.add(cd);
                 }
 
                 ExpressionProcessor ep = new ExpressionProcessor(functions, classes);
-                if (semanticErrors.isEmpty()) {
-                    for (ClassDeclaration cd : classes) {
+                for (ClassDeclaration cd : classes) {
+                    if (cd.semanticErrors.isEmpty()) {
                         ep.vars = new HashMap<>();
                         // evaluate the class declaration too
                         ep.evaluateExpression(cd);
@@ -214,8 +217,8 @@ public class ExpressionApp {
                     }
                 }
 
-                // Log analysis results
-                logAnalysisResults(file.getName(), classes, semanticErrors);
+                // Log analysis results with the enhanced logging we added
+                logAnalysisResults(file.getName(), classes, getAllSemanticErrors(classes));
 
                 // Console output (keep original for backwards compatibility)
                 for (ClassDeclaration cd : classes) {
@@ -228,15 +231,15 @@ public class ExpressionApp {
 
                 // Generate report
                 long processingTime = System.currentTimeMillis() - startTime;
-                String reportPath = generateHtmlReport(file, filePath, ep, semanticErrors, processingTime, classes);
+                String reportPath = generateHtmlReport(file, filePath, ep, getAllSemanticErrors(classes), processingTime, classes);
                 individualReports.add(reportPath);
                 
                 String reportMsg = "Generated report: " + reportPath;
                 logAndPrint(reportMsg, false);
                 
-				
+                logMessage("File processed in " + processingTime + "ms");
                 successCount++;
-                
+
             } catch (Exception e) {
                 String errorMsg = "ERROR: Error processing file " + filePath + ": " + e.getMessage();
                 logAndPrint(errorMsg, true);
@@ -249,7 +252,21 @@ public class ExpressionApp {
         return individualReports;
     }
 
-    private static void logAnalysisResults(String fileName, List<ClassDeclaration> classes, List<String> errors) {        
+    // Add this helper method to collect all semantic errors from classes
+    private static List<String> getAllSemanticErrors(List<ClassDeclaration> classes) {
+        List<String> allErrors = new ArrayList<>();
+        for (ClassDeclaration cd : classes) {
+            if (cd.semanticErrors != null) {
+                allErrors.addAll(cd.semanticErrors);
+            }
+        }
+        return allErrors;
+    }
+
+    // Add the missing logging methods we discussed earlier
+    private static void logAnalysisResults(String fileName, List<ClassDeclaration> classes, List<String> errors) {
+        logMessage("Analysis Results for: " + fileName);
+        
         if (!errors.isEmpty()) {
             logMessage("Semantic Errors Found: " + errors.size());
             for (String error : errors) {
@@ -278,6 +295,7 @@ public class ExpressionApp {
             }
         }
         
+        logMessage("Analysis Complete");
     }
 
     private static String formatVariableValueForLog(Value valueObj) {
@@ -297,300 +315,109 @@ public class ExpressionApp {
         return sw.toString();
     }
 
-    private static void visitExpression(Expression e, Map<String, Type> currentVars,
-            Map<String, FunctionDeclaration> functions, List<ClassDeclaration> classes) {
-
-        for (OperationVisitor v : operationVisitors) {
-            v.updateVarState(currentVars);
-            v.updateFunctionState(functions);
-            e.accept(v);
-        }
-        if (e instanceof BlockContainer) {
-            Map<String, Type> savedVars = Utils.copyVarScope(currentVars);
-            for (Expression ex : ((BlockContainer) e).getExpressions()) {
-                visitExpression(ex, currentVars, functions, classes);
-            }
-            Utils.restoreVarScope(currentVars, savedVars);
-        } else if (e instanceof FunctionDeclaration) {
-            /*
-             * treat this as a regular expression, not a block container. only difference is
-             * that u dont visit the inner statements here. instead, do it in the visitors.
-             */
-            FunctionDeclaration fd = ((FunctionDeclaration) e);
-            if (functions.containsKey(fd.functionName)) {
-                semanticErrors.add("Function " + fd.functionName + " already declared: [" + fd.getLine() + "]");
-            } else {
-                functions.put(fd.functionName, fd);
-            }
-
-        }
-    }
-
-    private static String generateHtmlReport(File file, String filePath, ExpressionProcessor ep,
-            List<String> semanticErrors, long processingTime, List<ClassDeclaration> classes) throws IOException {
-        
-        String baseName = file.getName().replace(".txt", "");
-        String outputPath = "src/tests/" + baseName + "-report.html";  // Already correct
-        ensureParentDirectoriesExist(new File(outputPath));
-
-        String inputFileContents = readFileContents(filePath);
-
-        try (PrintWriter writer = new PrintWriter(new FileWriter(outputPath))) {
-            writer.println("<!DOCTYPE html>");
-            writer.println("<html lang=\"en\">");
-            writer.println("<head>");
-            writer.println(generateHtmlHead(baseName + " Report"));
-            writer.println("</head><body>");
-            writer.println(generateHtmlHeader("Compilation Report"));
-            writer.println("<div class=\"container\">");
-            writer.println(generateLeftColumn(filePath, inputFileContents, semanticErrors));
-            writer.println(generateRightColumn(ep.vars, semanticErrors, filePath, inputFileContents, processingTime, classes));
-            writer.println("</div>");
-            writer.println(generateFooter());
-            writer.println("</body></html>");
-        }
-
-        return outputPath;
-    }
-
-    private static String readFileContents(String filePath) throws IOException {
-        StringBuilder content = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                content.append(line).append("\n");
-            }
-        }
-        return content.toString();
-    }
-
-    private static String generateHtmlHead(String title) {
-        return String.format(
-            """
-            <meta charset="UTF-8">
-            <title>%s</title>
-            <style>
-                body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #ede7e3; color: #16697a; }
-                h1 { color: #16697a; text-align: center; margin-bottom: 20px; }
-                .container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 100vw; }
-                .left, .right { padding: 20px; background-color: #ffffff; border: 1px solid #82c0cc; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
-                .left { max-width: 45vw; width: 45vw; overflow-x: auto; box-sizing: border-box; }
-                .right { max-width: 45vw; width: 45vw; overflow-x: auto; box-sizing: border-box; }
-                pre { background-color: #e9ecef; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 14px; font-family: 'Courier New', monospace; line-height: 1.4; width: 100%%; white-space: pre; box-sizing: border-box; }
-                .error { background-color: #f8d7da; border-left: 4px solid #d9534f; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #721c24; }
-                .variable { background-color: #489fb5; border-left: 4px solid #16697a; padding: 10px; margin-bottom: 10px; border-radius: 4px; color: #ffffff; }
-                .error-line { background-color: #f8d7da; color: #721c24; font-weight: bold; display: block; padding: 2px 5px; margin: 1px 0; border-radius: 3px; white-space: pre; }
-                .success-status { background-color: #d4edda; border-left: 4px solid #28a745; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #155724; font-weight: bold; }
-                .error-status { background-color: #f8d7da; border-left: 4px solid #dc3545; padding: 10px; margin-bottom: 15px; border-radius: 4px; color: #721c24; font-weight: bold; }
-                .stats { background-color: #f8f9fa; padding: 15px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #dee2e6; }
-                .stat-item { margin-bottom: 8px; font-size: 14px; }
-                .variables-table { width: 100%%; border-collapse: collapse; margin-top: 10px; margin-bottom: 20px; background-color: #ffffff; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); clear: both; table-layout: fixed; }
-                .variables-table th { background-color: #489fb5; color: white; padding: 12px 8px; text-align: left; font-weight: bold; border-bottom: 2px solid #16697a; width: 33.33%%; overflow: hidden; text-overflow: ellipsis; }
-                .variables-table td { padding: 10px 8px; border-bottom: 1px solid #e9ecef; width: 33.33%%; word-wrap: break-word; overflow: hidden; text-overflow: ellipsis; max-width: 0; }
-                .variables-table tbody tr:nth-child(even) { background-color: #f8f9fa; }
-                .variables-table tbody tr:hover { background-color: #e3f2fd; }
-                .table-container { margin-bottom: 25px; overflow-x: auto; clear: both; display: block; width: 100%%; }
-                .var-name { font-weight: bold; color: #16697a; }
-                .var-type { color: #6c757d; font-style: italic; }
-                .var-value { color: #28a745; font-family: 'Courier New', monospace; word-break: break-word; }
-                h2 { color: #489fb5; margin-top: 0; margin-bottom: 10px; }
-                h3 { color: #16697a; margin-top: 15px; margin-bottom: 8px; font-size: 18px; border-bottom: 2px solid #82c0cc; padding-bottom: 4px; }
-                h4 { color: #489fb5; margin-top: 15px; margin-bottom: 8px; font-size: 16px; }
-                footer { text-align: center; margin-top: 40px; font-size: 12px; color: #888; }
-                .report { margin-bottom: 30px; border-bottom: 2px solid #82c0cc; padding-bottom: 20px; }
-            </style>
-            """,
-            title);
-    }
-
-    private static String generateHtmlHeader(String title) {
-        return "<h1>" + escapeHTML(title) + "</h1>";
-    }
-
-    private static String generateLeftColumn(String filePath, String contents, List<String> errors) {
-        // Extract error line numbers from error messages
-        Set<Integer> errorLines = new HashSet<>();
-        for (String error : errors) {
-            // Look for patterns like "line=5" or "line 5" in error messages
-            if (error.contains("line=")) {
-                try {
-                    int start = error.indexOf("line=") + 5;
-                    int end = error.indexOf(" ", start);
-                    if (end == -1)
-                        end = error.indexOf(",", start);
-                    if (end == -1)
-                        end = error.length();
-                    String lineStr = error.substring(start, end);
-                    errorLines.add(Integer.parseInt(lineStr));
-                } catch (NumberFormatException e) {
-                    // Ignore if we can't parse the line number
-                }
-            }
-            // Look for patterns like "at [11, 13]" in error messages (type mismatches)
-            if (error.contains(" at [")) {
-                try {
-                    int start = error.indexOf(" at [") + 5;
-                    int end = error.indexOf(",", start);
-                    if (end != -1) {
-                        String lineStr = error.substring(start, end);
-                        errorLines.add(Integer.parseInt(lineStr));
-                    }
-                } catch (NumberFormatException e) {
-                    // Ignore if we can't parse the line number
-                }
-            }
-            // Look for patterns like "in [11, 13]" in error messages (assignment to
-            // undeclared variables)
-            if (error.contains(" in [")) {
-                try {
-                    int start = error.indexOf(" in [") + 5;
-                    int end = error.indexOf(",", start);
-                    if (end != -1) {
-                        String lineStr = error.substring(start, end);
-                        errorLines.add(Integer.parseInt(lineStr));
-                    }
-                } catch (NumberFormatException e) {
-                    // Ignore if we can't parse the line number
-                }
-            }
-        }
-
-        // Add line numbers to the content with error highlighting
-        String[] lines = contents.split("\n");
-        StringBuilder numberedContent = new StringBuilder();
-        for (int i = 0; i < lines.length; i++) {
-            int lineNumber = i + 1;
-            if (errorLines.contains(lineNumber)) {
-                numberedContent.append(String.format("<span class=\"error-line\">%3d | %s</span>\n", lineNumber,
-                        escapeHTML(lines[i])));
-            } else {
-                numberedContent.append(String.format("%3d | %s\n", lineNumber, escapeHTML(lines[i])));
-            }
-        }
-
-        return String.format("""
-				    <div class="left">
-				        <h2>Input File Path</h2>
-				        <pre><code>%s</code></pre>
-				        <h2>Input File Contents</h2>
-				        <pre><code>%s</code></pre>
-				    </div>
-				""", escapeHTML(filePath), numberedContent.toString());
-    }
-
+    // Update generateRightColumn to use the errors parameter consistently
     private static String generateRightColumn(Map<String, Value> values, List<String> errors, String filePath,
-			String contents, long processingTime, List<ClassDeclaration> classes) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("<div class=\"right\">");
+            String contents, long processingTime, List<ClassDeclaration> classes) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<div class=\"right\">");
 
-		// Always show compilation status first
-		sb.append("<h2>Compilation Status</h2>");
-		if (errors.isEmpty()) {
-			sb.append("<div class=\"success-status\">PASS - Compilation Successful</div>");
-		} else {
-			sb.append("<div class=\"error-status\">FAIL - Compilation Failed</div>");
-		}
+        boolean errorsExist = !errors.isEmpty();
 
-		// Only show classes information if there are no errors and we have classes
-		if (errors.isEmpty() && !classes.isEmpty()) {
-			sb.append("<h2>Classes, Functions, and Variables</h2>");
-			for (ClassDeclaration cd : classes) {
-				sb.append("<h3>Class: ").append(escapeHTML(cd.className)).append("</h3>");
-				
-				// Display variables table for this class
-				if (cd.evaluatedVars != null && !cd.evaluatedVars.isEmpty()) {
-					sb.append("<h4>Variables</h4>");
-					sb.append("<div class=\"table-container\">");
-					sb.append("<table class=\"variables-table\">");
-					sb.append("<thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead>");
-					sb.append("<tbody>");
-					for (Map.Entry<String, Value> entry : cd.evaluatedVars.entrySet()) {
-                        String variableName = escapeHTML(entry.getKey());
-                        Value valueObj = entry.getValue();
-                        String type = valueObj.type.toString();
-                        
-                        // Get just the actual value, not the full toString representation
-                        String actualValue = "null";
-                        if (valueObj.type == Type.INT) {
-                            actualValue = String.valueOf(valueObj.getValueAsInt());
-                        } else if (valueObj.type == Type.BOOL) {
-                            actualValue = String.valueOf(valueObj.getValueAsBool());
-                        } else if (valueObj.type == Type.CHAR) {
-                            actualValue = "'" + valueObj.getValueAsCharacter() + "'";
-                        } else if (valueObj.type == Type.LIST_CHAR || valueObj.type == Type.LIST_INT) {
-                            // Just extract the value=[...] part from toString()
-                            String valueStr = valueObj.toString();
-                            if (valueStr.contains("value=")) {
-                                int start = valueStr.indexOf("value=") + 6;
-                                int end = valueStr.indexOf("}", start);
-                                if (end == -1) end = valueStr.length();
-                                actualValue = valueStr.substring(start, end);
-                            }
+        // Always show compilation status first
+        sb.append("<h2>Compilation Status</h2>");
+        if (!errorsExist) {
+            sb.append("<div class=\"success-status\">PASS : Compilation Successful</div>");
+        } else {
+            sb.append("<div class=\"error-status\">FAIL : >= 1 Errors</div>");
+        }
+
+        // Only show classes information if there are no errors and we have classes
+        if (!classes.isEmpty()) {
+            sb.append("<h2>Classes, Functions, and Variables</h2>");
+            for (ClassDeclaration cd : classes) {
+                sb.append("<h3>Class: ").append(escapeHTML(cd.className)).append("</h3>");
+
+                if (cd.semanticErrors == null || cd.semanticErrors.isEmpty()) {
+                    // Display variables table for this class
+                    if (cd.evaluatedVars != null && !cd.evaluatedVars.isEmpty()) {
+                        sb.append("<h4>Variables</h4>");
+                        sb.append("<div class=\"table-container\">");
+                        sb.append("<table class=\"variables-table\">");
+                        sb.append("<thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead>");
+                        sb.append("<tbody>");
+                        for (Map.Entry<String, Value> entry : cd.evaluatedVars.entrySet()) {
+                            String variableName = escapeHTML(entry.getKey());
+                            Value valueObj = entry.getValue();
+
+                            String type = valueObj == null ? null : valueObj.type.toString();
+                            Type valueObjType = valueObj == null ? null : valueObj.type;
+                            if (valueObj == null)
+                                continue;
+                            
+                            String actualValue = formatVariableValueForLog(valueObj);
+
+                            sb.append("<tr>");
+                            sb.append("<td class=\"var-name\">").append(variableName).append("</td>");
+                            sb.append("<td class=\"var-type\">").append(escapeHTML(type)).append("</td>");
+                            sb.append("<td class=\"var-value\">").append(escapeHTML(actualValue)).append("</td>");
+                            sb.append("</tr>");
                         }
-                        
-                        sb.append("<tr>");
-                        sb.append("<td class=\"var-name\">").append(variableName).append("</td>");
-                        sb.append("<td class=\"var-type\">").append(escapeHTML(type)).append("</td>");
-                        sb.append("<td class=\"var-value\">").append(escapeHTML(actualValue)).append("</td>");
-                        sb.append("</tr>");
+                        sb.append("</tbody>");
+                        sb.append("</table>");
+                        sb.append("</div>");
                     }
-					sb.append("</tbody>");
-					sb.append("</table>");
-					sb.append("</div>");
-				}
-				
-				// Display functions for this class
-				if (cd.functions != null && !cd.functions.isEmpty()) {
-					sb.append("<h4>Functions</h4>");
-					sb.append("<div class=\"table-container\">");
-					sb.append("<table class=\"variables-table\">");
-					sb.append("<thead><tr><th>Function Name</th><th>Return Type</th><th>Parameters</th></tr></thead>");
-					sb.append("<tbody>");
-					for (Map.Entry<String, FunctionDeclaration> entry : cd.functions.entrySet()) {
-						String functionName = escapeHTML(entry.getKey());
-						FunctionDeclaration func = entry.getValue();
-						String returnType = func.returnType != null ? escapeHTML(func.returnType.toString()) : "void";
-						
-						// Build parameters string
-						StringBuilder params = new StringBuilder();
-						if (func.parameters != null && !func.parameters.isEmpty()) {
-							for (int i = 0; i < func.parameters.size(); i++) {
-								if (i > 0) params.append(", ");
-								// Assuming parameters have name and type - adjust based on actual structure
-								params.append(func.parameters.get(i).toString());
-							}
-						} else {
-							params.append("()");
-						}
-						
-						sb.append("<tr>");
-						sb.append("<td class=\"var-name\">").append(functionName).append("</td>");
-						sb.append("<td class=\"var-type\">").append(returnType).append("</td>");
-						sb.append("<td class=\"var-value\">").append(escapeHTML(params.toString())).append("</td>");
-						sb.append("</tr>");
-					}
-					sb.append("</tbody>");
-					sb.append("</table>");
-					sb.append("</div>");
-				}
-				
-			}
-		}
 
-		// Show code metrics
-		appendCodeMetrics(sb, contents, classes);
+                    // Display functions for this class
+                    if (cd.functions != null && !cd.functions.isEmpty()) {
+                        sb.append("<h4>Functions</h4>");
+                        sb.append("<div class=\"table-container\">");
+                        sb.append("<table class=\"variables-table\">");
+                        sb.append("<thead><tr><th>Function Name</th><th>Return Type</th><th>Parameters</th></tr></thead>");
+                        sb.append("<tbody>");
+                        for (Map.Entry<String, FunctionDeclaration> entry : cd.functions.entrySet()) {
+                            String functionName = escapeHTML(entry.getKey());
+                            FunctionDeclaration func = entry.getValue();
+                            String returnType = func.returnType != null ? escapeHTML(func.returnType.toString()) : "void";
 
-		// Only show errors if there are errors
-		if (!errors.isEmpty()) {
-			sb.append("<h2>Error Details</h2>");
-			for (String err : errors) {
-				sb.append("<div class=\"error\">").append(escapeHTML(err)).append("</div>");
-			}
-		}
+                            StringBuilder params = new StringBuilder();
+                            if (func.parameters != null && !func.parameters.isEmpty()) {
+                                for (int i = 0; i < func.parameters.size(); i++) {
+                                    if (i > 0)
+                                        params.append(", ");
+                                    params.append(func.parameters.get(i).toString());
+                                }
+                            } else {
+                                params.append("()");
+                            }
 
-		sb.append("</div>");
-		return sb.toString();
-	}
+                            sb.append("<tr>");
+                            sb.append("<td class=\"var-name\">").append(functionName).append("</td>");
+                            sb.append("<td class=\"var-type\">").append(returnType).append("</td>");
+                            sb.append("<td class=\"var-value\">").append(escapeHTML(params.toString())).append("</td>");
+                            sb.append("</tr>");
+                        }
+                        sb.append("</tbody>");
+                        sb.append("</table>");
+                        sb.append("</div>");
+                    }
+                }
+            }
+        }
+
+        // Show code metrics using the existing appendCodeMetrics method
+        appendCodeMetrics(sb, contents, classes);
+
+        // Only show errors if there are errors
+        if (!errors.isEmpty()) {
+            sb.append("<h2>Error Details</h2>");
+            for (String err : errors) {
+                sb.append("<div class=\"error\">").append(escapeHTML(err)).append("</div>");
+            }
+        }
+
+        sb.append("</div>");
+        return sb.toString();
+    }
 
 	private static void appendCodeMetrics(StringBuilder sb, String contents, List<ClassDeclaration> classes) {
         sb.append("<h2>Code Metrics</h2>");

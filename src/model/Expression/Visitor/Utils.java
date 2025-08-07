@@ -7,6 +7,7 @@ import model.Value;
 import model.Expression.ClassDeclaration;
 import model.Expression.Expression;
 import model.Expression.Expression.Type;
+import model.Expression.Util.Parameter;
 
 public class Utils {
 	public static ClassDeclaration getClassByClassName(List<ClassDeclaration> classes, String className) {
@@ -53,4 +54,11 @@ public class Utils {
 		return itemType;
 	}
 
+	public static Parameter getParameter(String paramName, List<Parameter> parameters) {
+		for (Parameter p : parameters) {
+			if (p.name.equals(paramName))
+				return p;
+		}
+		return null;
+	}
 }
