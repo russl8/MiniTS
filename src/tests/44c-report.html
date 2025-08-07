@@ -54,12 +54,12 @@
  11 |   b: char = '2';
  12 |   
  13 |   // FAIL: b is char, expected int
-<span class="error-line"> 14 |   c: bool = (2 + 2 + a) &lt; b;</span>
+ 14 |   c: bool = (2 + 2 + a) &lt; b;
  15 | }
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>15</strong></div><div class="stat-item">Non-Empty Lines: <strong>12</strong></div><div class="stat-item">Classes Declared: <strong>2</strong></div><div class="stat-item">Functions Declared: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">For Loops: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Avg Functions per Class: <strong>0.0</strong></div><div class="stat-item">Avg Variables per Class: <strong>0.0</strong></div><div class="stat-item">Errors Found: <strong>1</strong></div></div><h2>Error Details</h2><div class="error">Type mismatch in relational expression at [14, 13]: expected (INT, INT) but got (INT, CHAR)</div></div>
+<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL : >= 1 Errors</div><h2>Classes, Functions, and Variables</h2><h3>Class: p44c</h3><h4>Variables</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead><tbody><tr><td class="var-name">a</td><td class="var-type">INT</td><td class="var-value">1</td></tr><tr><td class="var-name">b</td><td class="var-type">INT</td><td class="var-value">2</td></tr><tr><td class="var-name">c</td><td class="var-type">BOOL</td><td class="var-value">true</td></tr></tbody></table></div><h3>Class: f44c</h3><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>15</strong></div><div class="stat-item">Non-Empty Lines: <strong>12</strong></div><div class="stat-item">Classes Declared: <strong>2</strong></div><div class="stat-item">Functions Declared: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>3</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">For Loops: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Avg Functions per Class: <strong>0.0</strong></div><div class="stat-item">Avg Variables per Class: <strong>1.5</strong></div><div class="stat-item">Errors Found: <strong>1</strong></div></div><h2>Error Details</h2><div class="error">Type mismatch in relational expression '&lt;' at [14, 13]: expected (INT &lt; INT) but got (INT &lt; CHAR)</div></div>
 </div>
 <footer>team: russl8, jeffj4</footer>
 </body></html>

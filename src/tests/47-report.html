@@ -50,13 +50,13 @@
   7 | class f47 {
   8 | 
   9 |   // FAIL: b does not exist before line 11
-<span class="error-line"> 10 |   a: int = b + 1;</span>
+ 10 |   a: int = b + 1;
  11 |   b: int = 2;
  12 | }
 </code></pre>
     </div>
 
-<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL - Compilation Failed</div><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>12</strong></div><div class="stat-item">Non-Empty Lines: <strong>9</strong></div><div class="stat-item">Classes Declared: <strong>2</strong></div><div class="stat-item">Functions Declared: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>0</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">For Loops: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Avg Functions per Class: <strong>0.0</strong></div><div class="stat-item">Avg Variables per Class: <strong>0.0</strong></div><div class="stat-item">Errors Found: <strong>2</strong></div></div><h2>Error Details</h2><div class="error">Variable 'b' not declared, line=10 col=12</div><div class="error">Type mismatch in arithmetic expression at [10, 12]: expected (INT, INT) but got (null, INT)</div></div>
+<div class="right"><h2>Compilation Status</h2><div class="error-status">FAIL : >= 1 Errors</div><h2>Classes, Functions, and Variables</h2><h3>Class: p47</h3><h4>Variables</h4><div class="table-container"><table class="variables-table"><thead><tr><th>Variable Name</th><th>Type</th><th>Value</th></tr></thead><tbody><tr><td class="var-name">a</td><td class="var-type">INT</td><td class="var-value">1</td></tr><tr><td class="var-name">b</td><td class="var-type">INT</td><td class="var-value">3</td></tr></tbody></table></div><h3>Class: f47</h3><h2>Code Metrics</h2><div class="stats"><div class="stat-item">Total Lines: <strong>12</strong></div><div class="stat-item">Non-Empty Lines: <strong>9</strong></div><div class="stat-item">Classes Declared: <strong>2</strong></div><div class="stat-item">Functions Declared: <strong>0</strong></div><div class="stat-item">Variables Declared: <strong>2</strong></div><div class="stat-item">If Statements: <strong>0</strong></div><div class="stat-item">For Loops: <strong>0</strong></div><div class="stat-item">While Loops: <strong>0</strong></div><div class="stat-item">Avg Functions per Class: <strong>0.0</strong></div><div class="stat-item">Avg Variables per Class: <strong>1.0</strong></div><div class="stat-item">Errors Found: <strong>2</strong></div></div><h2>Error Details</h2><div class="error">Variable 'b' not declared, line=10 col=12</div><div class="error">Type mismatch in arithmetic expression '+' at [10, 12]: expected (INT + INT) but got (null + INT)</div></div>
 </div>
 <footer>team: russl8, jeffj4</footer>
 </body></html>
