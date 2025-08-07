@@ -289,8 +289,13 @@ public class ExpressionApp {
             if (classDecl.evaluatedVars != null && !classDecl.evaluatedVars.isEmpty()) {
                 logMessage("  Variables: " + classDecl.evaluatedVars.size());
                 for (Map.Entry<String, Value> entry : classDecl.evaluatedVars.entrySet()) {
-                    String value = formatVariableValueForLog(entry.getValue());
-                    logMessage("    * " + entry.getKey() + ": " + entry.getValue().type.toString() + " = " + value);
+                    // Add null check here too
+                    if (entry.getValue() != null) {
+                        String value = formatVariableValueForLog(entry.getValue());
+                        logMessage("    * " + entry.getKey() + ": " + entry.getValue().type.toString() + " = " + value);
+                    } else {
+                        logMessage("    * " + entry.getKey() + ": null = null");
+                    }
                 }
             }
         }
@@ -299,6 +304,10 @@ public class ExpressionApp {
     }
 
     private static String formatVariableValueForLog(Value valueObj) {
+        if (valueObj == null || valueObj.type == null) {
+            return "null";
+        }
+        
         return switch (valueObj.type) {
             case INT -> String.valueOf(valueObj.getValueAsInt());
             case BOOL -> String.valueOf(valueObj.getValueAsBool());
@@ -543,11 +552,17 @@ public class ExpressionApp {
                             String variableName = escapeHTML(entry.getKey());
                             Value valueObj = entry.getValue();
 
-                            String type = valueObj == null ? null : valueObj.type.toString();
-                            Type valueObjType = valueObj == null ? null : valueObj.type;
-                            if (valueObj == null)
+                            // Add comprehensive null checks
+                            if (valueObj == null || valueObj.type == null) {
+                                sb.append("<tr>");
+                                sb.append("<td class=\"var-name\">").append(variableName).append("</td>");
+                                sb.append("<td class=\"var-type\">unknown</td>");
+                                sb.append("<td class=\"var-value\">null</td>");
+                                sb.append("</tr>");
                                 continue;
+                            }
                             
+                            String type = valueObj.type.toString();
                             String actualValue = formatVariableValueForLog(valueObj);
 
                             sb.append("<tr>");
