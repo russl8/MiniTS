@@ -21,8 +21,6 @@ import model.MyErrorListener;
 import org.antlr.v4.runtime.*;
 
 import java.io.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -35,131 +33,51 @@ public class ExpressionApp {
 	private static List<String> semanticErrors;
 	private static List<OperationVisitor> operationVisitors;
 
-	// log setup
-	private static final String LOG_FILE = "src/tests/history.log";
-	private static PrintWriter logWriter;
-	private static long sessionStartTime;
-
 	public static void main(String[] args) {
-		sessionStartTime = System.currentTimeMillis();
-		setupLogging();
-		logSessionStart(args);
-
 		if (args.length != 1) {
-			String errorMsg = "Error: missing folder or filename argument";
-			logAndPrint(errorMsg, true);
-			closeLogging();
+			System.err.println("Error: missing folder or filename argument");
 			return;
 		}
 
 		File inputPath = new File(args[0]);
 		if (!inputPath.exists()) {
-			String errorMsg = "Error: The specified path does not exist.";
-			logAndPrint(errorMsg, true);
-			closeLogging();
+			System.err.println("Error: The specified path does not exist.");
 			return;
 		}
 
 		File[] inputFiles = getInputFiles(inputPath);
 		if (inputFiles == null || inputFiles.length == 0) {
-			String errorMsg = "Error: No .txt files found in the specified path.";
-			logAndPrint(errorMsg, true);
-			closeLogging();
+			System.err.println("Error: No .txt files found in the specified path.");
 			return;
 		}
-
-		logMessage("Found " + inputFiles.length + " file(s) to process");
 
 		List<String> individualReports = processFiles(inputFiles);
 
 		if (!individualReports.isEmpty()) {
 			String combinedReportPath = "src/tests/combined-report.html";
 			writeCombinedHtmlReport(combinedReportPath, individualReports);
-			String successMsg = "Generated combined report at " + combinedReportPath;
-			logAndPrint(successMsg, false);
-		}
-
-		logSessionEnd();
-		closeLogging();
-	}
-
-	private static void setupLogging() {
-		try {
-			File logFile = new File(LOG_FILE);
-			ensureParentDirectoriesExist(logFile);
-			logWriter = new PrintWriter(new FileWriter(LOG_FILE, true));
-		} catch (IOException e) {
-			System.err.println("Failed to setup logging: " + e.getMessage());
-		}
-	}
-
-	private static void logMessage(String message) {
-		if (logWriter != null) {
-			String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-			logWriter.println("[" + timestamp + "] " + message);
-			logWriter.flush();
-		}
-	}
-
-	private static void logAndPrint(String message, boolean isError) {
-		logMessage(message);
-		if (isError) {
-			System.err.println(message);
-		} else {
-			System.out.println(message);
-		}
-	}
-
-	private static void logSessionStart(String[] args) {
-		logMessage("===============================================================");
-		logMessage("COMPILER SESSION STARTED");
-		logMessage("Arguments: " + Arrays.toString(args));
-		logMessage("Working Directory: " + System.getProperty("user.dir"));
-		logMessage("Java Version: " + System.getProperty("java.version"));
-		logMessage("===============================================================");
-	}
-
-	private static void logSessionEnd() {
-		long sessionDuration = System.currentTimeMillis() - sessionStartTime;
-		logMessage("===============================================================");
-		logMessage("COMPILER SESSION COMPLETED");
-		logMessage("Total Duration: " + String.format("%.2f seconds", sessionDuration / 1000.0));
-		logMessage("===============================================================");
-		logMessage("");
-	}
-
-	private static void closeLogging() {
-		if (logWriter != null) {
-			logWriter.close();
+			System.out.println("Generated combined report at " + combinedReportPath);
 		}
 	}
 
 	private static File[] getInputFiles(File inputPath) {
 		if (inputPath.isDirectory()) {
-			logMessage("Processing directory: " + inputPath.getAbsolutePath());
 			return inputPath.listFiles((dir, name) -> name.endsWith(".txt"));
 		} else {
-			logMessage("Processing single file: " + inputPath.getAbsolutePath());
 			return new File[] { inputPath };
 		}
 	}
 
 	private static List<String> processFiles(File[] inputFiles) {
 		List<String> individualReports = new ArrayList<>();
-		int successCount = 0;
-		int failureCount = 0;
 
-		for (int i = 0; i < inputFiles.length; i++) {
-			File file = inputFiles[i];
+		for (File file : inputFiles) {
 			String filePath = file.getAbsolutePath();
-			String processMsg = "Processing file " + (i + 1) + "/" + inputFiles.length + ": " + file.getName();
-			logAndPrint(processMsg, false);
+			System.out.println("Processing file: " + filePath);
 
 			ExprParser parser = getParser(filePath);
 			if (parser == null || MyErrorListener.hasError) {
-				String skipMsg = "WARNING: Skipping file due to syntax errors or parser failure.";
-				logAndPrint(skipMsg, true);
-				failureCount++;
+				System.err.println("Skipping file due to syntax errors or parser failure.");
 				continue;
 			}
 
@@ -169,6 +87,7 @@ public class ExpressionApp {
 				semanticErrors = new ArrayList<>();
 				operationVisitors = new ArrayList<>();
 
+				// Create a list of class declarations
 				List<ClassDeclaration> classes = new ArrayList<>();
 
 				AntlrToProgram progVisitor = new AntlrToProgram(semanticErrors, vars);
@@ -216,111 +135,25 @@ public class ExpressionApp {
 					}
 				}
 
-				
-				logAnalysisResults(file.getName(), classes, getAllSemanticErrors(classes));
-				
-				// log class info for testing
-				for (ClassDeclaration cd : classes) {
-					String classInfo = "-------------------------" + cd.className + "-------------------------";
-					logMessage(classInfo);
-					logMessage("Functions: " + cd.functions);
-					logMessage("Variables: " + cd.vars);
-					logMessage("Evaluated Variables: " + cd.evaluatedVars);
-				}
-				
-				
-				// generate html report
+				/**
+				 * 
+				 * Usage of List<ClassDeclaration> classes:
+				 * 
+				 * for (ClassDeclaration cd : classes) { //cd.functions returns a list of all
+				 * functions declared in the class //cd.evaluatedVar returns a list of all
+				 * variables in the class alongside their values }
+				 */
+
 				long processingTime = System.currentTimeMillis() - startTime;
-				String reportPath = generateHtmlReport(file, filePath, ep, getAllSemanticErrors(classes),
-						processingTime, classes);
+				String reportPath = generateHtmlReport(file, filePath, ep, semanticErrors, processingTime, classes);
 				individualReports.add(reportPath);
-
-				String reportMsg = "Generated report: " + reportPath;
-				logAndPrint(reportMsg, false);
-
-				logMessage("File processed in " + processingTime + "ms");
-				successCount++;
-
 			} catch (Exception e) {
-				String errorMsg = "ERROR: Error processing file " + filePath + ": " + e.getMessage();
-				logAndPrint(errorMsg, true);
-				logMessage("Stack trace: " + getStackTraceAsString(e));
-				failureCount++;
+				System.err.println("Error processing file " + filePath + ": " + e.getMessage());
+				e.printStackTrace();
 			}
 		}
 
-		logMessage("Processing Summary - Success: " + successCount + ", Failures: " + failureCount);
 		return individualReports;
-	}
-
-	private static void logAnalysisResults(String fileName, List<ClassDeclaration> classes, List<String> errors) {
-		logMessage("Analysis Results for: " + fileName);
-
-		if (!errors.isEmpty()) {
-			logMessage("Semantic Errors Found: " + errors.size());
-			for (String error : errors) {
-				logMessage("  - " + error);
-			}
-		} else {
-			logMessage("No semantic errors found");
-		}
-
-		for (ClassDeclaration classDecl : classes) {
-			logMessage("Class: " + classDecl.className);
-
-			if (classDecl.functions != null && !classDecl.functions.isEmpty()) {
-				logMessage("  Functions: " + classDecl.functions.size());
-				for (String funcName : classDecl.functions.keySet()) {
-					logMessage("    * " + funcName);
-				}
-			}
-
-			if (classDecl.evaluatedVars != null && !classDecl.evaluatedVars.isEmpty()) {
-				logMessage("  Variables: " + classDecl.evaluatedVars.size());
-				for (Map.Entry<String, Value> entry : classDecl.evaluatedVars.entrySet()) {
-					if (entry.getValue() != null) {
-						String value = formatVariableValueForLog(entry.getValue());
-						logMessage("    * " + entry.getKey() + ": " + entry.getValue().type.toString() + " = " + value);
-					} else {
-						logMessage("    * " + entry.getKey() + ": null = null");
-					}
-				}
-			}
-		}
-
-		logMessage("Analysis Complete");
-	}
-
-	private static String formatVariableValueForLog(Value valueObj) {
-		if (valueObj == null || valueObj.type == null) {
-			return "null";
-		}
-
-		return switch (valueObj.type) {
-		case INT -> String.valueOf(valueObj.getValueAsInt());
-		case BOOL -> String.valueOf(valueObj.getValueAsBool());
-		case CHAR -> "'" + valueObj.getValueAsCharacter() + "'";
-		case LIST_CHAR, LIST_INT -> extractListValue(valueObj.toString());
-		default -> "null";
-		};
-	}
-
-	private static String extractListValue(String valueStr) {
-		if (valueStr.contains("value=")) {
-			int start = valueStr.indexOf("value=") + 6;
-			int end = valueStr.indexOf("}", start);
-			if (end == -1)
-				end = valueStr.length();
-			return valueStr.substring(start, end);
-		}
-		return valueStr;
-	}
-
-	private static String getStackTraceAsString(Exception e) {
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-		e.printStackTrace(pw);
-		return sw.toString();
 	}
 
 	private static void visitExpression(Expression e, Map<String, Type> currentVars,
@@ -360,14 +193,19 @@ public class ExpressionApp {
 			} else {
 				functions.put(fd.functionName, fd);
 			}
+
 		}
 	}
 
 	private static String generateHtmlReport(File file, String filePath, ExpressionProcessor ep,
 			List<String> semanticErrors, long processingTime, List<ClassDeclaration> classes) throws IOException {
 		String baseName = file.getName().replace(".txt", "");
-		String outputPath = "src/tests/" + baseName + "-report.html"; // Changed: removed output/ folder
+		String outputPath = "src/tests/" + baseName + "-report.html";
 		ensureParentDirectoriesExist(new File(outputPath));
+
+		List<String> allSemanticErrors = new ArrayList<>();
+		for (ClassDeclaration cd : classes)
+			allSemanticErrors.addAll(cd.semanticErrors);
 
 		String inputFileContents = readFileContents(filePath);
 
@@ -379,7 +217,7 @@ public class ExpressionApp {
 			writer.println("</head><body>");
 			writer.println(generateHtmlHeader("Compilation Report"));
 			writer.println("<div class=\"container\">");
-			writer.println(generateLeftColumn(filePath, inputFileContents, semanticErrors));
+			writer.println(generateLeftColumn(filePath, inputFileContents, allSemanticErrors));
 			writer.println(
 					generateRightColumn(ep.vars, semanticErrors, filePath, inputFileContents, processingTime, classes));
 			writer.println("</div>");
@@ -387,6 +225,7 @@ public class ExpressionApp {
 			writer.println("</body></html>");
 		}
 
+		System.out.println("Generated report: " + outputPath);
 		return outputPath;
 	}
 
@@ -445,7 +284,46 @@ public class ExpressionApp {
 	}
 
 	private static String generateLeftColumn(String filePath, String contents, List<String> errors) {
-		Set<Integer> errorLines = extractErrorLineNumbers(errors);
+		Set<Integer> errorLines = new HashSet<>();
+		for (String error : errors) {
+			if (error.contains("line=")) {
+				try {
+					int start = error.indexOf("line=") + 5;
+					int end = error.indexOf(" ", start);
+					if (end == -1)
+						end = error.indexOf(",", start);
+					if (end == -1)
+						end = error.length();
+					String lineStr = error.substring(start, end);
+					errorLines.add(Integer.parseInt(lineStr));
+				} catch (NumberFormatException e) {
+				}
+			}
+			// look for patterns like "at [11, 13]" in error messages (type mismatches)
+			if (error.contains(" at [")) {
+				try {
+					int start = error.indexOf(" at [") + 5;
+					int end = error.indexOf(",", start);
+					if (end != -1) {
+						String lineStr = error.substring(start, end);
+						errorLines.add(Integer.parseInt(lineStr));
+					}
+				} catch (NumberFormatException e) {
+				}
+			}
+
+			if (error.contains(" in [")) {
+				try {
+					int start = error.indexOf(" in [") + 5;
+					int end = error.indexOf(",", start);
+					if (end != -1) {
+						String lineStr = error.substring(start, end);
+						errorLines.add(Integer.parseInt(lineStr));
+					}
+				} catch (NumberFormatException e) {
+				}
+			}
+		}
 
 		String[] lines = contents.split("\n");
 		StringBuilder numberedContent = new StringBuilder();
@@ -469,54 +347,19 @@ public class ExpressionApp {
 				""", escapeHTML(filePath), numberedContent.toString());
 	}
 
-	private static Set<Integer> extractErrorLineNumbers(List<String> errors) {
-		Set<Integer> errorLines = new HashSet<>();
-
-		for (String error : errors) {
-			extractLineNumber(error, "[", "]", errorLines);
-			extractLineNumber(error, "line ", " ", errorLines);
-			extractLineNumber(error, ": [", "]", errorLines);
-			extractLineNumber(error, " at [", "]", errorLines);
-			extractLineNumber(error, " in [", "]", errorLines);
-		}
-
-		return errorLines;
-	}
-
-	private static void extractLineNumber(String error, String startPattern, String endPattern,
-			Set<Integer> errorLines) {
-		if (!error.contains(startPattern))
-			return;
-
-		try {
-			int start = error.indexOf(startPattern) + startPattern.length();
-			int end = error.indexOf(endPattern, start);
-			if (end == -1) {
-				end = error.indexOf(" ", start);
-				if (end == -1)
-					end = error.indexOf(",", start);
-				if (end == -1)
-					end = error.length();
-			}
-
-			String lineStr = error.substring(start, end).trim();
-			lineStr = lineStr.replaceAll("[^0-9]", "");
-
-			if (!lineStr.isEmpty()) {
-				int lineNumber = Integer.parseInt(lineStr);
-				errorLines.add(lineNumber);
-			}
-		} catch (NumberFormatException | StringIndexOutOfBoundsException e) {
-			// ignore if cant parse line #
-		}
-	}
-
 	private static String generateRightColumn(Map<String, Value> values, List<String> errors, String filePath,
 			String contents, long processingTime, List<ClassDeclaration> classes) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<div class=\"right\">");
 
-		boolean errorsExist = !errors.isEmpty();
+		boolean errorsExist = false;
+		for (ClassDeclaration cd : classes) {
+			if (!cd.semanticErrors.isEmpty()) {
+				errorsExist = true;
+				break;
+			}
+		}
+
 
 		sb.append("<h2>Compilation Status</h2>");
 		if (!errorsExist) {
@@ -530,8 +373,7 @@ public class ExpressionApp {
 			for (ClassDeclaration cd : classes) {
 				sb.append("<h3>Class: ").append(escapeHTML(cd.className)).append("</h3>");
 
-				if (cd.semanticErrors == null || cd.semanticErrors.isEmpty()) {
-					// variable display
+				if (cd.semanticErrors.isEmpty()) {
 					if (cd.evaluatedVars != null && !cd.evaluatedVars.isEmpty()) {
 						sb.append("<h4>Variables</h4>");
 						sb.append("<div class=\"table-container\">");
@@ -542,17 +384,27 @@ public class ExpressionApp {
 							String variableName = escapeHTML(entry.getKey());
 							Value valueObj = entry.getValue();
 
-							if (valueObj == null || valueObj.type == null) {
-								sb.append("<tr>");
-								sb.append("<td class=\"var-name\">").append(variableName).append("</td>");
-								sb.append("<td class=\"var-type\">unknown</td>");
-								sb.append("<td class=\"var-value\">null</td>");
-								sb.append("</tr>");
+							String type = valueObj == null ? null : valueObj.type.toString();
+							Type valueObjType = valueObj == null ? null : valueObj.type;
+							if (valueObj == null)
 								continue;
+							String actualValue = "null";
+							if (valueObjType == Type.INT) {
+								actualValue = String.valueOf(valueObj.getValueAsInt());
+							} else if (valueObjType == Type.BOOL) {
+								actualValue = String.valueOf(valueObj.getValueAsBool());
+							} else if (valueObjType == Type.CHAR) {
+								actualValue = "'" + valueObj.getValueAsCharacter() + "'";
+							} else if (valueObjType == Type.LIST_CHAR || valueObjType == Type.LIST_INT) {
+								String valueStr = valueObj.toString();
+								if (valueStr.contains("value=")) {
+									int start = valueStr.indexOf("value=") + 6;
+									int end = valueStr.indexOf("}", start);
+									if (end == -1)
+										end = valueStr.length();
+									actualValue = valueStr.substring(start, end);
+								}
 							}
-
-							String type = valueObj.type.toString();
-							String actualValue = formatVariableValueForLog(valueObj);
 
 							sb.append("<tr>");
 							sb.append("<td class=\"var-name\">").append(variableName).append("</td>");
@@ -565,125 +417,92 @@ public class ExpressionApp {
 						sb.append("</div>");
 					}
 
-					// function display
-					if (cd.functions != null && !cd.functions.isEmpty()) {
-						sb.append("<h4>Functions</h4>");
-						sb.append("<div class=\"table-container\">");
-						sb.append("<table class=\"variables-table\">");
-						sb.append(
-								"<thead><tr><th>Function Name</th><th>Return Type</th><th>Parameters</th></tr></thead>");
-						sb.append("<tbody>");
-						for (Map.Entry<String, FunctionDeclaration> entry : cd.functions.entrySet()) {
-							String functionName = escapeHTML(entry.getKey());
-							FunctionDeclaration func = entry.getValue();
-							String returnType = func.returnType != null ? escapeHTML(func.returnType.toString())
-									: "void";
-
-							// Build parameters string
-							StringBuilder params = new StringBuilder();
-							if (func.parameters != null && !func.parameters.isEmpty()) {
-								for (int i = 0; i < func.parameters.size(); i++) {
-									if (i > 0)
-										params.append(", ");
-									params.append(func.parameters.get(i).toString());
-								}
-							} else {
-								params.append("()");
-							}
-
-							sb.append("<tr>");
-							sb.append("<td class=\"var-name\">").append(functionName).append("</td>");
-							sb.append("<td class=\"var-type\">").append(returnType).append("</td>");
-							sb.append("<td class=\"var-value\">").append(escapeHTML(params.toString())).append("</td>");
-							sb.append("</tr>");
-						}
-						sb.append("</tbody>");
-						sb.append("</table>");
-						sb.append("</div>");
+				} else {
+					sb.append("<h2>Error Details</h2>");
+					for (String err : cd.semanticErrors) {
+						sb.append("<div class=\"error\">").append(escapeHTML(err)).append("</div>");
 					}
+
 				}
+
+				if (cd.functions != null && !cd.functions.isEmpty()) {
+					sb.append("<h4>Functions</h4>");
+					sb.append("<div class=\"table-container\">");
+					sb.append("<table class=\"variables-table\">");
+					sb.append("<thead><tr><th>Function Name</th><th>Return Type</th><th>Parameters</th></tr></thead>");
+					sb.append("<tbody>");
+					for (Map.Entry<String, FunctionDeclaration> entry : cd.functions.entrySet()) {
+						String functionName = escapeHTML(entry.getKey());
+						FunctionDeclaration func = entry.getValue();
+						String returnType = func.returnType != null ? escapeHTML(func.returnType.toString()) : "void";
+
+						StringBuilder params = new StringBuilder();
+						if (func.parameters != null && !func.parameters.isEmpty()) {
+							for (int i = 0; i < func.parameters.size(); i++) {
+								if (i > 0)
+									params.append(", ");
+								params.append(func.parameters.get(i).toString());
+							}
+						} else {
+							params.append("()");
+						}
+
+						sb.append("<tr>");
+						sb.append("<td class=\"var-name\">").append(functionName).append("</td>");
+						sb.append("<td class=\"var-type\">").append(returnType).append("</td>");
+						sb.append("<td class=\"var-value\">").append(escapeHTML(params.toString())).append("</td>");
+						sb.append("</tr>");
+					}
+					sb.append("</tbody>");
+					sb.append("</table>");
+					sb.append("</div>");
+				}
+
 			}
 		}
 
-		// show metrics
-		appendCodeMetrics(sb, contents, classes);
-
-		if (!errors.isEmpty()) {
-			sb.append("<h2>Error Details</h2>");
-			for (String err : errors) {
-				sb.append("<div class=\"error\">").append(escapeHTML(err)).append("</div>");
-			}
-		}
-
-		sb.append("</div>");
-		return sb.toString();
-	}
-
-	private static void appendCodeMetrics(StringBuilder sb, String contents, List<ClassDeclaration> classes) {
 		sb.append("<h2>Code Metrics</h2>");
 		sb.append("<div class=\"stats\">");
-
 		String[] lines = contents.split("\n");
-		int totalLines = lines.length;
 		int nonEmptyLines = 0;
-		int ifStatements = 0;
-		int forLoops = 0;
-		int whileLoops = 0;
 		int commentLines = 0;
-		// count types of lines and statements
-		for (String line : lines) {
-			String trimmedLine = line.trim();
-			if (!trimmedLine.isEmpty()) {
-				nonEmptyLines++;
+		int ifStatements = 0;
+		int whileLoops = 0;
 
-				if (trimmedLine.startsWith("//")) {
+		for (String line : lines) {
+			String trimmed = line.trim();
+			if (!trimmed.isEmpty()) {
+				nonEmptyLines++;
+				if (trimmed.startsWith("//")) {
 					commentLines++;
 				}
-
-				if (trimmedLine.contains("if(") || trimmedLine.contains("if (")) {
+				if (trimmed.contains("if(") || trimmed.contains("if (")) {
 					ifStatements++;
 				}
-
-				if (trimmedLine.contains("for(") || trimmedLine.contains("for (")) {
-					forLoops++;
-				}
-
-				if (trimmedLine.contains("while(") || trimmedLine.contains("while (")) {
+				if (trimmed.contains("while(") || trimmed.contains("while (")) {
 					whileLoops++;
 				}
 			}
 		}
-
-		// calculate class and function metrics
-		int totalClasses = classes.size();
-		int totalFunctions = 0;
 		int totalVariables = 0;
-
-		for (ClassDeclaration classDecl : classes) {
-			if (classDecl.evaluatedVars != null) {
-				totalVariables += classDecl.evaluatedVars.size();
-			}
-			if (classDecl.functions != null) {
-				totalFunctions += classDecl.functions.size();
+		for (ClassDeclaration cd : classes) {
+			if (cd.evaluatedVars != null) {
+				totalVariables += cd.evaluatedVars.size();
 			}
 		}
 
-		appendMetric(sb, "Total Lines", totalLines);
-		appendMetric(sb, "Non-Empty Lines", nonEmptyLines);
-		appendMetric(sb, "Classes Declared", totalClasses);
-		appendMetric(sb, "Functions Declared", totalFunctions);
-		appendMetric(sb, "Variables Declared", totalVariables);
-		appendMetric(sb, "If Statements", ifStatements);
-		appendMetric(sb, "For Loops", forLoops);
-		appendMetric(sb, "While Loops", whileLoops);
-		appendMetric(sb, "Errors Found", getAllSemanticErrors(classes).size());
+		sb.append("<div class=\"stat-item\">Total Lines: <strong>").append(lines.length).append("</strong></div>");
+		sb.append("<div class=\"stat-item\">Non-Empty Lines: <strong>").append(nonEmptyLines).append("</strong></div>");
+		sb.append("<div class=\"stat-item\">Comment Lines: <strong>").append(commentLines).append("</strong></div>");
+		sb.append("<div class=\"stat-item\">If Statements: <strong>").append(ifStatements).append("</strong></div>");
+		sb.append("<div class=\"stat-item\">While Loops: <strong>").append(whileLoops).append("</strong></div>");
+		sb.append("<div class=\"stat-item\">Variables Declared: <strong>").append(totalVariables)
+				.append("</strong></div>");
+		sb.append("<div class=\"stat-item\">Errors Found: <strong>").append(errors.size()).append("</strong></div>");
+		sb.append("</div>");
 
 		sb.append("</div>");
-	}
-
-	private static void appendMetric(StringBuilder sb, String label, Object value) {
-		sb.append("<div class=\"stat-item\">").append(label).append(": <strong>").append(value)
-				.append("</strong></div>");
+		return sb.toString();
 	}
 
 	private static void writeCombinedHtmlReport(String outputPath, List<String> reportPaths) {
@@ -699,11 +518,11 @@ public class ExpressionApp {
 				String fileName = new File(reportPath).getName();
 				writer.println("<div class=\"report\">");
 				writer.println("<h2><a href=\"" + escapeHTML(fileName) + "\">" + escapeHTML(fileName) + "</a></h2>");
-
 				try (BufferedReader reader = new BufferedReader(new FileReader(reportPath))) {
 					String line;
 					while ((line = reader.readLine()) != null) {
-						if (shouldSkipLine(line)) {
+						if ((line.contains("<h1>") && line.contains("Compilation Report"))
+								|| line.contains("<footer>")) {
 							continue;
 						}
 						writer.println(line);
@@ -711,21 +530,14 @@ public class ExpressionApp {
 				} catch (IOException e) {
 					writer.println("<p>Error reading report: " + escapeHTML(fileName) + "</p>");
 				}
-
 				writer.println("</div>");
 			}
 
 			writer.println(generateFooter());
 			writer.println("</body></html>");
 		} catch (IOException e) {
-			String errorMsg = "Error writing combined report: " + e.getMessage();
-			logMessage(errorMsg);
-			System.err.println(errorMsg);
+			System.err.println("Error writing combined report: " + e.getMessage());
 		}
-	}
-
-	private static boolean shouldSkipLine(String line) {
-		return (line.contains("<h1>") && line.contains("Compilation Report")) || line.contains("<footer>");
 	}
 
 	private static void ensureParentDirectoriesExist(File file) {
@@ -757,15 +569,5 @@ public class ExpressionApp {
 			System.err.println("Error reading file: " + fileName + " - " + e.getMessage());
 			return null;
 		}
-	}
-
-	private static List<String> getAllSemanticErrors(List<ClassDeclaration> classes) {
-		List<String> allErrors = new ArrayList<>();
-		for (ClassDeclaration cd : classes) {
-			if (cd.semanticErrors != null) {
-				allErrors.addAll(cd.semanticErrors);
-			}
-		}
-		return allErrors;
 	}
 }
