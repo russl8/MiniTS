@@ -872,3 +872,289 @@ return stationId
 [2025-08-06 20:07:32] EXECUTION COMPLETED
 [2025-08-06 20:07:32] ===============================================================
 [2025-08-06 20:07:32] 
+[2025-08-06 20:17:47] ===============================================================
+[2025-08-06 20:17:47] EXECUTION STARTED
+[2025-08-06 20:17:47] Arguments: [src/tests/]
+[2025-08-06 20:17:47] Working Directory: C:\Users\ourai\Git\EECS4302Compiler-1
+[2025-08-06 20:17:47] Java Version: 17.0.15
+[2025-08-06 20:17:47] ===============================================================
+[2025-08-06 20:17:47] Processing directory: C:\Users\ourai\Git\EECS4302Compiler-1\src\tests
+[2025-08-06 20:17:47] Found 10 file(s) to process
+[2025-08-06 20:17:47] Processing file 1/10: bank_account.txt
+[2025-08-06 20:17:47] No semantic errors found
+[2025-08-06 20:17:47] Class: BankAccount
+[2025-08-06 20:17:47]   Functions: 2
+[2025-08-06 20:17:47]     * checkStatus
+[2025-08-06 20:17:47]     * compareBalance
+[2025-08-06 20:17:47]   Variables: 4
+[2025-08-06 20:17:47]     * minBalance: INT = 100
+[2025-08-06 20:17:47]     * comparison: BOOL = true
+[2025-08-06 20:17:47]     * balance: INT = 500
+[2025-08-06 20:17:47]     * status: CHAR = 'A'
+[2025-08-06 20:17:47] -------------------------BankAccount-------------------------
+[2025-08-06 20:17:47] Functions: {checkStatus=function checkStatus ( dummy : INT ) : CHAR {
+result : CHAR = L
+if (balance > minBalance) {
+        result = A
+    }
+if (balance == minBalance) {
+        result = W
+    }
+return result
+}
+, compareBalance=function compareBalance ( other : INT ) : BOOL {
+isHigher : BOOL = balance > other
+isEqual : BOOL = balance == other
+isLower : BOOL = balance < other
+return isHigher
+}
+}
+[2025-08-06 20:17:47] Variables: {Vars: checkStatus=CHAR, minBalance=INT, comparison=BOOL, balance=INT, Vars: compareBalance=BOOL, status=CHAR}
+[2025-08-06 20:17:47] Evaluated Variables: {minBalance={type=INT, value=100}, comparison={type=BOOL, value=true}, balance={type=INT, value=500}, status={type=CHAR, value=A}}
+[2025-08-06 20:17:47] Generated report: src/tests/bank_account-report.html
+[2025-08-06 20:17:47] Processing file 2/10: calculator.txt
+[2025-08-06 20:17:47] No semantic errors found
+[2025-08-06 20:17:47] Class: Calculator
+[2025-08-06 20:17:47]   Functions: 2
+[2025-08-06 20:17:47]     * compare
+[2025-08-06 20:17:47]     * evaluate
+[2025-08-06 20:17:47]   Variables: 4
+[2025-08-06 20:17:47]     * threshold: INT = 20
+[2025-08-06 20:17:47]     * comparison: BOOL = true
+[2025-08-06 20:17:47]     * category: CHAR = 'M'
+[2025-08-06 20:17:47]     * value: INT = 25
+[2025-08-06 20:17:47] -------------------------Calculator-------------------------
+[2025-08-06 20:17:47] Functions: {compare=function compare ( input : INT ) : BOOL {
+isGreater : BOOL = input > threshold
+return isGreater
+}
+, evaluate=function evaluate ( testValue : INT ) : CHAR {
+result : CHAR = L
+if (testValue >= 30) {
+        result = H
+    }
+if (testValue >= 20) {
+        result = M
+    }
+return result
+}
+}
+[2025-08-06 20:17:47] Variables: {comparison=BOOL, Vars: compare=BOOL, threshold=INT, category=CHAR, value=INT, Vars: evaluate=CHAR}
+[2025-08-06 20:17:47] Evaluated Variables: {threshold={type=INT, value=20}, comparison={type=BOOL, value=true}, category={type=CHAR, value=M}, value={type=INT, value=25}}
+[2025-08-06 20:17:47] Generated report: src/tests/calculator-report.html
+[2025-08-06 20:17:47] Processing file 3/10: employee.txt
+[2025-08-06 20:17:47] No semantic errors found
+[2025-08-06 20:17:47] Class: Employee
+[2025-08-06 20:17:47]   Functions: 2
+[2025-08-06 20:17:47]     * updateStatus
+[2025-08-06 20:17:47]     * checkAccess
+[2025-08-06 20:17:47]   Variables: 5
+[2025-08-06 20:17:47]     * accessGranted: BOOL = true
+[2025-08-06 20:17:47]     * accessLevel: INT = 5
+[2025-08-06 20:17:47]     * isActive: BOOL = true
+[2025-08-06 20:17:47]     * isVerified: BOOL = false
+[2025-08-06 20:17:47]     * currentStatus: BOOL = false
+[2025-08-06 20:17:47] -------------------------Employee-------------------------
+[2025-08-06 20:17:47] Functions: {updateStatus=function updateStatus ( newActive : BOOL ) : BOOL {
+isActive = newActive
+return isActive
+}
+, checkAccess=function checkAccess ( requiredLevel : INT ) : BOOL {
+hasAccess : BOOL = isActive && accessLevel >= requiredLevel
+return hasAccess
+}
+}
+[2025-08-06 20:17:47] Variables: {accessGranted=BOOL, accessLevel=INT, isVerified=BOOL, currentStatus=BOOL, Vars: checkAccess=BOOL, isActive=BOOL, Vars: updateStatus=BOOL}
+[2025-08-06 20:17:47] Evaluated Variables: {accessGranted={type=BOOL, value=true}, accessLevel={type=INT, value=5}, isActive={type=BOOL, value=true}, isVerified={type=BOOL, value=false}, currentStatus={type=BOOL, value=false}}
+[2025-08-06 20:17:47] Generated report: src/tests/employee-report.html
+[2025-08-06 20:17:47] Processing file 4/10: fleet.txt
+[2025-08-06 20:17:47] No semantic errors found
+[2025-08-06 20:17:47] Class: Vehicle
+[2025-08-06 20:17:47]   Functions: 1
+[2025-08-06 20:17:47]     * checkAndRefuel
+[2025-08-06 20:17:47]   Variables: 5
+[2025-08-06 20:17:47]     * fuel2: INT = 95
+[2025-08-06 20:17:47]     * fuelLevel: INT = 75
+[2025-08-06 20:17:47]     * vehicleId: INT = 1001
+[2025-08-06 20:17:47]     * needsRefuel: BOOL = false
+[2025-08-06 20:17:47]     * fuel1: INT = 85
+[2025-08-06 20:17:47] -------------------------Vehicle-------------------------
+[2025-08-06 20:17:47] Functions: {checkAndRefuel=function checkAndRefuel ( amount : INT ) : INT {
+fuelLevel = fuelLevel + amount
+if (fuelLevel > 90) {
+        needsRefuel = False
+    }
+if (fuelLevel <= 90) {
+        needsRefuel = True
+    }
+return fuelLevel
+}
+}
+[2025-08-06 20:17:47] Variables: {fuelLevel=INT, Vars: checkAndRefuel=INT, fuel2=INT, vehicleId=INT, needsRefuel=BOOL, fuel1=INT}
+[2025-08-06 20:17:47] Evaluated Variables: {fuel2={type=INT, value=95}, fuelLevel={type=INT, value=75}, vehicleId={type=INT, value=1001}, needsRefuel={type=BOOL, value=false}, fuel1={type=INT, value=85}}
+[2025-08-06 20:17:47] Generated report: src/tests/fleet-report.html
+[2025-08-06 20:17:47] Processing file 5/10: gaming.txt
+[2025-08-06 20:17:47] No semantic errors found
+[2025-08-06 20:17:47] Class: Player
+[2025-08-06 20:17:47]   Functions: 2
+[2025-08-06 20:17:47]     * calculateBonus
+[2025-08-06 20:17:47]     * getScore
+[2025-08-06 20:17:47]   Variables: 4
+[2025-08-06 20:17:47]     * score: INT = 100
+[2025-08-06 20:17:47]     * bonusScore: INT = 150
+[2025-08-06 20:17:47]     * classScore: INT = 100
+[2025-08-06 20:17:47]     * level: INT = 1
+[2025-08-06 20:17:47] -------------------------Player-------------------------
+[2025-08-06 20:17:47] Functions: {calculateBonus=function calculateBonus ( multiplier : INT ) : INT {
+score : INT = 50 * multiplier
+return score
+}
+, getScore=function getScore ( dummy : INT ) : INT {
+return score
+}
+}
+[2025-08-06 20:17:47] Variables: {score=INT, bonusScore=INT, level=INT, Vars: calculateBonus=INT, classScore=INT, Vars: getScore=INT}
+[2025-08-06 20:17:47] Evaluated Variables: {score={type=INT, value=100}, bonusScore={type=INT, value=150}, classScore={type=INT, value=100}, level={type=INT, value=1}}
+[2025-08-06 20:17:47] Generated report: src/tests/gaming-report.html
+[2025-08-06 20:17:47] Processing file 6/10: inventory.txt
+[2025-08-06 20:17:47] No semantic errors found
+[2025-08-06 20:17:47] Class: Product
+[2025-08-06 20:17:47]   Functions: 1
+[2025-08-06 20:17:47]     * updateQuantity
+[2025-08-06 20:17:47]   Variables: 2
+[2025-08-06 20:17:47]     * quantity: INT = 50
+[2025-08-06 20:17:47]     * productId: INT = 101
+[2025-08-06 20:17:47] Class: Warehouse
+[2025-08-06 20:17:47]   Functions: 2
+[2025-08-06 20:17:47]     * updateQuantity
+[2025-08-06 20:17:47]     * getLocation
+[2025-08-06 20:17:47]   Variables: 5
+[2025-08-06 20:17:47]     * location: CHAR = 'A'
+[2025-08-06 20:17:47]     * quantity: INT = 50
+[2025-08-06 20:17:47]     * newQuantity: INT = 75
+[2025-08-06 20:17:47]     * productId: INT = 101
+[2025-08-06 20:17:47]     * currentLocation: CHAR = 'A'
+[2025-08-06 20:17:47] -------------------------Product-------------------------
+[2025-08-06 20:17:47] Functions: {updateQuantity=function updateQuantity ( newQty : INT ) : INT {
+quantity = newQty
+return quantity
+}
+}
+[2025-08-06 20:17:47] Variables: {quantity=INT, productId=INT, Vars: updateQuantity=INT}
+[2025-08-06 20:17:47] Evaluated Variables: {quantity={type=INT, value=50}, productId={type=INT, value=101}}
+[2025-08-06 20:17:47] -------------------------Warehouse-------------------------
+[2025-08-06 20:17:47] Functions: {updateQuantity=function updateQuantity ( newQty : INT ) : INT {
+quantity = newQty
+return quantity
+}
+, getLocation=function getLocation ( dummy : INT ) : CHAR {
+return location
+}
+}
+[2025-08-06 20:17:47] Variables: {quantity=INT, Vars: getLocation=CHAR, productId=INT, Vars: updateQuantity=INT, location=CHAR, newQuantity=INT, currentLocation=CHAR}
+[2025-08-06 20:17:47] Evaluated Variables: {location={type=CHAR, value=A}, quantity={type=INT, value=50}, newQuantity={type=INT, value=75}, productId={type=INT, value=101}, currentLocation={type=CHAR, value=A}}
+[2025-08-06 20:17:47] Generated report: src/tests/inventory-report.html
+[2025-08-06 20:17:47] Processing file 7/10: library.txt
+[2025-08-06 20:17:47] No semantic errors found
+[2025-08-06 20:17:47] Class: Library
+[2025-08-06 20:17:47]   Functions: 1
+[2025-08-06 20:17:47]     * checkout
+[2025-08-06 20:17:47]   Variables: 3
+[2025-08-06 20:17:47]     * checkedOut: INT = 0
+[2025-08-06 20:17:47]     * totalBooks: INT = 10
+[2025-08-06 20:17:47]     * finalBooks: INT = 7
+[2025-08-06 20:17:47] -------------------------Library-------------------------
+[2025-08-06 20:17:47] Functions: {checkout=function checkout ( limit : INT ) : INT {
+while (checkedOut < limit) {
+totalBooks = totalBooks - 1
+checkedOut = checkedOut + 1
+}
+return totalBooks
+}
+}
+[2025-08-06 20:17:47] Variables: {checkedOut=INT, Vars: checkout=INT, finalBooks=INT, totalBooks=INT}
+[2025-08-06 20:17:47] Evaluated Variables: {checkedOut={type=INT, value=0}, totalBooks={type=INT, value=10}, finalBooks={type=INT, value=7}}
+[2025-08-06 20:17:47] Generated report: src/tests/library-report.html
+[2025-08-06 20:17:47] Processing file 8/10: student.txt
+[2025-08-06 20:17:47] No semantic errors found
+[2025-08-06 20:17:47] Class: Student
+[2025-08-06 20:17:47]   Functions: 2
+[2025-08-06 20:17:47]     * updateGrade
+[2025-08-06 20:17:47]     * addCredits
+[2025-08-06 20:17:47]   Variables: 5
+[2025-08-06 20:17:47]     * studentId: INT = 12345
+[2025-08-06 20:17:47]     * finalGrade: INT = 92
+[2025-08-06 20:17:47]     * totalCredits: INT = 15
+[2025-08-06 20:17:47]     * credits: INT = 12
+[2025-08-06 20:17:47]     * grade: INT = 85
+[2025-08-06 20:17:47] -------------------------Student-------------------------
+[2025-08-06 20:17:47] Functions: {updateGrade=function updateGrade ( newGrade : INT ) : INT {
+grade = newGrade
+return grade
+}
+, addCredits=function addCredits ( additionalCredits : INT ) : INT {
+credits = credits + additionalCredits
+return credits
+}
+}
+[2025-08-06 20:17:47] Variables: {studentId=INT, totalCredits=INT, Vars: updateGrade=INT, credits=INT, grade=INT, finalGrade=INT, Vars: addCredits=INT}
+[2025-08-06 20:17:47] Evaluated Variables: {studentId={type=INT, value=12345}, finalGrade={type=INT, value=92}, totalCredits={type=INT, value=15}, credits={type=INT, value=12}, grade={type=INT, value=85}}
+[2025-08-06 20:17:47] Generated report: src/tests/student-report.html
+[2025-08-06 20:17:47] Processing file 9/10: task_manager.txt
+[2025-08-06 20:17:47] No semantic errors found
+[2025-08-06 20:17:47] Class: TaskManager
+[2025-08-06 20:17:47]   Functions: 1
+[2025-08-06 20:17:47]     * processTasks
+[2025-08-06 20:17:47]   Variables: 3
+[2025-08-06 20:17:47]     * processedCount: INT = 5
+[2025-08-06 20:17:47]     * completedTasks: INT = 0
+[2025-08-06 20:17:47]     * totalTasks: INT = 0
+[2025-08-06 20:17:47] -------------------------TaskManager-------------------------
+[2025-08-06 20:17:47] Functions: {processTasks=function processTasks ( limit : INT ) : INT {
+for (
+i : INT = 1; i <= limit; i = i + 1) {
+totalTasks = totalTasks + 1
+if (i <= 3) {
+        completedTasks = completedTasks + 1
+    }
+}
+
+return totalTasks
+}
+}
+[2025-08-06 20:17:47] Variables: {completedTasks=INT, Vars: processTasks=INT, processedCount=INT, totalTasks=INT}
+[2025-08-06 20:17:47] Evaluated Variables: {processedCount={type=INT, value=5}, completedTasks={type=INT, value=0}, totalTasks={type=INT, value=0}}
+[2025-08-06 20:17:47] Generated report: src/tests/task_manager-report.html
+[2025-08-06 20:17:47] Processing file 10/10: weather.txt
+[2025-08-06 20:17:47] No semantic errors found
+[2025-08-06 20:17:47] Class: WeatherStation
+[2025-08-06 20:17:47]   Functions: 2
+[2025-08-06 20:17:47]     * setRain
+[2025-08-06 20:17:47]     * setClear
+[2025-08-06 20:17:47]   Variables: 5
+[2025-08-06 20:17:47]     * clearAlert: INT = 2001
+[2025-08-06 20:17:47]     * etaRange: LIST_INT = [5, 10]
+[2025-08-06 20:17:47]     * rainAlert: INT = 2001
+[2025-08-06 20:17:47]     * weatherCode: LIST_CHAR = [C, L, E, A, R]
+[2025-08-06 20:17:47]     * stationId: INT = 2001
+[2025-08-06 20:17:47] -------------------------WeatherStation-------------------------
+[2025-08-06 20:17:47] Functions: {setRain=function setRain ( dummy : INT ) : INT {
+weatherCode = [R, A, I, N]
+etaRange = [15, 30]
+return stationId
+}
+, setClear=function setClear ( dummy : INT ) : INT {
+weatherCode = [C, L, E, A, R]
+etaRange = [5, 10]
+return stationId
+}
+}
+[2025-08-06 20:17:47] Variables: {weatherCode=LIST_CHAR, clearAlert=INT, etaRange=LIST_INT, Vars: setRain=INT, rainAlert=INT, stationId=INT, Vars: setClear=INT}
+[2025-08-06 20:17:47] Evaluated Variables: {clearAlert={type=INT, value=2001}, etaRange={type=LIST_INT, value=[5, 10]}, rainAlert={type=INT, value=2001}, weatherCode={type=LIST_CHAR, value=[C, L, E, A, R]}, stationId={type=INT, value=2001}}
+[2025-08-06 20:17:47] Generated report: src/tests/weather-report.html
+[2025-08-06 20:17:47] Processing Summary - Success: 10, Failures: 0
+[2025-08-06 20:17:47] Generated combined report at src/tests/combined-report.html
+[2025-08-06 20:17:47] ===============================================================
+[2025-08-06 20:17:47] EXECUTION COMPLETED
+[2025-08-06 20:17:47] ===============================================================
+[2025-08-06 20:17:47] 

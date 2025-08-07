@@ -801,19 +801,19 @@
   3 | 
   4 | class WeatherStation {
   5 |     stationId : int = 2001;
-  6 |     weatherCode : list[char] = ['S', 'U', 'N'];
+  6 |     weatherCode : list[char] = &quot;SUN&quot;;
   7 |     etaRange : list[int] = [0, 0];
   8 |     
   9 |     function setRain(dummy : int) : int {
  10 |         // Update weather code and ETA for rain
- 11 |         weatherCode = ['R', 'A', 'I', 'N'];
+ 11 |         weatherCode = &quot;RAIN&quot;;
  12 |         etaRange = [15, 30];
  13 |         return stationId;
  14 |     }
  15 |     
  16 |     function setClear(dummy : int) : int {
  17 |         // Update weather code and ETA for clear skies
- 18 |         weatherCode = ['C', 'L', 'E', 'A', 'R'];
+ 18 |         weatherCode = &quot;CLEAR&quot;;
  19 |         etaRange = [5, 10];
  20 |         return stationId;
  21 |     }
