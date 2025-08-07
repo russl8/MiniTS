@@ -1,7 +1,7 @@
 # MiniTS Setup Instructions
 
 ## Creating a runnable JAR from the project (from eclipse) if there isnt one already
-
+------------------------------------------------------------------------------------
 #### Setting up run config
 1. Right-click the Java project on the project explorer
 2. Select "Run As" -> "Run Configurations"
@@ -17,10 +17,11 @@
 5. Select export destination to be "MiniTS\miniTs.jar"
 
 ## Running the Runnable JAR
+---------------------------
 Before running, make sure you are in the **root** directory (MiniTS).
 	ie: /mnt/c/Users/russe/Github/MiniTS
 	
-When running the input command, we can select to provide either:
+When running the input command, you can select to provide either:
 1. A directory full of .txt files 
 2. 1 individual file
 
