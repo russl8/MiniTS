@@ -1,0 +1,980 @@
+[2025-08-06 19:50:30] ===============================================================
+[2025-08-06 19:50:30] COMPILER SESSION STARTED
+[2025-08-06 19:50:30] Arguments: [src/tests/examples/]
+[2025-08-06 19:50:30] Working Directory: C:\Users\ourai\Git\EECS4302Compiler-1
+[2025-08-06 19:50:30] Java Version: 17.0.15
+[2025-08-06 19:50:30] ===============================================================
+[2025-08-06 19:50:30] Processing directory: C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\examples
+[2025-08-06 19:50:30] Found 10 file(s) to process
+[2025-08-06 19:50:30] Processing file 1/10: bank_account.txt
+[2025-08-06 19:50:30] No semantic errors found
+[2025-08-06 19:50:30] Class: BankAccount
+[2025-08-06 19:50:30]   Functions: 2
+[2025-08-06 19:50:30]     * checkStatus
+[2025-08-06 19:50:30]     * compareBalance
+[2025-08-06 19:50:30]   Variables: 4
+[2025-08-06 19:50:30]     * minBalance: INT = 100
+[2025-08-06 19:50:30]     * comparison: BOOL = true
+[2025-08-06 19:50:30]     * balance: INT = 500
+[2025-08-06 19:50:30]     * status: CHAR = 'A'
+[2025-08-06 19:50:30] -------------------------BankAccount-------------------------
+[2025-08-06 19:50:30] Functions: {checkStatus=function checkStatus ( dummy : INT ) : CHAR {
+result : CHAR = L
+if (balance > minBalance) {
+        result = A
+    }
+if (balance == minBalance) {
+        result = W
+    }
+return result
+}
+, compareBalance=function compareBalance ( other : INT ) : BOOL {
+isHigher : BOOL = balance > other
+isEqual : BOOL = balance == other
+isLower : BOOL = balance < other
+return isHigher
+}
+}
+[2025-08-06 19:50:30] Variables: {Vars: checkStatus=CHAR, minBalance=INT, comparison=BOOL, balance=INT, Vars: compareBalance=BOOL, status=CHAR}
+[2025-08-06 19:50:30] Evaluated Variables: {minBalance={type=INT, value=100}, comparison={type=BOOL, value=true}, balance={type=INT, value=500}, status={type=CHAR, value=A}}
+[2025-08-06 19:50:30] Generated report: src/tests/output/bank_account-report.html
+[2025-08-06 19:50:30] Processing file 2/10: calculator.txt
+[2025-08-06 19:50:30] No semantic errors found
+[2025-08-06 19:50:30] Class: Calculator
+[2025-08-06 19:50:30]   Functions: 2
+[2025-08-06 19:50:30]     * compare
+[2025-08-06 19:50:30]     * evaluate
+[2025-08-06 19:50:30]   Variables: 4
+[2025-08-06 19:50:30]     * threshold: INT = 20
+[2025-08-06 19:50:30]     * comparison: BOOL = true
+[2025-08-06 19:50:30]     * category: CHAR = 'M'
+[2025-08-06 19:50:30]     * value: INT = 25
+[2025-08-06 19:50:30] -------------------------Calculator-------------------------
+[2025-08-06 19:50:30] Functions: {compare=function compare ( input : INT ) : BOOL {
+isGreater : BOOL = input > threshold
+return isGreater
+}
+, evaluate=function evaluate ( testValue : INT ) : CHAR {
+result : CHAR = L
+if (testValue >= 30) {
+        result = H
+    }
+if (testValue >= 20) {
+        result = M
+    }
+return result
+}
+}
+[2025-08-06 19:50:30] Variables: {comparison=BOOL, Vars: compare=BOOL, threshold=INT, category=CHAR, value=INT, Vars: evaluate=CHAR}
+[2025-08-06 19:50:30] Evaluated Variables: {threshold={type=INT, value=20}, comparison={type=BOOL, value=true}, category={type=CHAR, value=M}, value={type=INT, value=25}}
+[2025-08-06 19:50:30] Generated report: src/tests/output/calculator-report.html
+[2025-08-06 19:50:30] Processing file 3/10: employee.txt
+[2025-08-06 19:50:30] No semantic errors found
+[2025-08-06 19:50:30] Class: Employee
+[2025-08-06 19:50:30]   Functions: 2
+[2025-08-06 19:50:30]     * updateStatus
+[2025-08-06 19:50:30]     * checkAccess
+[2025-08-06 19:50:30]   Variables: 5
+[2025-08-06 19:50:30]     * accessGranted: BOOL = true
+[2025-08-06 19:50:30]     * accessLevel: INT = 5
+[2025-08-06 19:50:30]     * isActive: BOOL = true
+[2025-08-06 19:50:30]     * isVerified: BOOL = false
+[2025-08-06 19:50:30]     * currentStatus: BOOL = false
+[2025-08-06 19:50:30] -------------------------Employee-------------------------
+[2025-08-06 19:50:30] Functions: {updateStatus=function updateStatus ( newActive : BOOL ) : BOOL {
+isActive = newActive
+return isActive
+}
+, checkAccess=function checkAccess ( requiredLevel : INT ) : BOOL {
+hasAccess : BOOL = isActive && accessLevel >= requiredLevel
+return hasAccess
+}
+}
+[2025-08-06 19:50:30] Variables: {accessGranted=BOOL, accessLevel=INT, isVerified=BOOL, currentStatus=BOOL, Vars: checkAccess=BOOL, isActive=BOOL, Vars: updateStatus=BOOL}
+[2025-08-06 19:50:30] Evaluated Variables: {accessGranted={type=BOOL, value=true}, accessLevel={type=INT, value=5}, isActive={type=BOOL, value=true}, isVerified={type=BOOL, value=false}, currentStatus={type=BOOL, value=false}}
+[2025-08-06 19:50:30] Generated report: src/tests/output/employee-report.html
+[2025-08-06 19:50:30] Processing file 4/10: fleet.txt
+[2025-08-06 19:50:30] No semantic errors found
+[2025-08-06 19:50:30] Class: Vehicle
+[2025-08-06 19:50:30]   Functions: 1
+[2025-08-06 19:50:30]     * checkAndRefuel
+[2025-08-06 19:50:30]   Variables: 5
+[2025-08-06 19:50:30]     * fuel2: INT = 95
+[2025-08-06 19:50:30]     * fuelLevel: INT = 75
+[2025-08-06 19:50:30]     * vehicleId: INT = 1001
+[2025-08-06 19:50:30]     * needsRefuel: BOOL = false
+[2025-08-06 19:50:30]     * fuel1: INT = 85
+[2025-08-06 19:50:30] -------------------------Vehicle-------------------------
+[2025-08-06 19:50:30] Functions: {checkAndRefuel=function checkAndRefuel ( amount : INT ) : INT {
+fuelLevel = fuelLevel + amount
+if (fuelLevel > 90) {
+        needsRefuel = False
+    }
+if (fuelLevel <= 90) {
+        needsRefuel = True
+    }
+return fuelLevel
+}
+}
+[2025-08-06 19:50:30] Variables: {fuelLevel=INT, Vars: checkAndRefuel=INT, fuel2=INT, vehicleId=INT, needsRefuel=BOOL, fuel1=INT}
+[2025-08-06 19:50:30] Evaluated Variables: {fuel2={type=INT, value=95}, fuelLevel={type=INT, value=75}, vehicleId={type=INT, value=1001}, needsRefuel={type=BOOL, value=false}, fuel1={type=INT, value=85}}
+[2025-08-06 19:50:30] Generated report: src/tests/output/fleet-report.html
+[2025-08-06 19:50:30] Processing file 5/10: gaming.txt
+[2025-08-06 19:50:30] No semantic errors found
+[2025-08-06 19:50:30] Class: Player
+[2025-08-06 19:50:30]   Functions: 2
+[2025-08-06 19:50:30]     * calculateBonus
+[2025-08-06 19:50:30]     * getScore
+[2025-08-06 19:50:30]   Variables: 4
+[2025-08-06 19:50:30]     * score: INT = 100
+[2025-08-06 19:50:30]     * bonusScore: INT = 150
+[2025-08-06 19:50:30]     * classScore: INT = 100
+[2025-08-06 19:50:30]     * level: INT = 1
+[2025-08-06 19:50:30] -------------------------Player-------------------------
+[2025-08-06 19:50:30] Functions: {calculateBonus=function calculateBonus ( multiplier : INT ) : INT {
+score : INT = 50 * multiplier
+return score
+}
+, getScore=function getScore ( dummy : INT ) : INT {
+return score
+}
+}
+[2025-08-06 19:50:30] Variables: {score=INT, bonusScore=INT, level=INT, Vars: calculateBonus=INT, classScore=INT, Vars: getScore=INT}
+[2025-08-06 19:50:30] Evaluated Variables: {score={type=INT, value=100}, bonusScore={type=INT, value=150}, classScore={type=INT, value=100}, level={type=INT, value=1}}
+[2025-08-06 19:50:30] Generated report: src/tests/output/gaming-report.html
+[2025-08-06 19:50:30] Processing file 6/10: inventory.txt
+[2025-08-06 19:50:30] No semantic errors found
+[2025-08-06 19:50:30] Class: Product
+[2025-08-06 19:50:30]   Functions: 1
+[2025-08-06 19:50:30]     * updateQuantity
+[2025-08-06 19:50:30]   Variables: 2
+[2025-08-06 19:50:30]     * quantity: INT = 50
+[2025-08-06 19:50:30]     * productId: INT = 101
+[2025-08-06 19:50:30] Class: Warehouse
+[2025-08-06 19:50:30]   Functions: 2
+[2025-08-06 19:50:30]     * updateQuantity
+[2025-08-06 19:50:30]     * getLocation
+[2025-08-06 19:50:30]   Variables: 5
+[2025-08-06 19:50:30]     * location: CHAR = 'A'
+[2025-08-06 19:50:30]     * quantity: INT = 50
+[2025-08-06 19:50:30]     * newQuantity: INT = 75
+[2025-08-06 19:50:30]     * productId: INT = 101
+[2025-08-06 19:50:30]     * currentLocation: CHAR = 'A'
+[2025-08-06 19:50:30] -------------------------Product-------------------------
+[2025-08-06 19:50:30] Functions: {updateQuantity=function updateQuantity ( newQty : INT ) : INT {
+quantity = newQty
+return quantity
+}
+}
+[2025-08-06 19:50:30] Variables: {quantity=INT, productId=INT, Vars: updateQuantity=INT}
+[2025-08-06 19:50:30] Evaluated Variables: {quantity={type=INT, value=50}, productId={type=INT, value=101}}
+[2025-08-06 19:50:30] -------------------------Warehouse-------------------------
+[2025-08-06 19:50:30] Functions: {updateQuantity=function updateQuantity ( newQty : INT ) : INT {
+quantity = newQty
+return quantity
+}
+, getLocation=function getLocation ( dummy : INT ) : CHAR {
+return location
+}
+}
+[2025-08-06 19:50:30] Variables: {quantity=INT, Vars: getLocation=CHAR, productId=INT, Vars: updateQuantity=INT, location=CHAR, newQuantity=INT, currentLocation=CHAR}
+[2025-08-06 19:50:30] Evaluated Variables: {location={type=CHAR, value=A}, quantity={type=INT, value=50}, newQuantity={type=INT, value=75}, productId={type=INT, value=101}, currentLocation={type=CHAR, value=A}}
+[2025-08-06 19:50:30] Generated report: src/tests/output/inventory-report.html
+[2025-08-06 19:50:30] Processing file 7/10: library.txt
+[2025-08-06 19:50:30] No semantic errors found
+[2025-08-06 19:50:30] Class: Library
+[2025-08-06 19:50:30]   Functions: 1
+[2025-08-06 19:50:30]     * checkout
+[2025-08-06 19:50:30]   Variables: 3
+[2025-08-06 19:50:30]     * checkedOut: INT = 0
+[2025-08-06 19:50:30]     * totalBooks: INT = 10
+[2025-08-06 19:50:30]     * finalBooks: INT = 7
+[2025-08-06 19:50:30] -------------------------Library-------------------------
+[2025-08-06 19:50:30] Functions: {checkout=function checkout ( limit : INT ) : INT {
+while (checkedOut < limit) {
+totalBooks = totalBooks - 1
+checkedOut = checkedOut + 1
+}
+return totalBooks
+}
+}
+[2025-08-06 19:50:30] Variables: {checkedOut=INT, Vars: checkout=INT, finalBooks=INT, totalBooks=INT}
+[2025-08-06 19:50:30] Evaluated Variables: {checkedOut={type=INT, value=0}, totalBooks={type=INT, value=10}, finalBooks={type=INT, value=7}}
+[2025-08-06 19:50:30] Generated report: src/tests/output/library-report.html
+[2025-08-06 19:50:30] Processing file 8/10: student.txt
+[2025-08-06 19:50:30] No semantic errors found
+[2025-08-06 19:50:30] Class: Student
+[2025-08-06 19:50:30]   Functions: 2
+[2025-08-06 19:50:30]     * updateGrade
+[2025-08-06 19:50:30]     * addCredits
+[2025-08-06 19:50:30]   Variables: 5
+[2025-08-06 19:50:30]     * studentId: INT = 12345
+[2025-08-06 19:50:30]     * finalGrade: INT = 92
+[2025-08-06 19:50:30]     * totalCredits: INT = 15
+[2025-08-06 19:50:30]     * credits: INT = 12
+[2025-08-06 19:50:30]     * grade: INT = 85
+[2025-08-06 19:50:30] -------------------------Student-------------------------
+[2025-08-06 19:50:30] Functions: {updateGrade=function updateGrade ( newGrade : INT ) : INT {
+grade = newGrade
+return grade
+}
+, addCredits=function addCredits ( additionalCredits : INT ) : INT {
+credits = credits + additionalCredits
+return credits
+}
+}
+[2025-08-06 19:50:30] Variables: {studentId=INT, totalCredits=INT, Vars: updateGrade=INT, credits=INT, grade=INT, finalGrade=INT, Vars: addCredits=INT}
+[2025-08-06 19:50:30] Evaluated Variables: {studentId={type=INT, value=12345}, finalGrade={type=INT, value=92}, totalCredits={type=INT, value=15}, credits={type=INT, value=12}, grade={type=INT, value=85}}
+[2025-08-06 19:50:30] Generated report: src/tests/output/student-report.html
+[2025-08-06 19:50:30] Processing file 9/10: task_manager.txt
+[2025-08-06 19:50:30] No semantic errors found
+[2025-08-06 19:50:30] Class: TaskManager
+[2025-08-06 19:50:30]   Functions: 1
+[2025-08-06 19:50:30]     * processTasks
+[2025-08-06 19:50:30]   Variables: 3
+[2025-08-06 19:50:30]     * processedCount: INT = 5
+[2025-08-06 19:50:30]     * completedTasks: INT = 0
+[2025-08-06 19:50:30]     * totalTasks: INT = 0
+[2025-08-06 19:50:30] -------------------------TaskManager-------------------------
+[2025-08-06 19:50:30] Functions: {processTasks=function processTasks ( limit : INT ) : INT {
+for (
+i : INT = 1; i <= limit; i = i + 1) {
+totalTasks = totalTasks + 1
+if (i <= 3) {
+        completedTasks = completedTasks + 1
+    }
+}
+
+return totalTasks
+}
+}
+[2025-08-06 19:50:30] Variables: {completedTasks=INT, Vars: processTasks=INT, processedCount=INT, totalTasks=INT}
+[2025-08-06 19:50:30] Evaluated Variables: {processedCount={type=INT, value=5}, completedTasks={type=INT, value=0}, totalTasks={type=INT, value=0}}
+[2025-08-06 19:50:30] Generated report: src/tests/output/task_manager-report.html
+[2025-08-06 19:50:30] Processing file 10/10: weather.txt
+[2025-08-06 19:50:30] No semantic errors found
+[2025-08-06 19:50:30] Class: WeatherStation
+[2025-08-06 19:50:30]   Functions: 2
+[2025-08-06 19:50:30]     * setRain
+[2025-08-06 19:50:30]     * setClear
+[2025-08-06 19:50:30]   Variables: 5
+[2025-08-06 19:50:30]     * clearAlert: INT = 2001
+[2025-08-06 19:50:30]     * etaRange: LIST_INT = [5, 10]
+[2025-08-06 19:50:30]     * rainAlert: INT = 2001
+[2025-08-06 19:50:30]     * weatherCode: LIST_CHAR = [C, L, E, A, R]
+[2025-08-06 19:50:30]     * stationId: INT = 2001
+[2025-08-06 19:50:30] -------------------------WeatherStation-------------------------
+[2025-08-06 19:50:30] Functions: {setRain=function setRain ( dummy : INT ) : INT {
+weatherCode = [R, A, I, N]
+etaRange = [15, 30]
+return stationId
+}
+, setClear=function setClear ( dummy : INT ) : INT {
+weatherCode = [C, L, E, A, R]
+etaRange = [5, 10]
+return stationId
+}
+}
+[2025-08-06 19:50:30] Variables: {weatherCode=LIST_CHAR, clearAlert=INT, etaRange=LIST_INT, Vars: setRain=INT, rainAlert=INT, stationId=INT, Vars: setClear=INT}
+[2025-08-06 19:50:30] Evaluated Variables: {clearAlert={type=INT, value=2001}, etaRange={type=LIST_INT, value=[5, 10]}, rainAlert={type=INT, value=2001}, weatherCode={type=LIST_CHAR, value=[C, L, E, A, R]}, stationId={type=INT, value=2001}}
+[2025-08-06 19:50:30] Generated report: src/tests/output/weather-report.html
+[2025-08-06 19:50:30] Processing Summary - Success: 10, Failures: 0
+[2025-08-06 19:50:30] Generated combined report at src/tests/output/combined-report.html
+[2025-08-06 19:50:30] ===============================================================
+[2025-08-06 19:50:30] COMPILER SESSION COMPLETED
+[2025-08-06 19:50:30] ===============================================================
+[2025-08-06 19:50:30] 
+[2025-08-06 19:54:20] ===============================================================
+[2025-08-06 19:54:20] COMPILER SESSION STARTED
+[2025-08-06 19:54:20] Arguments: [src/tests/]
+[2025-08-06 19:54:20] Working Directory: C:\Users\ourai\Git\EECS4302Compiler-1
+[2025-08-06 19:54:20] Java Version: 17.0.15
+[2025-08-06 19:54:20] ===============================================================
+[2025-08-06 19:54:20] Processing directory: C:\Users\ourai\Git\EECS4302Compiler-1\src\tests
+[2025-08-06 19:54:20] Found 5 file(s) to process
+[2025-08-06 19:54:20] Processing file 1/5: t1.txt
+[2025-08-06 19:54:20] Semantic Errors Found: 2
+[2025-08-06 19:54:20]   - Type mismatch at [2, 5]: expected INT = INT declaration but got INT = BOOL
+[2025-08-06 19:54:20]   - Variable x already declared,  line=5 col=5
+[2025-08-06 19:54:20] Class: MyClass
+[2025-08-06 19:54:20] -------------------------MyClass-------------------------
+[2025-08-06 19:54:20] Functions: {}
+[2025-08-06 19:54:20] Variables: {x=INT, y=BOOL}
+[2025-08-06 19:54:20] Evaluated Variables: null
+[2025-08-06 19:54:20] Generated report: src/tests/output/t1-report.html
+[2025-08-06 19:54:20] Processing file 2/5: t2.txt
+[2025-08-06 19:54:20] ERROR: Error processing file C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\t2.txt: class java.lang.Integer cannot be cast to class java.lang.Boolean (java.lang.Integer and java.lang.Boolean are in module java.base of loader 'bootstrap')
+[2025-08-06 19:54:20] Stack trace: java.lang.ClassCastException: class java.lang.Integer cannot be cast to class java.lang.Boolean (java.lang.Integer and java.lang.Boolean are in module java.base of loader 'bootstrap')
+	at model.Value.getValueAsBool(Value.java:25)
+	at model.Expression.ExpressionProcessor.evaluateBoolean(ExpressionProcessor.java:294)
+	at model.Expression.ExpressionProcessor.evaluateBoolean(ExpressionProcessor.java:258)
+	at model.Expression.ExpressionProcessor.evaluateBoolean(ExpressionProcessor.java:264)
+	at model.Expression.ExpressionProcessor.evaluateExpression(ExpressionProcessor.java:99)
+	at app.ExpressionApp.processFiles(ExpressionApp.java:211)
+	at app.ExpressionApp.main(ExpressionApp.java:70)
+
+[2025-08-06 19:54:20] Processing file 3/5: t3.txt
+[2025-08-06 19:54:20] ERROR: Error processing file C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\t3.txt: Cannot invoke "org.antlr.v4.runtime.tree.ParseTree.getText()" because the return value of "antlr.ExprParser$TypeContext.getChild(int)" is null
+[2025-08-06 19:54:20] Stack trace: java.lang.NullPointerException: Cannot invoke "org.antlr.v4.runtime.tree.ParseTree.getText()" because the return value of "antlr.ExprParser$TypeContext.getChild(int)" is null
+	at model.Expression.AntlrToExpression.visitDeclarationWithOptionalAssignment(AntlrToExpression.java:159)
+	at model.Expression.AntlrToExpression.visitDeclarationWithOptionalAssignment(AntlrToExpression.java:1)
+	at antlr.ExprParser$DeclarationWithOptionalAssignmentContext.accept(ExprParser.java:419)
+	at org.antlr.v4.runtime.tree.AbstractParseTreeVisitor.visit(AbstractParseTreeVisitor.java:18)
+	at model.Expression.AntlrToExpression.visitStatement(AntlrToExpression.java:199)
+	at model.Expression.AntlrToExpression.visitStatement(AntlrToExpression.java:1)
+	at antlr.ExprParser$StatementContext.accept(ExprParser.java:330)
+	at org.antlr.v4.runtime.tree.AbstractParseTreeVisitor.visit(AbstractParseTreeVisitor.java:18)
+	at model.Expression.AntlrToExpression.visitClassDeclaration(AntlrToExpression.java:80)
+	at model.Expression.AntlrToExpression.visitClassDeclaration(AntlrToExpression.java:1)
+	at antlr.ExprParser$ClassDeclarationContext.accept(ExprParser.java:225)
+	at org.antlr.v4.runtime.tree.AbstractParseTreeVisitor.visit(AbstractParseTreeVisitor.java:18)
+	at model.Program.AntlrToProgram.visitProgram(AntlrToProgram.java:33)
+	at model.Program.AntlrToProgram.visitProgram(AntlrToProgram.java:1)
+	at antlr.ExprParser$ProgramContext.accept(ExprParser.java:142)
+	at org.antlr.v4.runtime.tree.AbstractParseTreeVisitor.visit(AbstractParseTreeVisitor.java:18)
+	at app.ExpressionApp.processFiles(ExpressionApp.java:173)
+	at app.ExpressionApp.main(ExpressionApp.java:70)
+
+[2025-08-06 19:54:20] Processing file 4/5: t4.txt
+[2025-08-06 19:54:20] WARNING: Skipping file due to syntax errors or parser failure.
+[2025-08-06 19:54:20] Processing file 5/5: t5.txt
+[2025-08-06 19:54:20] WARNING: Skipping file due to syntax errors or parser failure.
+[2025-08-06 19:54:20] Processing Summary - Success: 1, Failures: 4
+[2025-08-06 19:54:20] Generated combined report at src/tests/output/combined-report.html
+[2025-08-06 19:54:20] ===============================================================
+[2025-08-06 19:54:20] COMPILER SESSION COMPLETED
+[2025-08-06 19:54:20] ===============================================================
+[2025-08-06 19:54:20] 
+[2025-08-06 19:58:07] ===============================================================
+[2025-08-06 19:58:07] COMPILER SESSION STARTED
+[2025-08-06 19:58:07] Arguments: [src/tests/examples/]
+[2025-08-06 19:58:07] Working Directory: C:\Users\ourai\Git\EECS4302Compiler-1
+[2025-08-06 19:58:07] Java Version: 17.0.15
+[2025-08-06 19:58:07] ===============================================================
+[2025-08-06 19:58:07] Processing directory: C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\examples
+[2025-08-06 19:58:07] Found 10 file(s) to process
+[2025-08-06 19:58:07] Processing file 1/10: bank_account.txt
+[2025-08-06 19:58:07] No semantic errors found
+[2025-08-06 19:58:07] Class: BankAccount
+[2025-08-06 19:58:07]   Functions: 2
+[2025-08-06 19:58:07]     * checkStatus
+[2025-08-06 19:58:07]     * compareBalance
+[2025-08-06 19:58:07]   Variables: 4
+[2025-08-06 19:58:07]     * minBalance: INT = 100
+[2025-08-06 19:58:07]     * comparison: BOOL = true
+[2025-08-06 19:58:07]     * balance: INT = 500
+[2025-08-06 19:58:07]     * status: CHAR = 'A'
+[2025-08-06 19:58:07] -------------------------BankAccount-------------------------
+[2025-08-06 19:58:07] Functions: {checkStatus=function checkStatus ( dummy : INT ) : CHAR {
+result : CHAR = L
+if (balance > minBalance) {
+        result = A
+    }
+if (balance == minBalance) {
+        result = W
+    }
+return result
+}
+, compareBalance=function compareBalance ( other : INT ) : BOOL {
+isHigher : BOOL = balance > other
+isEqual : BOOL = balance == other
+isLower : BOOL = balance < other
+return isHigher
+}
+}
+[2025-08-06 19:58:07] Variables: {Vars: checkStatus=CHAR, minBalance=INT, comparison=BOOL, balance=INT, Vars: compareBalance=BOOL, status=CHAR}
+[2025-08-06 19:58:07] Evaluated Variables: {minBalance={type=INT, value=100}, comparison={type=BOOL, value=true}, balance={type=INT, value=500}, status={type=CHAR, value=A}}
+[2025-08-06 19:58:07] Generated report: src/tests/output/bank_account-report.html
+[2025-08-06 19:58:07] Processing file 2/10: calculator.txt
+[2025-08-06 19:58:07] No semantic errors found
+[2025-08-06 19:58:07] Class: Calculator
+[2025-08-06 19:58:07]   Functions: 2
+[2025-08-06 19:58:07]     * compare
+[2025-08-06 19:58:07]     * evaluate
+[2025-08-06 19:58:07]   Variables: 4
+[2025-08-06 19:58:07]     * threshold: INT = 20
+[2025-08-06 19:58:07]     * comparison: BOOL = true
+[2025-08-06 19:58:07]     * category: CHAR = 'M'
+[2025-08-06 19:58:07]     * value: INT = 25
+[2025-08-06 19:58:07] -------------------------Calculator-------------------------
+[2025-08-06 19:58:07] Functions: {compare=function compare ( input : INT ) : BOOL {
+isGreater : BOOL = input > threshold
+return isGreater
+}
+, evaluate=function evaluate ( testValue : INT ) : CHAR {
+result : CHAR = L
+if (testValue >= 30) {
+        result = H
+    }
+if (testValue >= 20) {
+        result = M
+    }
+return result
+}
+}
+[2025-08-06 19:58:07] Variables: {comparison=BOOL, Vars: compare=BOOL, threshold=INT, category=CHAR, value=INT, Vars: evaluate=CHAR}
+[2025-08-06 19:58:07] Evaluated Variables: {threshold={type=INT, value=20}, comparison={type=BOOL, value=true}, category={type=CHAR, value=M}, value={type=INT, value=25}}
+[2025-08-06 19:58:07] Generated report: src/tests/output/calculator-report.html
+[2025-08-06 19:58:07] Processing file 3/10: employee.txt
+[2025-08-06 19:58:07] No semantic errors found
+[2025-08-06 19:58:07] Class: Employee
+[2025-08-06 19:58:07]   Functions: 2
+[2025-08-06 19:58:07]     * updateStatus
+[2025-08-06 19:58:07]     * checkAccess
+[2025-08-06 19:58:07]   Variables: 5
+[2025-08-06 19:58:07]     * accessGranted: BOOL = true
+[2025-08-06 19:58:07]     * accessLevel: INT = 5
+[2025-08-06 19:58:07]     * isActive: BOOL = true
+[2025-08-06 19:58:07]     * isVerified: BOOL = false
+[2025-08-06 19:58:07]     * currentStatus: BOOL = false
+[2025-08-06 19:58:07] -------------------------Employee-------------------------
+[2025-08-06 19:58:07] Functions: {updateStatus=function updateStatus ( newActive : BOOL ) : BOOL {
+isActive = newActive
+return isActive
+}
+, checkAccess=function checkAccess ( requiredLevel : INT ) : BOOL {
+hasAccess : BOOL = isActive && accessLevel >= requiredLevel
+return hasAccess
+}
+}
+[2025-08-06 19:58:07] Variables: {accessGranted=BOOL, accessLevel=INT, isVerified=BOOL, currentStatus=BOOL, Vars: checkAccess=BOOL, isActive=BOOL, Vars: updateStatus=BOOL}
+[2025-08-06 19:58:07] Evaluated Variables: {accessGranted={type=BOOL, value=true}, accessLevel={type=INT, value=5}, isActive={type=BOOL, value=true}, isVerified={type=BOOL, value=false}, currentStatus={type=BOOL, value=false}}
+[2025-08-06 19:58:07] Generated report: src/tests/output/employee-report.html
+[2025-08-06 19:58:07] Processing file 4/10: fleet.txt
+[2025-08-06 19:58:07] No semantic errors found
+[2025-08-06 19:58:07] Class: Vehicle
+[2025-08-06 19:58:07]   Functions: 1
+[2025-08-06 19:58:07]     * checkAndRefuel
+[2025-08-06 19:58:07]   Variables: 5
+[2025-08-06 19:58:07]     * fuel2: INT = 95
+[2025-08-06 19:58:07]     * fuelLevel: INT = 75
+[2025-08-06 19:58:07]     * vehicleId: INT = 1001
+[2025-08-06 19:58:07]     * needsRefuel: BOOL = false
+[2025-08-06 19:58:07]     * fuel1: INT = 85
+[2025-08-06 19:58:07] -------------------------Vehicle-------------------------
+[2025-08-06 19:58:07] Functions: {checkAndRefuel=function checkAndRefuel ( amount : INT ) : INT {
+fuelLevel = fuelLevel + amount
+if (fuelLevel > 90) {
+        needsRefuel = False
+    }
+if (fuelLevel <= 90) {
+        needsRefuel = True
+    }
+return fuelLevel
+}
+}
+[2025-08-06 19:58:07] Variables: {fuelLevel=INT, Vars: checkAndRefuel=INT, fuel2=INT, vehicleId=INT, needsRefuel=BOOL, fuel1=INT}
+[2025-08-06 19:58:07] Evaluated Variables: {fuel2={type=INT, value=95}, fuelLevel={type=INT, value=75}, vehicleId={type=INT, value=1001}, needsRefuel={type=BOOL, value=false}, fuel1={type=INT, value=85}}
+[2025-08-06 19:58:07] Generated report: src/tests/output/fleet-report.html
+[2025-08-06 19:58:07] Processing file 5/10: gaming.txt
+[2025-08-06 19:58:07] No semantic errors found
+[2025-08-06 19:58:07] Class: Player
+[2025-08-06 19:58:07]   Functions: 2
+[2025-08-06 19:58:07]     * calculateBonus
+[2025-08-06 19:58:07]     * getScore
+[2025-08-06 19:58:07]   Variables: 4
+[2025-08-06 19:58:07]     * score: INT = 100
+[2025-08-06 19:58:07]     * bonusScore: INT = 150
+[2025-08-06 19:58:07]     * classScore: INT = 100
+[2025-08-06 19:58:07]     * level: INT = 1
+[2025-08-06 19:58:07] -------------------------Player-------------------------
+[2025-08-06 19:58:07] Functions: {calculateBonus=function calculateBonus ( multiplier : INT ) : INT {
+score : INT = 50 * multiplier
+return score
+}
+, getScore=function getScore ( dummy : INT ) : INT {
+return score
+}
+}
+[2025-08-06 19:58:07] Variables: {score=INT, bonusScore=INT, level=INT, Vars: calculateBonus=INT, classScore=INT, Vars: getScore=INT}
+[2025-08-06 19:58:07] Evaluated Variables: {score={type=INT, value=100}, bonusScore={type=INT, value=150}, classScore={type=INT, value=100}, level={type=INT, value=1}}
+[2025-08-06 19:58:07] Generated report: src/tests/output/gaming-report.html
+[2025-08-06 19:58:07] Processing file 6/10: inventory.txt
+[2025-08-06 19:58:07] No semantic errors found
+[2025-08-06 19:58:07] Class: Product
+[2025-08-06 19:58:07]   Functions: 1
+[2025-08-06 19:58:07]     * updateQuantity
+[2025-08-06 19:58:07]   Variables: 2
+[2025-08-06 19:58:07]     * quantity: INT = 50
+[2025-08-06 19:58:07]     * productId: INT = 101
+[2025-08-06 19:58:07] Class: Warehouse
+[2025-08-06 19:58:07]   Functions: 2
+[2025-08-06 19:58:07]     * updateQuantity
+[2025-08-06 19:58:07]     * getLocation
+[2025-08-06 19:58:07]   Variables: 5
+[2025-08-06 19:58:07]     * location: CHAR = 'A'
+[2025-08-06 19:58:07]     * quantity: INT = 50
+[2025-08-06 19:58:07]     * newQuantity: INT = 75
+[2025-08-06 19:58:07]     * productId: INT = 101
+[2025-08-06 19:58:07]     * currentLocation: CHAR = 'A'
+[2025-08-06 19:58:07] -------------------------Product-------------------------
+[2025-08-06 19:58:07] Functions: {updateQuantity=function updateQuantity ( newQty : INT ) : INT {
+quantity = newQty
+return quantity
+}
+}
+[2025-08-06 19:58:07] Variables: {quantity=INT, productId=INT, Vars: updateQuantity=INT}
+[2025-08-06 19:58:07] Evaluated Variables: {quantity={type=INT, value=50}, productId={type=INT, value=101}}
+[2025-08-06 19:58:07] -------------------------Warehouse-------------------------
+[2025-08-06 19:58:07] Functions: {updateQuantity=function updateQuantity ( newQty : INT ) : INT {
+quantity = newQty
+return quantity
+}
+, getLocation=function getLocation ( dummy : INT ) : CHAR {
+return location
+}
+}
+[2025-08-06 19:58:07] Variables: {quantity=INT, Vars: getLocation=CHAR, productId=INT, Vars: updateQuantity=INT, location=CHAR, newQuantity=INT, currentLocation=CHAR}
+[2025-08-06 19:58:07] Evaluated Variables: {location={type=CHAR, value=A}, quantity={type=INT, value=50}, newQuantity={type=INT, value=75}, productId={type=INT, value=101}, currentLocation={type=CHAR, value=A}}
+[2025-08-06 19:58:07] Generated report: src/tests/output/inventory-report.html
+[2025-08-06 19:58:07] Processing file 7/10: library.txt
+[2025-08-06 19:58:07] No semantic errors found
+[2025-08-06 19:58:07] Class: Library
+[2025-08-06 19:58:07]   Functions: 1
+[2025-08-06 19:58:07]     * checkout
+[2025-08-06 19:58:07]   Variables: 3
+[2025-08-06 19:58:07]     * checkedOut: INT = 0
+[2025-08-06 19:58:07]     * totalBooks: INT = 10
+[2025-08-06 19:58:07]     * finalBooks: INT = 7
+[2025-08-06 19:58:07] -------------------------Library-------------------------
+[2025-08-06 19:58:07] Functions: {checkout=function checkout ( limit : INT ) : INT {
+while (checkedOut < limit) {
+totalBooks = totalBooks - 1
+checkedOut = checkedOut + 1
+}
+return totalBooks
+}
+}
+[2025-08-06 19:58:07] Variables: {checkedOut=INT, Vars: checkout=INT, finalBooks=INT, totalBooks=INT}
+[2025-08-06 19:58:07] Evaluated Variables: {checkedOut={type=INT, value=0}, totalBooks={type=INT, value=10}, finalBooks={type=INT, value=7}}
+[2025-08-06 19:58:07] Generated report: src/tests/output/library-report.html
+[2025-08-06 19:58:07] Processing file 8/10: student.txt
+[2025-08-06 19:58:07] No semantic errors found
+[2025-08-06 19:58:07] Class: Student
+[2025-08-06 19:58:07]   Functions: 2
+[2025-08-06 19:58:07]     * updateGrade
+[2025-08-06 19:58:07]     * addCredits
+[2025-08-06 19:58:07]   Variables: 5
+[2025-08-06 19:58:07]     * studentId: INT = 12345
+[2025-08-06 19:58:07]     * finalGrade: INT = 92
+[2025-08-06 19:58:07]     * totalCredits: INT = 15
+[2025-08-06 19:58:07]     * credits: INT = 12
+[2025-08-06 19:58:07]     * grade: INT = 85
+[2025-08-06 19:58:07] -------------------------Student-------------------------
+[2025-08-06 19:58:07] Functions: {updateGrade=function updateGrade ( newGrade : INT ) : INT {
+grade = newGrade
+return grade
+}
+, addCredits=function addCredits ( additionalCredits : INT ) : INT {
+credits = credits + additionalCredits
+return credits
+}
+}
+[2025-08-06 19:58:07] Variables: {studentId=INT, totalCredits=INT, Vars: updateGrade=INT, credits=INT, grade=INT, finalGrade=INT, Vars: addCredits=INT}
+[2025-08-06 19:58:07] Evaluated Variables: {studentId={type=INT, value=12345}, finalGrade={type=INT, value=92}, totalCredits={type=INT, value=15}, credits={type=INT, value=12}, grade={type=INT, value=85}}
+[2025-08-06 19:58:07] Generated report: src/tests/output/student-report.html
+[2025-08-06 19:58:07] Processing file 9/10: task_manager.txt
+[2025-08-06 19:58:07] No semantic errors found
+[2025-08-06 19:58:07] Class: TaskManager
+[2025-08-06 19:58:07]   Functions: 1
+[2025-08-06 19:58:07]     * processTasks
+[2025-08-06 19:58:07]   Variables: 3
+[2025-08-06 19:58:07]     * processedCount: INT = 5
+[2025-08-06 19:58:07]     * completedTasks: INT = 0
+[2025-08-06 19:58:07]     * totalTasks: INT = 0
+[2025-08-06 19:58:07] -------------------------TaskManager-------------------------
+[2025-08-06 19:58:07] Functions: {processTasks=function processTasks ( limit : INT ) : INT {
+for (
+i : INT = 1; i <= limit; i = i + 1) {
+totalTasks = totalTasks + 1
+if (i <= 3) {
+        completedTasks = completedTasks + 1
+    }
+}
+
+return totalTasks
+}
+}
+[2025-08-06 19:58:07] Variables: {completedTasks=INT, Vars: processTasks=INT, processedCount=INT, totalTasks=INT}
+[2025-08-06 19:58:07] Evaluated Variables: {processedCount={type=INT, value=5}, completedTasks={type=INT, value=0}, totalTasks={type=INT, value=0}}
+[2025-08-06 19:58:07] Generated report: src/tests/output/task_manager-report.html
+[2025-08-06 19:58:07] Processing file 10/10: weather.txt
+[2025-08-06 19:58:07] No semantic errors found
+[2025-08-06 19:58:07] Class: WeatherStation
+[2025-08-06 19:58:07]   Functions: 2
+[2025-08-06 19:58:07]     * setRain
+[2025-08-06 19:58:07]     * setClear
+[2025-08-06 19:58:07]   Variables: 5
+[2025-08-06 19:58:07]     * clearAlert: INT = 2001
+[2025-08-06 19:58:07]     * etaRange: LIST_INT = [5, 10]
+[2025-08-06 19:58:07]     * rainAlert: INT = 2001
+[2025-08-06 19:58:07]     * weatherCode: LIST_CHAR = [C, L, E, A, R]
+[2025-08-06 19:58:07]     * stationId: INT = 2001
+[2025-08-06 19:58:07] -------------------------WeatherStation-------------------------
+[2025-08-06 19:58:07] Functions: {setRain=function setRain ( dummy : INT ) : INT {
+weatherCode = [R, A, I, N]
+etaRange = [15, 30]
+return stationId
+}
+, setClear=function setClear ( dummy : INT ) : INT {
+weatherCode = [C, L, E, A, R]
+etaRange = [5, 10]
+return stationId
+}
+}
+[2025-08-06 19:58:07] Variables: {weatherCode=LIST_CHAR, clearAlert=INT, etaRange=LIST_INT, Vars: setRain=INT, rainAlert=INT, stationId=INT, Vars: setClear=INT}
+[2025-08-06 19:58:07] Evaluated Variables: {clearAlert={type=INT, value=2001}, etaRange={type=LIST_INT, value=[5, 10]}, rainAlert={type=INT, value=2001}, weatherCode={type=LIST_CHAR, value=[C, L, E, A, R]}, stationId={type=INT, value=2001}}
+[2025-08-06 19:58:07] Generated report: src/tests/output/weather-report.html
+[2025-08-06 19:58:07] Processing Summary - Success: 10, Failures: 0
+[2025-08-06 19:58:07] Generated combined report at src/tests/output/combined-report.html
+[2025-08-06 19:58:07] ===============================================================
+[2025-08-06 19:58:07] COMPILER SESSION COMPLETED
+[2025-08-06 19:58:07] ===============================================================
+[2025-08-06 19:58:07] 
+[2025-08-06 20:01:27] ===============================================================
+[2025-08-06 20:01:27] COMPILER SESSION STARTED
+[2025-08-06 20:01:27] Arguments: [src/tests/]
+[2025-08-06 20:01:27] Working Directory: C:\Users\ourai\Git\EECS4302Compiler-1
+[2025-08-06 20:01:27] Java Version: 17.0.15
+[2025-08-06 20:01:27] ===============================================================
+[2025-08-06 20:01:27] Processing directory: C:\Users\ourai\Git\EECS4302Compiler-1\src\tests
+[2025-08-06 20:01:27] Found 5 file(s) to process
+[2025-08-06 20:01:27] Processing file 1/5: t1.txt
+[2025-08-06 20:01:27] Semantic Errors Found: 2
+[2025-08-06 20:01:27]   - Type mismatch at [2, 5]: expected INT = INT declaration but got INT = BOOL
+[2025-08-06 20:01:27]   - Variable x already declared,  line=5 col=5
+[2025-08-06 20:01:27] Class: MyClass
+[2025-08-06 20:01:27] -------------------------MyClass-------------------------
+[2025-08-06 20:01:27] Functions: {}
+[2025-08-06 20:01:27] Variables: {x=INT, y=BOOL}
+[2025-08-06 20:01:27] Evaluated Variables: null
+[2025-08-06 20:01:27] Generated report: src/tests/output/t1-report.html
+[2025-08-06 20:01:27] Processing file 2/5: t2.txt
+[2025-08-06 20:01:27] ERROR: Error processing file C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\t2.txt: class java.lang.Integer cannot be cast to class java.lang.Boolean (java.lang.Integer and java.lang.Boolean are in module java.base of loader 'bootstrap')
+[2025-08-06 20:01:27] Stack trace: java.lang.ClassCastException: class java.lang.Integer cannot be cast to class java.lang.Boolean (java.lang.Integer and java.lang.Boolean are in module java.base of loader 'bootstrap')
+	at model.Value.getValueAsBool(Value.java:25)
+	at model.Expression.ExpressionProcessor.evaluateBoolean(ExpressionProcessor.java:294)
+	at model.Expression.ExpressionProcessor.evaluateBoolean(ExpressionProcessor.java:258)
+	at model.Expression.ExpressionProcessor.evaluateBoolean(ExpressionProcessor.java:264)
+	at model.Expression.ExpressionProcessor.evaluateExpression(ExpressionProcessor.java:99)
+	at app.ExpressionApp.processFiles(ExpressionApp.java:211)
+	at app.ExpressionApp.main(ExpressionApp.java:70)
+
+[2025-08-06 20:01:27] Processing file 3/5: t3.txt
+[2025-08-06 20:01:27] ERROR: Error processing file C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\t3.txt: Cannot invoke "org.antlr.v4.runtime.tree.ParseTree.getText()" because the return value of "antlr.ExprParser$TypeContext.getChild(int)" is null
+[2025-08-06 20:01:27] Stack trace: java.lang.NullPointerException: Cannot invoke "org.antlr.v4.runtime.tree.ParseTree.getText()" because the return value of "antlr.ExprParser$TypeContext.getChild(int)" is null
+	at model.Expression.AntlrToExpression.visitDeclarationWithOptionalAssignment(AntlrToExpression.java:159)
+	at model.Expression.AntlrToExpression.visitDeclarationWithOptionalAssignment(AntlrToExpression.java:1)
+	at antlr.ExprParser$DeclarationWithOptionalAssignmentContext.accept(ExprParser.java:419)
+	at org.antlr.v4.runtime.tree.AbstractParseTreeVisitor.visit(AbstractParseTreeVisitor.java:18)
+	at model.Expression.AntlrToExpression.visitStatement(AntlrToExpression.java:199)
+	at model.Expression.AntlrToExpression.visitStatement(AntlrToExpression.java:1)
+	at antlr.ExprParser$StatementContext.accept(ExprParser.java:330)
+	at org.antlr.v4.runtime.tree.AbstractParseTreeVisitor.visit(AbstractParseTreeVisitor.java:18)
+	at model.Expression.AntlrToExpression.visitClassDeclaration(AntlrToExpression.java:80)
+	at model.Expression.AntlrToExpression.visitClassDeclaration(AntlrToExpression.java:1)
+	at antlr.ExprParser$ClassDeclarationContext.accept(ExprParser.java:225)
+	at org.antlr.v4.runtime.tree.AbstractParseTreeVisitor.visit(AbstractParseTreeVisitor.java:18)
+	at model.Program.AntlrToProgram.visitProgram(AntlrToProgram.java:33)
+	at model.Program.AntlrToProgram.visitProgram(AntlrToProgram.java:1)
+	at antlr.ExprParser$ProgramContext.accept(ExprParser.java:142)
+	at org.antlr.v4.runtime.tree.AbstractParseTreeVisitor.visit(AbstractParseTreeVisitor.java:18)
+	at app.ExpressionApp.processFiles(ExpressionApp.java:173)
+	at app.ExpressionApp.main(ExpressionApp.java:70)
+
+[2025-08-06 20:01:27] Processing file 4/5: t4.txt
+[2025-08-06 20:01:27] WARNING: Skipping file due to syntax errors or parser failure.
+[2025-08-06 20:01:27] Processing file 5/5: t5.txt
+[2025-08-06 20:01:27] WARNING: Skipping file due to syntax errors or parser failure.
+[2025-08-06 20:01:27] Processing Summary - Success: 1, Failures: 4
+[2025-08-06 20:01:27] Generated combined report at src/tests/output/combined-report.html
+[2025-08-06 20:01:27] ===============================================================
+[2025-08-06 20:01:27] COMPILER SESSION COMPLETED
+[2025-08-06 20:01:27] ===============================================================
+[2025-08-06 20:01:27] 
+[2025-08-06 20:01:40] ===============================================================
+[2025-08-06 20:01:40] COMPILER SESSION STARTED
+[2025-08-06 20:01:40] Arguments: [src/tests/examples/]
+[2025-08-06 20:01:40] Working Directory: C:\Users\ourai\Git\EECS4302Compiler-1
+[2025-08-06 20:01:40] Java Version: 17.0.15
+[2025-08-06 20:01:40] ===============================================================
+[2025-08-06 20:01:40] Processing directory: C:\Users\ourai\Git\EECS4302Compiler-1\src\tests\examples
+[2025-08-06 20:01:40] Found 10 file(s) to process
+[2025-08-06 20:01:40] Processing file 1/10: bank_account.txt
+[2025-08-06 20:01:41] No semantic errors found
+[2025-08-06 20:01:41] Class: BankAccount
+[2025-08-06 20:01:41]   Functions: 2
+[2025-08-06 20:01:41]     * checkStatus
+[2025-08-06 20:01:41]     * compareBalance
+[2025-08-06 20:01:41]   Variables: 4
+[2025-08-06 20:01:41]     * minBalance: INT = 100
+[2025-08-06 20:01:41]     * comparison: BOOL = true
+[2025-08-06 20:01:41]     * balance: INT = 500
+[2025-08-06 20:01:41]     * status: CHAR = 'A'
+[2025-08-06 20:01:41] -------------------------BankAccount-------------------------
+[2025-08-06 20:01:41] Functions: {checkStatus=function checkStatus ( dummy : INT ) : CHAR {
+result : CHAR = L
+if (balance > minBalance) {
+        result = A
+    }
+if (balance == minBalance) {
+        result = W
+    }
+return result
+}
+, compareBalance=function compareBalance ( other : INT ) : BOOL {
+isHigher : BOOL = balance > other
+isEqual : BOOL = balance == other
+isLower : BOOL = balance < other
+return isHigher
+}
+}
+[2025-08-06 20:01:41] Variables: {Vars: checkStatus=CHAR, minBalance=INT, comparison=BOOL, balance=INT, Vars: compareBalance=BOOL, status=CHAR}
+[2025-08-06 20:01:41] Evaluated Variables: {minBalance={type=INT, value=100}, comparison={type=BOOL, value=true}, balance={type=INT, value=500}, status={type=CHAR, value=A}}
+[2025-08-06 20:01:41] Generated report: src/tests/output/bank_account-report.html
+[2025-08-06 20:01:41] Processing file 2/10: calculator.txt
+[2025-08-06 20:01:41] No semantic errors found
+[2025-08-06 20:01:41] Class: Calculator
+[2025-08-06 20:01:41]   Functions: 2
+[2025-08-06 20:01:41]     * compare
+[2025-08-06 20:01:41]     * evaluate
+[2025-08-06 20:01:41]   Variables: 4
+[2025-08-06 20:01:41]     * threshold: INT = 20
+[2025-08-06 20:01:41]     * comparison: BOOL = true
+[2025-08-06 20:01:41]     * category: CHAR = 'M'
+[2025-08-06 20:01:41]     * value: INT = 25
+[2025-08-06 20:01:41] -------------------------Calculator-------------------------
+[2025-08-06 20:01:41] Functions: {compare=function compare ( input : INT ) : BOOL {
+isGreater : BOOL = input > threshold
+return isGreater
+}
+, evaluate=function evaluate ( testValue : INT ) : CHAR {
+result : CHAR = L
+if (testValue >= 30) {
+        result = H
+    }
+if (testValue >= 20) {
+        result = M
+    }
+return result
+}
+}
+[2025-08-06 20:01:41] Variables: {comparison=BOOL, Vars: compare=BOOL, threshold=INT, category=CHAR, value=INT, Vars: evaluate=CHAR}
+[2025-08-06 20:01:41] Evaluated Variables: {threshold={type=INT, value=20}, comparison={type=BOOL, value=true}, category={type=CHAR, value=M}, value={type=INT, value=25}}
+[2025-08-06 20:01:41] Generated report: src/tests/output/calculator-report.html
+[2025-08-06 20:01:41] Processing file 3/10: employee.txt
+[2025-08-06 20:01:41] No semantic errors found
+[2025-08-06 20:01:41] Class: Employee
+[2025-08-06 20:01:41]   Functions: 2
+[2025-08-06 20:01:41]     * updateStatus
+[2025-08-06 20:01:41]     * checkAccess
+[2025-08-06 20:01:41]   Variables: 5
+[2025-08-06 20:01:41]     * accessGranted: BOOL = true
+[2025-08-06 20:01:41]     * accessLevel: INT = 5
+[2025-08-06 20:01:41]     * isActive: BOOL = true
+[2025-08-06 20:01:41]     * isVerified: BOOL = false
+[2025-08-06 20:01:41]     * currentStatus: BOOL = false
+[2025-08-06 20:01:41] -------------------------Employee-------------------------
+[2025-08-06 20:01:41] Functions: {updateStatus=function updateStatus ( newActive : BOOL ) : BOOL {
+isActive = newActive
+return isActive
+}
+, checkAccess=function checkAccess ( requiredLevel : INT ) : BOOL {
+hasAccess : BOOL = isActive && accessLevel >= requiredLevel
+return hasAccess
+}
+}
+[2025-08-06 20:01:41] Variables: {accessGranted=BOOL, accessLevel=INT, isVerified=BOOL, currentStatus=BOOL, Vars: checkAccess=BOOL, isActive=BOOL, Vars: updateStatus=BOOL}
+[2025-08-06 20:01:41] Evaluated Variables: {accessGranted={type=BOOL, value=true}, accessLevel={type=INT, value=5}, isActive={type=BOOL, value=true}, isVerified={type=BOOL, value=false}, currentStatus={type=BOOL, value=false}}
+[2025-08-06 20:01:41] Generated report: src/tests/output/employee-report.html
+[2025-08-06 20:01:41] Processing file 4/10: fleet.txt
+[2025-08-06 20:01:41] No semantic errors found
+[2025-08-06 20:01:41] Class: Vehicle
+[2025-08-06 20:01:41]   Functions: 1
+[2025-08-06 20:01:41]     * checkAndRefuel
+[2025-08-06 20:01:41]   Variables: 5
+[2025-08-06 20:01:41]     * fuel2: INT = 95
+[2025-08-06 20:01:41]     * fuelLevel: INT = 75
+[2025-08-06 20:01:41]     * vehicleId: INT = 1001
+[2025-08-06 20:01:41]     * needsRefuel: BOOL = false
+[2025-08-06 20:01:41]     * fuel1: INT = 85
+[2025-08-06 20:01:41] -------------------------Vehicle-------------------------
+[2025-08-06 20:01:41] Functions: {checkAndRefuel=function checkAndRefuel ( amount : INT ) : INT {
+fuelLevel = fuelLevel + amount
+if (fuelLevel > 90) {
+        needsRefuel = False
+    }
+if (fuelLevel <= 90) {
+        needsRefuel = True
+    }
+return fuelLevel
+}
+}
+[2025-08-06 20:01:41] Variables: {fuelLevel=INT, Vars: checkAndRefuel=INT, fuel2=INT, vehicleId=INT, needsRefuel=BOOL, fuel1=INT}
+[2025-08-06 20:01:41] Evaluated Variables: {fuel2={type=INT, value=95}, fuelLevel={type=INT, value=75}, vehicleId={type=INT, value=1001}, needsRefuel={type=BOOL, value=false}, fuel1={type=INT, value=85}}
+[2025-08-06 20:01:41] Generated report: src/tests/output/fleet-report.html
+[2025-08-06 20:01:41] Processing file 5/10: gaming.txt
+[2025-08-06 20:01:41] No semantic errors found
+[2025-08-06 20:01:41] Class: Player
+[2025-08-06 20:01:41]   Functions: 2
+[2025-08-06 20:01:41]     * calculateBonus
+[2025-08-06 20:01:41]     * getScore
+[2025-08-06 20:01:41]   Variables: 4
+[2025-08-06 20:01:41]     * score: INT = 100
+[2025-08-06 20:01:41]     * bonusScore: INT = 150
+[2025-08-06 20:01:41]     * classScore: INT = 100
+[2025-08-06 20:01:41]     * level: INT = 1
+[2025-08-06 20:01:41] -------------------------Player-------------------------
+[2025-08-06 20:01:41] Functions: {calculateBonus=function calculateBonus ( multiplier : INT ) : INT {
+score : INT = 50 * multiplier
+return score
+}
+, getScore=function getScore ( dummy : INT ) : INT {
+return score
+}
+}
+[2025-08-06 20:01:41] Variables: {score=INT, bonusScore=INT, level=INT, Vars: calculateBonus=INT, classScore=INT, Vars: getScore=INT}
+[2025-08-06 20:01:41] Evaluated Variables: {score={type=INT, value=100}, bonusScore={type=INT, value=150}, classScore={type=INT, value=100}, level={type=INT, value=1}}
+[2025-08-06 20:01:41] Generated report: src/tests/output/gaming-report.html
+[2025-08-06 20:01:41] Processing file 6/10: inventory.txt
+[2025-08-06 20:01:41] No semantic errors found
+[2025-08-06 20:01:41] Class: Product
+[2025-08-06 20:01:41]   Functions: 1
+[2025-08-06 20:01:41]     * updateQuantity
+[2025-08-06 20:01:41]   Variables: 2
+[2025-08-06 20:01:41]     * quantity: INT = 50
+[2025-08-06 20:01:41]     * productId: INT = 101
+[2025-08-06 20:01:41] Class: Warehouse
+[2025-08-06 20:01:41]   Functions: 2
+[2025-08-06 20:01:41]     * updateQuantity
+[2025-08-06 20:01:41]     * getLocation
+[2025-08-06 20:01:41]   Variables: 5
+[2025-08-06 20:01:41]     * location: CHAR = 'A'
+[2025-08-06 20:01:41]     * quantity: INT = 50
+[2025-08-06 20:01:41]     * newQuantity: INT = 75
+[2025-08-06 20:01:41]     * productId: INT = 101
+[2025-08-06 20:01:41]     * currentLocation: CHAR = 'A'
+[2025-08-06 20:01:41] -------------------------Product-------------------------
+[2025-08-06 20:01:41] Functions: {updateQuantity=function updateQuantity ( newQty : INT ) : INT {
+quantity = newQty
+return quantity
+}
+}
+[2025-08-06 20:01:41] Variables: {quantity=INT, productId=INT, Vars: updateQuantity=INT}
+[2025-08-06 20:01:41] Evaluated Variables: {quantity={type=INT, value=50}, productId={type=INT, value=101}}
+[2025-08-06 20:01:41] -------------------------Warehouse-------------------------
+[2025-08-06 20:01:41] Functions: {updateQuantity=function updateQuantity ( newQty : INT ) : INT {
+quantity = newQty
+return quantity
+}
+, getLocation=function getLocation ( dummy : INT ) : CHAR {
+return location
+}
+}
+[2025-08-06 20:01:41] Variables: {quantity=INT, Vars: getLocation=CHAR, productId=INT, Vars: updateQuantity=INT, location=CHAR, newQuantity=INT, currentLocation=CHAR}
+[2025-08-06 20:01:41] Evaluated Variables: {location={type=CHAR, value=A}, quantity={type=INT, value=50}, newQuantity={type=INT, value=75}, productId={type=INT, value=101}, currentLocation={type=CHAR, value=A}}
+[2025-08-06 20:01:41] Generated report: src/tests/output/inventory-report.html
+[2025-08-06 20:01:41] Processing file 7/10: library.txt
+[2025-08-06 20:01:41] No semantic errors found
+[2025-08-06 20:01:41] Class: Library
+[2025-08-06 20:01:41]   Functions: 1
+[2025-08-06 20:01:41]     * checkout
+[2025-08-06 20:01:41]   Variables: 3
+[2025-08-06 20:01:41]     * checkedOut: INT = 0
+[2025-08-06 20:01:41]     * totalBooks: INT = 10
+[2025-08-06 20:01:41]     * finalBooks: INT = 7
+[2025-08-06 20:01:41] -------------------------Library-------------------------
+[2025-08-06 20:01:41] Functions: {checkout=function checkout ( limit : INT ) : INT {
+while (checkedOut < limit) {
+totalBooks = totalBooks - 1
+checkedOut = checkedOut + 1
+}
+return totalBooks
+}
+}
+[2025-08-06 20:01:41] Variables: {checkedOut=INT, Vars: checkout=INT, finalBooks=INT, totalBooks=INT}
+[2025-08-06 20:01:41] Evaluated Variables: {checkedOut={type=INT, value=0}, totalBooks={type=INT, value=10}, finalBooks={type=INT, value=7}}
+[2025-08-06 20:01:41] Generated report: src/tests/output/library-report.html
+[2025-08-06 20:01:41] Processing file 8/10: student.txt
+[2025-08-06 20:01:41] No semantic errors found
+[2025-08-06 20:01:41] Class: Student
+[2025-08-06 20:01:41]   Functions: 2
+[2025-08-06 20:01:41]     * updateGrade
+[2025-08-06 20:01:41]     * addCredits
+[2025-08-06 20:01:41]   Variables: 5
+[2025-08-06 20:01:41]     * studentId: INT = 12345
+[2025-08-06 20:01:41]     * finalGrade: INT = 92
+[2025-08-06 20:01:41]     * totalCredits: INT = 15
+[2025-08-06 20:01:41]     * credits: INT = 12
+[2025-08-06 20:01:41]     * grade: INT = 85
+[2025-08-06 20:01:41] -------------------------Student-------------------------
+[2025-08-06 20:01:41] Functions: {updateGrade=function updateGrade ( newGrade : INT ) : INT {
+grade = newGrade
+return grade
+}
+, addCredits=function addCredits ( additionalCredits : INT ) : INT {
+credits = credits + additionalCredits
+return credits
+}
+}
+[2025-08-06 20:01:41] Variables: {studentId=INT, totalCredits=INT, Vars: updateGrade=INT, credits=INT, grade=INT, finalGrade=INT, Vars: addCredits=INT}
+[2025-08-06 20:01:41] Evaluated Variables: {studentId={type=INT, value=12345}, finalGrade={type=INT, value=92}, totalCredits={type=INT, value=15}, credits={type=INT, value=12}, grade={type=INT, value=85}}
+[2025-08-06 20:01:41] Generated report: src/tests/output/student-report.html
+[2025-08-06 20:01:41] Processing file 9/10: task_manager.txt
+[2025-08-06 20:01:41] No semantic errors found
+[2025-08-06 20:01:41] Class: TaskManager
+[2025-08-06 20:01:41]   Functions: 1
+[2025-08-06 20:01:41]     * processTasks
+[2025-08-06 20:01:41]   Variables: 3
+[2025-08-06 20:01:41]     * processedCount: INT = 5
+[2025-08-06 20:01:41]     * completedTasks: INT = 0
+[2025-08-06 20:01:41]     * totalTasks: INT = 0
+[2025-08-06 20:01:41] -------------------------TaskManager-------------------------
+[2025-08-06 20:01:41] Functions: {processTasks=function processTasks ( limit : INT ) : INT {
+for (
+i : INT = 1; i <= limit; i = i + 1) {
+totalTasks = totalTasks + 1
+if (i <= 3) {
+        completedTasks = completedTasks + 1
+    }
+}
+
+return totalTasks
+}
+}
+[2025-08-06 20:01:41] Variables: {completedTasks=INT, Vars: processTasks=INT, processedCount=INT, totalTasks=INT}
+[2025-08-06 20:01:41] Evaluated Variables: {processedCount={type=INT, value=5}, completedTasks={type=INT, value=0}, totalTasks={type=INT, value=0}}
+[2025-08-06 20:01:41] Generated report: src/tests/output/task_manager-report.html
+[2025-08-06 20:01:41] Processing file 10/10: weather.txt
+[2025-08-06 20:01:41] No semantic errors found
+[2025-08-06 20:01:41] Class: WeatherStation
+[2025-08-06 20:01:41]   Functions: 2
+[2025-08-06 20:01:41]     * setRain
+[2025-08-06 20:01:41]     * setClear
+[2025-08-06 20:01:41]   Variables: 5
+[2025-08-06 20:01:41]     * clearAlert: INT = 2001
+[2025-08-06 20:01:41]     * etaRange: LIST_INT = [5, 10]
+[2025-08-06 20:01:41]     * rainAlert: INT = 2001
+[2025-08-06 20:01:41]     * weatherCode: LIST_CHAR = [C, L, E, A, R]
+[2025-08-06 20:01:41]     * stationId: INT = 2001
+[2025-08-06 20:01:41] -------------------------WeatherStation-------------------------
+[2025-08-06 20:01:41] Functions: {setRain=function setRain ( dummy : INT ) : INT {
+weatherCode = [R, A, I, N]
+etaRange = [15, 30]
+return stationId
+}
+, setClear=function setClear ( dummy : INT ) : INT {
+weatherCode = [C, L, E, A, R]
+etaRange = [5, 10]
+return stationId
+}
+}
+[2025-08-06 20:01:41] Variables: {weatherCode=LIST_CHAR, clearAlert=INT, etaRange=LIST_INT, Vars: setRain=INT, rainAlert=INT, stationId=INT, Vars: setClear=INT}
+[2025-08-06 20:01:41] Evaluated Variables: {clearAlert={type=INT, value=2001}, etaRange={type=LIST_INT, value=[5, 10]}, rainAlert={type=INT, value=2001}, weatherCode={type=LIST_CHAR, value=[C, L, E, A, R]}, stationId={type=INT, value=2001}}
+[2025-08-06 20:01:41] Generated report: src/tests/output/weather-report.html
+[2025-08-06 20:01:41] Processing Summary - Success: 10, Failures: 0
+[2025-08-06 20:01:41] Generated combined report at src/tests/output/combined-report.html
+[2025-08-06 20:01:41] ===============================================================
+[2025-08-06 20:01:41] COMPILER SESSION COMPLETED
+[2025-08-06 20:01:41] ===============================================================
+[2025-08-06 20:01:41] 

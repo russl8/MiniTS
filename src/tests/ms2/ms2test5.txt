@@ -1,7 +1,0 @@
-class test4 {
-	i : int = 5;
-	if (True) {
-		j : int = 4;
-	}
-	j : int = 0; //OK
-}
