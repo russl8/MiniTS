@@ -29,7 +29,7 @@ Using the command: java -jar miniTs.jar {input}
 
 #### Running the 10 example files
 1. Run the following command:
-	java -jar minits.jar src/tests/finalSubmission/section5
+	java -jar miniTs.jar src/tests/finalSubmission/section5
 	
 2. Refresh the test folder (src/tests) and they should be in the format
 	src/tests/<filename>-report.html
@@ -42,7 +42,7 @@ Using the command: java -jar miniTs.jar {input}
 1. Run the following command:
 	java -jar minits.jar <filepath>/<filename>.txt
 	
-	ex: java -jar minits.jar src/tests/finalSubmission/section5/inventory.txt
+	ex: java -jar miniTs.jar src/tests/finalSubmission/section5/inventory.txt
 	
 2. Test results should be in src/tests/<filename>-report.html
 
