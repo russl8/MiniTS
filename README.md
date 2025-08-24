@@ -36,8 +36,7 @@ class Overview extends Superclass {
 - Classes & Inheritance: Classes can extend superclasses
 - Variables: Strongly typed (int, char, bool, list[...])
 - Functions: Typed parameters + return values
-- Control Flow: if, while, for
-<image: example-program-ast>
+- Control Flow: if, while-loops, for-loops
 
 ## Advanced Features
 - Inheritance (`class B extends A {}`)
@@ -112,6 +111,7 @@ java -jar miniTs.jar src/tests/finalSubmission/section5/inventory.txt
 ```
 ### Results:
 `src/tests/<filename>-report.html`
+
 
 
 
