@@ -1,8 +1,71 @@
 # MiniTS: A Compiler for a TypeScript-Inspired Class-Based Language
 
-MiniTS is a compiler for a simplified, TypeScript-inspired, class-based language.  
+A compiler for a simplified, TypeScript-inspired, class-based language.  
 It parses `.txt` files containing MiniTS programs and produces `.html` reports that highlight semantic correctness, variable values, and errors.
 
+## Example
+<img width="1898" height="917" alt="image" src="https://github.com/user-attachments/assets/bc79e7ed-85fb-4fa5-96d2-c93bf2f89730" />
+
+## Input Language
+MiniTS accepts class-based programs with inheritance, typed variables, functions, and control flow.
+
+### Example Program
+```
+class Superclass {
+    c : list[char] = "hello";
+    i : int = 0;  
+}
+
+class Overview extends Superclass {    
+    function f (i : int, j : int) : int {
+        return i + j;
+    }
+
+    for (j : int = 1; j <= 5; j = j + 1) {
+        i = f(i, j); 
+    }    
+
+    j : int = 0;
+    if(i == 15) {
+        j = i; 
+    }
+}
+```
+
+## Key Constructs:
+- Classes & Inheritance: Classes can extend superclasses
+- Variables: Strongly typed (int, char, bool, list[...])
+- Functions: Typed parameters + return values
+- Control Flow: if, while, for
+<image: example-program-ast>
+
+## Advanced Features
+- Inheritance (`class B extends A {}`)
+- For-Loops (`for (i:int=0; i<5; i=i+1) {}`)
+- Scoping (lexical scope: variables local to block/function)
+- Function Declaration & Invocation
+- Lists (`list[int]`, `list[char]`, `list[bool]`)
+
+
+
+## Compiler Workflow & Architecture
+- ANTLR Parser → builds AST
+- VariableBindingVisitor → ensures variables are declared before use
+- TypeCheckerVisitor → enforces type rules
+- Evaluator → evaluates expressions (if no errors)
+- Pretty Printer → outputs HTML reports
+<img width="814" height="423" alt="image" src="https://github.com/user-attachments/assets/7ddbd8c8-1b43-41c8-b7a8-fe3ac461921c" />
+
+
+## Limitations
+- No method overloading/overriding
+- No nested functions
+- Limited list operations (declaration/assignment only)
+- No else if / else
+- No string methods or indexing
+- No anonymous/lambda functions
+- No operator precedence in grammar
+- No object instantiation (new) or dot notation
 ## Setup
 
 ### Creating a Runnable JAR from Eclipse
@@ -50,64 +113,5 @@ java -jar miniTs.jar src/tests/finalSubmission/section5/inventory.txt
 ### Results:
 `src/tests/<filename>-report.html`
 
-## Input Language
-MiniTS accepts class-based programs with inheritance, typed variables, functions, and control flow.
-
-### Example Program
-`
-class Superclass {
-    c : list[char] = "hello";
-    i : int = 0;  
-}
-
-class Overview extends Superclass {    
-    function f (i : int, j : int) : int {
-        return i + j;
-    }
-
-    for (j : int = 1; j <= 5; j = j + 1) {
-        i = f(i, j); 
-    }    
-
-    j : int = 0;
-    if(i == 15) {
-        j = i; 
-    }
-}
-`
-
-## Key Constructs:
-- Classes & Inheritance: Classes can extend superclasses
-- Variables: Strongly typed (int, char, bool, list[...])
-- Functions: Typed parameters + return values
-- Control Flow: if, while, for
-<image: example-program-ast>
-
-## Advanced Features
-- Inheritance (`class B extends A {}`)
-- For-Loops (`for (i:int=0; i<5; i=i+1) {}`)
-- Scoping (lexical scope: variables local to block/function)
-- Function Declaration & Invocation
-- Lists (`list[int]`, `list[char]`, `list[bool]`)
-<image: inheritance-diagram>
-<image: scoping-example>
 
 
-## Compiler Workflow & Architecture
-- ANTLR Parser → builds AST
-- VariableBindingVisitor → ensures variables are declared before use
-- TypeCheckerVisitor → enforces type rules
-- Evaluator → evaluates expressions (if no errors)
-- Pretty Printer → outputs HTML reports
-<img width="814" height="423" alt="image" src="https://github.com/user-attachments/assets/7ddbd8c8-1b43-41c8-b7a8-fe3ac461921c" />
-
-
-## Limitations
-- No method overloading/overriding
-- No nested functions
-- Limited list operations (declaration/assignment only)
-- No else if / else
-- No string methods or indexing
-- No anonymous/lambda functions
-- No operator precedence in grammar
-- No object instantiation (new) or dot notation
