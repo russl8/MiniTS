@@ -1,47 +1,113 @@
-# Setup
+# MiniTS: A Compiler for a TypeScript-Inspired Class-Based Language
 
-## Creating a runnable JAR from the project (from eclipse) if there isnt one already
-------------------------------------------------------------------------------------
+MiniTS is a compiler for a simplified, TypeScript-inspired, class-based language.  
+It parses `.txt` files containing MiniTS programs and produces `.html` reports that highlight semantic correctness, variable values, and errors.
+
+## Setup
+
+### Creating a Runnable JAR from Eclipse
 #### Setting up run config
-1. Right-click the Java project on the project explorer
-2. Select "Run As" -> "Run Configurations"
-3. Select the "arguments" tab, and paste "${file_prompt}" into the "Program Arguments" field
-4. Name the config "MiniTS" then click apply
+1. Right-click the Java project in the project explorer
+2. Select **Run As → Run Configurations**
+3. Select the **Arguments** tab, and paste `${file_prompt}` into the **Program Arguments** field
+4. Name the config **MiniTS** then click **Apply**
 
 #### Creating a runnable JAR
-**there already exists a runnable JAR so there is no need to create a new one**
-1. Right-click the Java project on the project explorer
-2. Click "export"
-3. Select Java -> Runnable JAR File
-4. Set the launch configuration to be the same as the run config
-5. Select export destination to be "MiniTS\miniTs.jar"
+**Note:** A runnable JAR already exists, so you do **not** need to create a new one.  
+If needed:
+1. Right-click the Java project → **Export**
+2. Select **Java → Runnable JAR File**
+3. Set the launch configuration to **MiniTS**
+4. Set export destination to `MiniTS/miniTs.jar`
 
-## Running the Runnable JAR
----------------------------
-Before running, make sure you are in the **root** directory (MiniTS).
-	ie: /mnt/c/Users/russe/Github/MiniTS
-	
-When running the input command, you can select to provide either:
-1. A directory full of .txt files 
-2. 1 individual file
+## Running the JAR
 
-Using the command: java -jar miniTs.jar {input}
+Make sure you are in the **root directory** (`MiniTS`):  
 
-#### Running the 10 example files
-1. Run the following command:
-	java -jar miniTs.jar src/tests/finalSubmission/section5
-	
-2. Refresh the test folder (src/tests) and they should be in the format
-	src/tests/<filename>-report.html
+`
+/mnt/c/Users/russe/Github/MiniTS
+`
+Run with:
+```bash
+java -jar miniTs.jar {input}
+```
+- {input} can be:
+  - A directory of .txt files
+  - A single .txt file
 
-3. You can either view the results of a singular file (<filename>-report.html)
-	or see all 10 results at the same time (preferred) in the file
-	combined_report.html
+## Running the 10 Example Files
+```bash
+java -jar miniTs.jar src/tests/finalSubmission/section5
 
-#### Running an individual file
-1. Run the following command:
-	java -jar minits.jar <filepath>/<filename>.txt
-	
-	ex: java -jar miniTs.jar src/tests/finalSubmission/section5/inventory.txt
-	
-2. Test results should be in src/tests/<filename>-report.html
+### Results:
+Individual reports in src/tests/<filename>-report.html
+Combined results in combined_report.html (preferred)
+
+## Running an Individual File
+```bash
+java -jar miniTs.jar src/tests/finalSubmission/section5/inventory.txt
+```
+### Results:
+`src/tests/<filename>-report.html`
+
+## Input Language
+MiniTS accepts class-based programs with inheritance, typed variables, functions, and control flow.
+
+### Example Program
+`
+class Superclass {
+    c : list[char] = "hello";
+    i : int = 0;  
+}
+
+class Overview extends Superclass {    
+    function f (i : int, j : int) : int {
+        return i + j;
+    }
+
+    for (j : int = 1; j <= 5; j = j + 1) {
+        i = f(i, j); 
+    }    
+
+    j : int = 0;
+    if(i == 15) {
+        j = i; 
+    }
+}
+`
+
+## Key Constructs:
+- Classes & Inheritance: Classes can extend superclasses
+- Variables: Strongly typed (int, char, bool, list[...])
+- Functions: Typed parameters + return values
+- Control Flow: if, while, for
+<image: example-program-ast>
+
+## Advanced Features
+- Inheritance (`class B extends A {}`)
+- For-Loops (`for (i:int=0; i<5; i=i+1) {}`)
+- Scoping (lexical scope: variables local to block/function)
+- Function Declaration & Invocation
+- Lists (`list[int]`, `list[char]`, `list[bool]`)
+<image: inheritance-diagram>
+<image: scoping-example>
+
+
+## Compiler Workflow & Architecture
+- ANTLR Parser → builds AST
+- VariableBindingVisitor → ensures variables are declared before use
+- TypeCheckerVisitor → enforces type rules
+- Evaluator → evaluates expressions (if no errors)
+- Pretty Printer → outputs HTML reports
+<img width="814" height="423" alt="image" src="https://github.com/user-attachments/assets/7ddbd8c8-1b43-41c8-b7a8-fe3ac461921c" />
+
+
+## Limitations
+- No method overloading/overriding
+- No nested functions
+- Limited list operations (declaration/assignment only)
+- No else if / else
+- No string methods or indexing
+- No anonymous/lambda functions
+- No operator precedence in grammar
+- No object instantiation (new) or dot notation
