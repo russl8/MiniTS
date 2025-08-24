@@ -96,19 +96,20 @@ java -jar miniTs.jar {input}
   - A single .txt file
 
 ## Running the 10 Example Files
-```bash
+`
 java -jar miniTs.jar src/tests/finalSubmission/section5
-
+`
 ### Results:
 Individual reports in src/tests/<filename>-report.html
 Combined results in combined_report.html (preferred)
 
 ## Running an Individual File
-```bash
+`
 java -jar miniTs.jar src/tests/finalSubmission/section5/inventory.txt
-```
+`
 ### Results:
 `src/tests/<filename>-report.html`
+
 
 
 
