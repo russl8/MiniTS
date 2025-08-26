@@ -1,5 +1,5 @@
 # MiniTS: A Compiler for a TypeScript-Inspired Class-Based Language
-A compiler for a simplified, TypeScript-inspired, class-based language.  
+A compiler for a simplified TypeScript-inspired class-based language.  
 
 ## Example
 <img width="1898" height="917" alt="image" src="https://github.com/user-attachments/assets/bc79e7ed-85fb-4fa5-96d2-c93bf2f89730" />
@@ -109,6 +109,7 @@ java -jar miniTs.jar src/tests/finalSubmission/section5/inventory.txt
 `
 ### Results:
 `src/tests/<filename>-report.html`
+
 
 
 
