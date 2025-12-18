@@ -1,0 +1,4 @@
+class MyClass extends BaseClass {
+	s1 : list[char] = ['2','4'];
+    s1 = "ab241a"; // should have no error
+}

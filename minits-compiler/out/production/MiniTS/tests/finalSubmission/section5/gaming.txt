@@ -1,0 +1,25 @@
+// FEATURE DEMONSTRATED: Variable Scoping
+// KEY CONCEPTS: Local vs class variables, variable shadowing, scope resolution
+
+class Player {
+    score : int = 100;  // Class variable
+    level : int = 1;
+    
+    function calculateBonus(multiplier : int) : int {
+        // Local variable 'score' shadows class variable 'score'
+        score : int = 50 * multiplier;
+        return score;  // Returns local score, not class score
+    }
+    
+    function getScore(dummy : int) : int {
+        // Accesses class variable 'score' (no local shadowing)
+        return score;
+    }
+    
+    // Scoping demonstrations
+    bonusScore : int = calculateBonus(3);  // Returns 150 (local score)
+    classScore : int = getScore(1);        // Returns 100 (class score unchanged)
+}
+
+// FINAL STATE: score=100, level=1, bonusScore=150, classScore=100
+// SCOPING: Local 'score' in calculateBonus() doesn't affect class 'score'

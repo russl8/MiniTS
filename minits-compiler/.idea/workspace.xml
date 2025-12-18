@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b7448c3b-54c9-43ee-ade8-74cbab37f54c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/Expression/Utils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../minits-webserver/src/main/java/com/russl8/webserver/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/antlr-4.13.2-complete.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/antlr-4.13.2-complete.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miniTs.jar" beforeDir="false" afterPath="$PROJECT_DIR$/miniTs.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/Expr.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/Expr.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/Expr.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/Expr.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/Expr.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/Expr.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprBaseListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprBaseListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprBaseListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprBaseVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprBaseVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprBaseVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprLexer.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprLexer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprLexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprLexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprLexer.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$AdditionContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$AdditionContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$AndContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$AndContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$AssignmentContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$AssignmentContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$BooleanLiteralContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$BooleanLiteralContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$CharacterLiteralContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$CharacterLiteralContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$ClassDeclarationContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$ClassDeclarationContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$Class_declContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$Class_declContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$ConditionalContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$ConditionalContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$DeclarationContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$DeclarationContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$DeclarationWithOptionalAssignmentContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$DeclarationWithOptionalAssignmentContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$DivisionContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$DivisionContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$EqualContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$EqualContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$ExprContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$ExprContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$ForLoopContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$ForLoopContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$Func_invoContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$Func_invoContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$FunctionContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$FunctionContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$FunctionDeclarationContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$FunctionDeclarationContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$FunctionInvocationContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$FunctionInvocationContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$GreaterEqualThanContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$GreaterEqualThanContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$GreaterThanContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$GreaterThanContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$IfStatementContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$IfStatementContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$LessEqualThanContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$LessEqualThanContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$LessThanContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$LessThanContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$ListLiteralContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$ListLiteralContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$LoopContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$LoopContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$ModuloContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$ModuloContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$MultiplicationContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$MultiplicationContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$NotContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$NotContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$NotEqualContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$NotEqualContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$NumberLiteralContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$NumberLiteralContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$OrContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$OrContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$ParameterContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$ParameterContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$ParenthesisContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$ParenthesisContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$ProgContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$ProgContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$ProgramContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$ProgramContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$ReturnContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$ReturnContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$StatementContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$StatementContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$StringLiteralContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$StringLiteralContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$SubtractionContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$SubtractionContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$TypeContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$TypeContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$VariableAssignmentContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$VariableAssignmentContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$VariableContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$VariableContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser$WhileLoopContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser$WhileLoopContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/antlr/ExprVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/antlr/ExprVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/app/ExpressionApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ExpressionApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/app/ExpressionApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ExpressionApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/app/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/docs/Readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/Readme.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Assignment/Assignment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Assignment/Assignment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Assignment/ListAssignment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Assignment/ListAssignment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Assignment/PrimitiveAssignment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Assignment/PrimitiveAssignment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/AntlrToExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/AntlrToExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Binary/Addition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Binary/Addition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Binary/And.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Binary/And.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Binary/BinaryExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Binary/BinaryExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Binary/Division.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Binary/Division.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Binary/Equal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Binary/Equal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Binary/GreaterEqualThan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Binary/GreaterEqualThan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Binary/GreaterThan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Binary/GreaterThan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Binary/LessEqualThan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Binary/LessEqualThan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Binary/LessThan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Binary/LessThan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Binary/Modulo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Binary/Modulo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Binary/Multiplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Binary/Multiplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Binary/NotEqual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Binary/NotEqual.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Binary/Or.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Binary/Or.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Binary/Subtraction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Binary/Subtraction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/BlockContainer/BlockContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/BlockContainer/BlockContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/BlockContainer/ForLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/BlockContainer/ForLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/BlockContainer/IfStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/BlockContainer/IfStatement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/BlockContainer/WhileLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/BlockContainer/WhileLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/BooleanLiteral.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/BooleanLiteral.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/CharacterLiteral.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/CharacterLiteral.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/ClassDeclaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/ClassDeclaration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Declaration/Declaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Declaration/Declaration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Declaration/ListDeclaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Declaration/ListDeclaration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Declaration/PrimitaveDeclaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Declaration/PrimitaveDeclaration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Expression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/ExpressionProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/ExpressionProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/FunctionDeclaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/FunctionDeclaration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/FunctionInvocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/FunctionInvocation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/ListLiteral.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/ListLiteral.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/NumberLiteral.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/NumberLiteral.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Unary/Not.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Unary/Not.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Unary/Parenthesis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Unary/Parenthesis.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Unary/UnaryExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Unary/UnaryExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Util/Parameter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Util/Parameter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Util/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Util/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Utils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Variable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Variable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Visitor/ExpressionVariableDeclarationChecker.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Visitor/ExpressionVariableDeclarationChecker.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Visitor/OperationVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Visitor/OperationVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Visitor/TypeChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Visitor/TypeChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Visitor/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Visitor/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Expression/Visitor/VariableBindingChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Expression/Visitor/VariableBindingChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/MyErrorListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/MyErrorListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Program/AntlrToProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Program/AntlrToProgram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Program/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Program/Program.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/model/Value.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Value.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/forloop/fl1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/forloop/fl1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/forloop/fl2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/forloop/fl2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/forloop/fl3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/forloop/fl3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/function/f1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/function/f1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/function/f2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/function/f2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/function/f3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/function/f3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/function/f4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/function/f4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/function/f5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/function/f5.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/function/f6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/function/f6.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/function/f7.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/function/f7.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/functionInvocation/fi1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/functionInvocation/fi1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/functionInvocation/fi2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/functionInvocation/fi2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/functionInvocation/fi3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/functionInvocation/fi3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/functionInvocation/fi4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/functionInvocation/fi4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/inheritance/ih1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/inheritance/ih1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/inheritance/ih2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/inheritance/ih2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/list/list1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/list/list1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/list/list2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/list/list2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/list/list3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/list/list3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/list/list4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/list/list4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/multipleClasses/mc1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/multipleClasses/mc1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/scoping/sc1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/scoping/sc1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/scoping/sc2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/scoping/sc2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/scoping/sc3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/scoping/sc3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/scoping/sc4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/scoping/sc4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/string/s1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/string/s1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/string/s2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/string/s2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/string/s3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/string/s3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/string/s4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/string/s4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/whileloop/w1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/whileloop/w1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/whileloop/w2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/whileloop/w2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/development/whileloop/w3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/development/whileloop/w3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/expectedOutput/bank_account-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/expectedOutput/bank_account-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/expectedOutput/calculator-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/expectedOutput/calculator-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/expectedOutput/combined-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/expectedOutput/combined-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/expectedOutput/employee-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/expectedOutput/employee-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/expectedOutput/fleet-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/expectedOutput/fleet-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/expectedOutput/gaming-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/expectedOutput/gaming-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/expectedOutput/inventory-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/expectedOutput/inventory-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/expectedOutput/library-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/expectedOutput/library-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/expectedOutput/student-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/expectedOutput/student-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/expectedOutput/task_manager-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/expectedOutput/task_manager-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/expectedOutput/weather-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/expectedOutput/weather-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section1/overview.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section1/overview.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section2/hasErrors.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section2/hasErrors.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section2/noErrors.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section2/noErrors.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section4/410.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section4/410.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section4/41a.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section4/41a.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section4/41b.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section4/41b.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section4/42.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section4/42.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section4/43.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section4/43.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section4/44a.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section4/44a.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section4/44b.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section4/44b.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section4/44c.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section4/44c.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section4/44d.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section4/44d.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section4/45.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section4/45.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section4/46.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section4/46.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section4/47.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section4/47.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section4/48.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section4/48.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section4/49.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section4/49.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section5/bank_account.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section5/bank_account.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section5/calculator.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section5/calculator.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section5/employee.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section5/employee.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section5/fleet.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section5/fleet.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section5/gaming.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section5/gaming.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section5/inventory.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section5/inventory.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section5/library.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section5/library.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section5/student.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section5/student.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section5/task_manager.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section5/task_manager.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/tests/finalSubmission/section5/weather.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/finalSubmission/section5/weather.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="370BkMNMShb50zHJA2hBrITespN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "springboot__intg",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/russl8/github/MiniTS/minits-compiler"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-cffe25b9f5b3-intellij.indexing.shared.core-IU-253.28294.334" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b7448c3b-54c9-43ee-ade8-74cbab37f54c" name="Changes" comment="" />
+      <created>1766030249151</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1766030249151</updated>
+    </task>
+    <servers />
+  </component>
+</project>

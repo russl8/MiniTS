@@ -1,0 +1,20 @@
+class c0 {
+	function f () : bool {
+		return True && !False;
+	}
+	function g () : int {
+		return 2 + 2;
+	}
+}
+
+class c1 {
+	i : int = 0;
+	j : bool;
+	
+	function f () : bool {
+		return True && !False;
+	}
+	
+	j = f();
+	
+}

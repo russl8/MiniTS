@@ -1,0 +1,23 @@
+class Superclass {
+	c : list[char] = "hello";
+	i : int = 0; 	
+}
+
+class Overview extends Superclass {	
+	function f (i : int, j : int) : int {
+    	// i and j are variables local to this function and should not affect the 
+		// values of i and j outside of this scope
+		return i + j;
+	}
+	
+	for (j : int = 1; j <= 5; j = j + 1) {
+		i = f(i, j); // i = 1+2+3+4+5 = 15
+	}	
+	
+    j : int = 0; //Declaration of j outside of forloop scope
+    
+	if(i == 15) {
+      j = i;  
+	}
+}
+

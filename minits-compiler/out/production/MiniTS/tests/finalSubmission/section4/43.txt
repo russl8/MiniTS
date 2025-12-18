@@ -1,0 +1,19 @@
+class p43 {
+  function areZero(n: int, m: int): bool {
+    return n == 0 && m == 0;
+  }
+  
+  // OK
+  b: bool = areZero(5, 0);
+}
+
+
+
+class f43 {
+   function areZero(n: int, m: int): bool {
+    return n == 0 && m == 0;
+   }
+  
+  // FAIL: wrong arg type in first parameter
+  b: bool = areZero(True, 0);
+}

@@ -1,0 +1,18 @@
+class p44d {
+  x: int = 1;
+  y: int = 2;
+  
+  // OK
+  e: bool = x == y;
+}
+
+
+
+class f44d {
+  x: int = 1;
+  y: bool = True;
+  
+  // FAIL: expected that LHS 
+  // and RHS are the same type
+  e: bool = x == (((!y)));
+}

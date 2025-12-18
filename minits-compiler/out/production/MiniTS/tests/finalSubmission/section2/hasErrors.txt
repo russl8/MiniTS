@@ -1,0 +1,15 @@
+class hasErrors {
+
+	// FAIL: type mismatch
+	i : list[char] = '2';
+	
+	function f () : int {
+	
+		// FAIL: assignment to undeclared variable
+		g = 2; 
+		
+		// FAIL: returning a bool 
+		// when function declaration returns int
+		return True; 
+	}
+}
