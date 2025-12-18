@@ -1,0 +1,27 @@
+// FEATURE DEMONSTRATED: For Loops
+// KEY CONCEPTS: Loop initialization, condition checking, increment operations
+
+class TaskManager {
+    totalTasks : int = 0;
+    completedTasks : int = 0;
+    
+    function processTasks(limit : int) : int {
+        // For loop with initialization, condition, and increment
+        for (i : int = 1; i <= limit; i = i + 1) {
+            totalTasks = totalTasks + 1;
+            
+            // Conditional logic inside loop
+            if (i <= 3) {
+                completedTasks = completedTasks + 1;
+            }
+        }
+        
+        return totalTasks;
+    }
+    
+    // For loop execution
+    processedCount : int = processTasks(5);  // Loop runs 5 iterations
+}
+
+// FINAL STATE: totalTasks=5, completedTasks=3, processedCount=5
+// FOR LOOP: Runs 5 iterations (i: 1->2->3->4->5), first 3 counted as completed

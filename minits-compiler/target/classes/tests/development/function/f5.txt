@@ -1,0 +1,6 @@
+class f5 {
+	function func (i : int) : list[char]{
+		res : list[int] = [1,2];
+		return res; // error: must return list[char]
+	}
+}
