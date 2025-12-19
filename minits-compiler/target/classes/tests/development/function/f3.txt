@@ -1,7 +1,0 @@
-class f1 {
-	k : int = 0;
-	function f (i : int , j : bool, j:int) : int {
-	
-		return 1; //valid return
-	}
-}

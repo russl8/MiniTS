@@ -1,13 +1,18 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>russl8</groupId>
+    <parent>
+        <groupId>russl8</groupId>
+        <artifactId>minits</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
     <artifactId>minits-compiler</artifactId>
     <version>2.0.0</version>
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- ANTLR runtime -->
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
@@ -29,12 +34,13 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
                 <configuration>
-                    <source>15</source>
-                    <target>15</target>
+                    <release>${java.version}</release>
                 </configuration>
             </plugin>
         </plugins>

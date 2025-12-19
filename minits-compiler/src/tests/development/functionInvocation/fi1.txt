@@ -1,9 +1,0 @@
-class fi1 {
-	function f1 ( i : int, j: int) : int  {
-		return 24 + i + j;
-	}
-	
-	
-	i : int = f1(2, 4);
-	
-}
