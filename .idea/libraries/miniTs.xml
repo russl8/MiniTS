@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="miniTs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/miniTs.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

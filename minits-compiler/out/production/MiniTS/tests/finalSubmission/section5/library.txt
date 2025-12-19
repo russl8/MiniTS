@@ -1,0 +1,23 @@
+// FEATURE DEMONSTRATED: While Loops
+// KEY CONCEPTS: Loop conditions, variable modification, loop termination
+
+class Library {
+    totalBooks : int = 10;
+    checkedOut : int = 0;
+    
+    function checkout(limit : int) : int {
+        // While loop continues until limit is reached
+        while (checkedOut < limit) {
+            totalBooks = totalBooks - 1;    // Decrease total books
+            checkedOut = checkedOut + 1;    // Increase checked out count
+        }
+        
+        return totalBooks;
+    }
+    
+    // While loop execution
+    finalBooks : int = checkout(3);  // Loop runs 3 times
+}
+
+// FINAL STATE: totalBooks=7, checkedOut=3, finalBooks=7
+// WHILE LOOP: Executes 3 times, reduces totalBooks from 10 to 7
