@@ -23,9 +23,10 @@ public class StringCompiler extends Compiler {
         }
 
         if (bundle.errorListener.hasError()) {
-            for (String err : bundle.errorListener.getErrors()) {
-                System.err.println(err);
-            }
+//            for (String err : bundle.errorListener.getErrors()) {
+//                System.err.println(err);
+//            }
+            System.out.println("SYNTAX ERROR!");
             return null;
         }
 
