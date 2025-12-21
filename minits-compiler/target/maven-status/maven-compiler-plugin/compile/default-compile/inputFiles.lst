@@ -12,6 +12,7 @@
 /Users/russl8/github/MiniTS/minits-compiler/src/main/java/compiler/TextFileCompiler.java
 /Users/russl8/github/MiniTS/minits-compiler/src/main/java/dto/ClassResult.java
 /Users/russl8/github/MiniTS/minits-compiler/src/main/java/dto/CompileResult.java
+/Users/russl8/github/MiniTS/minits-compiler/src/main/java/exception/SyntaxException.java
 /Users/russl8/github/MiniTS/minits-compiler/src/main/java/model/Assignment/Assignment.java
 /Users/russl8/github/MiniTS/minits-compiler/src/main/java/model/Assignment/ListAssignment.java
 /Users/russl8/github/MiniTS/minits-compiler/src/main/java/model/Assignment/PrimitiveAssignment.java

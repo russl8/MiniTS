@@ -1,2 +1,4 @@
-com/russl8/mints/MainApplication.class
+com/russl8/mints/config/CorsConfig.class
 com/russl8/mints/controllers/CompileController.class
+com/russl8/mints/MainApplication.class
+com/russl8/mints/controllers/GlobalExceptionHandler.class

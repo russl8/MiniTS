@@ -2,6 +2,7 @@ package compiler;
 
 import antlr.ExprLexer;
 import antlr.ExprParser;
+import exception.SyntaxException;
 import model.Expression.ClassDeclaration;
 import model.MyErrorListener;
 import org.antlr.v4.runtime.*;
@@ -10,37 +11,40 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Compiles MiniTS source code from a text file.
+ * <p>
+ * Pipeline:
+ * 1) Lex + parse
+ * 2) If any syntax errors were reported -> throw SyntaxException
+ * 3) Otherwise run the normal compilation pipeline via Compiler.compile(...)
+ */
 public class TextFileCompiler extends Compiler {
 
     public TextFileCompiler() {
         super();
     }
 
+    /**
+     * Compile a MiniTS source file.
+     *
+     * @param file input .txt file
+     * @return compiled classes
+     * @throws SyntaxException if the file has grammar/syntax errors
+     */
     public List<ClassDeclaration> compileFile(File file) {
-        String filePath = file.getAbsolutePath();
-        System.out.println("Processing file: " + filePath);
-
-        ParseBundle bundle = getParserFromTextFile(filePath);
-
-        if (bundle.parser == null) {
-            System.err.println("Skipping file due to parser failure.");
-            return null;
+        if (file == null) {
+            throw new IllegalArgumentException("file cannot be null");
+        }
+        if (!file.exists() || !file.isFile()) {
+            throw new IllegalArgumentException("file does not exist: " + file);
         }
 
-        if (bundle.errorListener.hasError()) {
-            System.err.println("Skipping file due to syntax errors.");
-            for (String err : bundle.errorListener.getErrors()) {
-                System.err.println(err);
-            }
-            return null;
-        }
+        System.out.println("Processing file: " + file.getAbsolutePath());
 
-        return super.compile(bundle.parser);
-    }
-
-    private static ParseBundle getParserFromTextFile(String fileName) {
         try {
-            CharStream input = CharStreams.fromFileName(fileName);
+            // 1) Build parser + fresh listener
+            CharStream input = CharStreams.fromFileName(file.getAbsolutePath());
             ExprLexer lexer = new ExprLexer(input);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             ExprParser parser = new ExprParser(tokens);
@@ -49,12 +53,20 @@ public class TextFileCompiler extends Compiler {
             parser.removeErrorListeners();
             parser.addErrorListener(listener);
 
-            return new ParseBundle(parser, listener);
+            // 2) verifyGrammar: build parse tree once
+            ExprParser.ProgContext tree = parser.prog();
+
+            if (listener.hasError()) {
+                throw new SyntaxException(listener.getErrors());
+            }
+            tokens.seek(0);
+
+            // 3) Compile using existing pipeline
+            // Option A (recommended): change Compiler.compile(...) to accept ProgContext
+            return super.compile(tree);
+
         } catch (IOException e) {
-            System.err.println("Error reading file: " + fileName + " - " + e.getMessage());
-            return new ParseBundle(null, new MyErrorListener());
+            throw new RuntimeException("Failed to read source file: " + file.getAbsolutePath(), e);
         }
     }
-
-    private record ParseBundle(ExprParser parser, MyErrorListener errorListener) {}
 }

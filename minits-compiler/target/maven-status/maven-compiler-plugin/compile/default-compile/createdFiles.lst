@@ -32,6 +32,7 @@ antlr/ExprParser$SubtractionContext.class
 model/Expression/Declaration/ListDeclaration.class
 antlr/ExprParser$VariableContext.class
 antlr/ExprParser$ParenthesisContext.class
+exception/SyntaxException.class
 model/Assignment/PrimitiveAssignment.class
 model/Expression/Binary/Division.class
 antlr/ExprParser$ForLoopContext.class

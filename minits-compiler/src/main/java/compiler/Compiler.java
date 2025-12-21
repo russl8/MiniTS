@@ -43,13 +43,13 @@ public class Compiler {
      *  cd.functions returns a list of all functions declared in the class.
      *  cd.vars returns a map of all variables in the class alongside their values
      */
-    protected List<ClassDeclaration> compile(ExprParser parser) {
+    protected List<ClassDeclaration> compile(ExprParser.ProgContext progTree) {
         init();
         // Create a list of class declarations
         List<ClassDeclaration> classes = new ArrayList<>();
 
         AntlrToProgram progVisitor = new AntlrToProgram(semanticErrors, vars);
-        Program prog = progVisitor.visit(parser.prog());
+        Program prog = progVisitor.visit(progTree);
 
         TypeChecker typeCheckerVisitor =
                 new TypeChecker(semanticErrors, vars, functions, classes);

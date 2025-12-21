@@ -28,7 +28,7 @@ public class ExpressionApp {
 //        }
 
 //        compileSingleFile(file);
-        compileSingleFileAsString("class A { a : int = 4 ; }");
+        compileSingleFileAsString("class A { a : int = 4 ; wda awdq  }");
     }
 
     private static void compileSingleFileAsString(String fileAsString) {
