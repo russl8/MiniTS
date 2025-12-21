@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
-    @Value("${FRONTEND_ORIGIN}")
+    @Value("${FRONTEND_ORIGIN}") // set on render -> variables
     private String frontendOrigin;
 
     @Override
