@@ -1,4 +1,5 @@
 /Users/russl8/github/MiniTS/minits-webserver/src/main/java/com/russl8/mints/controllers/CompileController.java
+/Users/russl8/github/MiniTS/minits-webserver/src/main/java/com/russl8/mints/config/JacksonConfig.java
 /Users/russl8/github/MiniTS/minits-webserver/src/main/java/com/russl8/mints/controllers/GlobalExceptionHandler.java
 /Users/russl8/github/MiniTS/minits-webserver/src/main/java/com/russl8/mints/config/CorsConfig.java
 /Users/russl8/github/MiniTS/minits-webserver/src/main/java/com/russl8/mints/MainApplication.java
