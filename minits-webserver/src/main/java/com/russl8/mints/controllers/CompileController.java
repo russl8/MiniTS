@@ -1,13 +1,12 @@
 package com.russl8.mints.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import compiler.StringCompiler;
 import dto.ClassResult;
 import dto.CompileResult;
 import model.Expression.ClassDeclaration;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,48 +15,34 @@ import java.util.Map;
 public class CompileController {
 
     @PostMapping("/compile")
-    public Map<String, Object> compile(@RequestBody Map<String, String> body) {
+    public CompileResult compile(@RequestBody Map<String, String> body) {
         String code = body.get("code");
 
         if (code == null || code.isBlank()) {
-            return Map.of(
-                    "success", false,
-                    "output", "No code provided"
-            );
+            return new CompileResult(false, List.of("No code provided"), List.of());
         }
 
         StringCompiler compiler = new StringCompiler();
-        var classes = compiler.compileString(code);
+        List<ClassDeclaration> classes = compiler.compileString(code);
 
         if (classes == null) {
-            return Map.of(
-                    "success", false,
-                    "output", String.join("\n", compiler.getSemanticErrors())
-            );
+            // if you still return null on syntax errors, you can decide how to handle:
+            // ideally StringCompiler throws SyntaxException instead (400 handler)
+            return new CompileResult(false, compiler.getSemanticErrors(), List.of());
         }
 
-        StringBuilder out = new StringBuilder();
+        List<String> semanticErrors = new ArrayList<>();
+        List<ClassResult> classResults = new ArrayList<>();
 
-        for (var cd : classes) {
-            out.append("class ").append(cd.className).append("\n");
-
-            if (!cd.semanticErrors.isEmpty()) {
-                out.append("Errors:\n");
-                for (String err : cd.semanticErrors) {
-                    out.append("  ").append(err).append("\n");
-                }
-            } else {
-                out.append("Evaluated Vars:\n");
-                cd.evaluatedVars.forEach((k, v) ->
-                        out.append("  ").append(k).append(" = ").append(v).append("\n")
-                );
+        for (ClassDeclaration cd : classes) {
+            if (cd.semanticErrors != null && !cd.semanticErrors.isEmpty()) {
+                semanticErrors.addAll(cd.semanticErrors);
             }
-            out.append("\n");
+
+            classResults.add(new ClassResult(cd.className, cd.evaluatedVars));
         }
 
-        return Map.of(
-                "success", true,
-                "output", out.toString()
-        );
+        boolean success = semanticErrors.isEmpty();
+        return new CompileResult(success, semanticErrors, classResults);
     }
 }
