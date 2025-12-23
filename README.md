@@ -2,7 +2,7 @@
 <img width="1898" height="917" alt="image" src="https://github.com/user-attachments/assets/bc79e7ed-85fb-4fa5-96d2-c93bf2f89730" />
 
 ## NEW: Spring Boot API Integration
-- Supports string-based inputs via a Spring Boot API.
+- Supports string-based inputs via a Spring Boot API: minits-ui.vercel.app/
 - To run the spring boot api locally:
 ```
 # SETUP
