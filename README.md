@@ -1,6 +1,3 @@
-# MiniTS: A Compiler for a TypeScript-Inspired Class-Based Language
-<img width="1898" height="917" alt="image" src="https://github.com/user-attachments/assets/bc79e7ed-85fb-4fa5-96d2-c93bf2f89730" />
-
 ## NEW: Spring Boot API Integration
 - Supports string-based inputs via a Spring Boot API: minits-ui.vercel.app/
 - To run the spring boot api locally:
@@ -21,7 +18,10 @@ curl -X POST localhost:8080/api/compile \
   -H "Content-Type: application/json" \
   -d '{"code":"class A { a : int = 4 ; b : bool = a ; }"}'
 ```
-  
+
+
+# MiniTS: A Compiler for a TypeScript-Inspired Class-Based Language
+<img width="1898" height="917" alt="image" src="https://github.com/user-attachments/assets/bc79e7ed-85fb-4fa5-96d2-c93bf2f89730" />
 
 ## Input
 MiniTS accepts class-based programs with inheritance, typed variables, functions, and control flow.
