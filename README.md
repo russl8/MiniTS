@@ -1,6 +1,6 @@
 ## NEW: Spring Boot API Integration
 - Supports string-based inputs via a Spring Boot API: minits-ui.vercel.app/
-- To run the spring boot api locally:
+- To run the api locally:
 ```
 # SETUP
 cd minits-compiler
