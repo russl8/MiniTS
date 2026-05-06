@@ -1,30 +1,8 @@
-## NEW: Spring Boot API Integration
-- Supports string-based inputs via a Spring Boot API: minits-ui.vercel.app/
-- To run the api locally:
-```
-# SETUP
-cd minits-compiler
-mvn clean install
-cd ../minits-webserver
-mvn clean install
-
-# from .../minits-webserver
-mvn springboot:run
-```
-
-Using the API to run code (assuming port=8080):
-```
-curl -X POST localhost:8080/api/compile \
-  -H "Content-Type: application/json" \
-  -d '{"code":"class A { a : int = 4 ; b : bool = a ; }"}'
-```
-
-
-# MiniTS: An interpreter for a TypeScript-Inspired Class-Based Language
+# miniTS: An interpreter for a TypeScript-Inspired Class-Based Language
 <img width="1898" height="917" alt="image" src="https://github.com/user-attachments/assets/bc79e7ed-85fb-4fa5-96d2-c93bf2f89730" />
 
 ## Input
-MiniTS accepts class-based programs with inheritance, typed variables, functions, and control flow.
+miniTS accepts class-based programs with inheritance, typed variables, functions, and control flow.
 
 ### Example Program
 ```
@@ -82,6 +60,28 @@ class Overview extends Superclass {
 - No anonymous/lambda functions
 - No operator precedence in grammar
 - No object instantiation (new) or dot notation
+
+## Spring Boot API Integration
+- Supports string-based inputs via a Spring Boot API: minits-ui.vercel.app/
+- To run the api locally:
+```
+# SETUP
+cd minits-compiler
+mvn clean install
+cd ../minits-webserver
+mvn clean install
+
+# from .../minits-webserver
+mvn springboot:run
+```
+
+Using the API to run code (assuming port=8080):
+```
+curl -X POST localhost:8080/api/compile \
+  -H "Content-Type: application/json" \
+  -d '{"code":"class A { a : int = 4 ; b : bool = a ; }"}'
+```
+
 ## Setup
 
 ### Creating a Runnable JAR from Eclipse
