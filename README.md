@@ -20,7 +20,7 @@ curl -X POST localhost:8080/api/compile \
 ```
 
 
-# MiniTS: A Compiler for a TypeScript-Inspired Class-Based Language
+# MiniTS: An interpreter for a TypeScript-Inspired Class-Based Language
 <img width="1898" height="917" alt="image" src="https://github.com/user-attachments/assets/bc79e7ed-85fb-4fa5-96d2-c93bf2f89730" />
 
 ## Input
@@ -64,7 +64,7 @@ class Overview extends Superclass {
 
 
 
-## Compiler Workflow & Architecture
+## Workflow & Architecture
 - ANTLR Parser → builds AST
 - VariableBindingVisitor → ensures variables are declared before use
 - TypeCheckerVisitor → enforces type rules
