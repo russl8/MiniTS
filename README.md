@@ -1,5 +1,7 @@
-# miniTS: An interpreter for a TypeScript-Inspired Class-Based Language
-miniTS accepts class-based programs with inheritance, typed variables, functions, and control flow.
+# miniTS
+A statically-typed interpreted language with inheritance, typed variables, functions, and control flow.
+
+<img width="1708" height="948" alt="image" src="https://github.com/user-attachments/assets/01db1440-e36a-4ec1-90e5-6d41c32def4e" />
 
 
 Try it out: [minits-ui.vercel.app](https://minits-ui.vercel.app/)
